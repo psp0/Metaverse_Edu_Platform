@@ -17,6 +17,20 @@ services:
       - SWAGGER_SERVER_URL=${SWAGGER_SERVER_URL}
       - SWAGGER_SERVER_PORT=${SWAGGER_SERVER_PORT}
 
+  quiz:
+    build:
+      context: ./quiz
+      dockerfile: Dockerfile
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
   db:
     image: mysql:8.0.42
     ports:
