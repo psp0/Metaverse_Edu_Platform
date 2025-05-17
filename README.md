@@ -56,3 +56,12 @@ MEP(Metaverse Edu Platform)는 가상환경에서 교육 경험을 제공하는 
 ## API Documentation
 
 Swagger UI: `https://${DOMAIN_NAME}/swagger-ui.html`
+
+## 로컬 개발 환경 설정
+
+로컬 개발 환경에서 프론트엔트 애플리케이션을 실행하려면 다음 환경 변수를 설정하세요:
+
+```bash
+# 벡엔드서버의 url과 포트 설정
+export BACK_SERVER_URL=https://example.com
+export BACK_SERVER_PORT=5000
