@@ -1,6 +1,18 @@
 version: "3.8"
 
 services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    environment:
+      - BACK_SERVER_URL=${SERVER_URL}
+      - BACK_SERVER_PORT=${SERVER_PORT}
+
   backend:
     build:
       context: ./backend
