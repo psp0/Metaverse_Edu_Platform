@@ -420,37 +420,33 @@ INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUE
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21702_1716000000', 'C', '\\frac{8}{3}', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21702_1716000000', 'D', '-4', FALSE);
 INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21702_1716000000', '두 벡터가 수직이면 내적이 0이어야 하므로, \\( 3x + 8 = 0 \\rightarrow x = -\\frac{8}{3} \\)이다.');
-INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21703, '삼각형 \\( ABC \\)에서 점 \\( D \\)는 변 \\( BC \\)의 중점이다. 벡터 \\( \\vec{AB} = \\vec{b} \\), \\( \\vec{AC} = \\vec{c} \\)일 때, 벡터 \\( \\vec{AD} \\)를 \\( \\vec{b}, \\vec{c} \\)로 나타낸 것은?');
 
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21703, '삼각형 \\( ABC \\)에서 점 \\( D \\)는 변 \\( BC \\)의 중점이다. 벡터 \\( \\vec{AB} = \\vec{b} \\), \\( \\vec{AC} = \\vec{c} \\)일 때, 벡터 \\( \\vec{AD} \\)를 \\( \\vec{b}, \\vec{c} \\)로 나타낸 것은?');
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'A', '\\vec{b} + \\vec{c}', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'B', '\\frac{1}{2} \\vec{b} - \\frac{1}{2} \\vec{c}', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'C', '\\frac{1}{2} \\vec{b} + \\frac{1}{2} \\vec{c}', TRUE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'D', '\\vec{b} - \\vec{c}', FALSE);
-
 INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21703_1716000000', '중점 공식을 이용하면 \\( \\vec{BD} = \\frac{1}{2}(\\vec{c} - \\vec{b}) \\)이고, \\( \\vec{AD} = \\vec{AB} + \\vec{BD} = \\vec{b} + \\frac{1}{2}(\\vec{c} - \\vec{b}) = \\frac{1}{2} \\vec{b} + \\frac{1}{2} \\vec{c} \\)이다.');
-INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21801, '공간벡터 \\( \\vec{a} = (2, -1, 3) \\), \\( \\vec{b} = (x, 2, -6) \\)가 서로 수직일 때, \\( x \\)의 값을 구하시오.');
 
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21801, '공간벡터 \\( \\vec{a} = (2, -1, 3) \\), \\( \\vec{b} = (x, 2, -6) \\)가 서로 수직일 때, \\( x \\)의 값을 구하시오.');
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'A', '8', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'B', '10', TRUE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'C', '12', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'D', '14', FALSE);
-
 INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21801_1716000000', '벡터의 내적이 0이면 수직이다. \\( \\vec{a} \\cdot \\vec{b} = 2x - 2 - 18 = 0 \\)이므로 \\( x = 10 \\)이다.');
-INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21802, '직선 \\( \\vec{r}(t) = (1, 2, -1) + t(2, -1, 3) \\)과 평면 \\( 2x - y + z = 5 \\)가 만나는 점의 좌표를 구하시오.');
 
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21802, '직선 \\( \\vec{r}(t) = (1, 2, -1) + t(2, -1, 3) \\)과 평면 \\( 2x - y + z = 5 \\)가 만나는 점의 좌표를 구하시오.');
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'A', '(3, 1, 2)', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'B', '(2, 1.5, 1)', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'C', '(2.5, 1.25, 1.25)', TRUE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'D', '(1.5, 1.75, 0.5)', FALSE);
-
 INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21802_1716000000', '직선의 각 성분을 평면 방정식에 대입하여 \\( t = \\frac{3}{4} \\)을 구하고, 이를 통해 교점 좌표 \\( (2.5, 1.25, 1.25) \\)를 계산한다.');
-INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21803, '점 \\( A(1, 2, 3) \\)에서 직선 \\( \\vec{r}(t) = (4, 0, -1) + t(2, 1, 2) \\)까지의 거리를 구하시오.');
 
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21803, '점 \\( A(1, 2, 3) \\)에서 직선 \\( \\vec{r}(t) = (4, 0, -1) + t(2, 1, 2) \\)까지의 거리를 구하시오.');
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'A', '\\( \\frac{\\sqrt{221}}{3} \\)', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'B', '\\( \\frac{\\sqrt{245}}{3} \\)', TRUE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'C', '\\( \\frac{\\sqrt{170}}{5} \\)', FALSE);
 INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'D', '\\( \\frac{\\sqrt{261}}{2} \\)', FALSE);
-
 INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21803_1716000000', '점과 직선 사이의 거리는, 점에서 직선 위 한 점까지의 벡터와 직선 방향벡터의 외적의 크기를 방향벡터의 크기로 나누어 계산하며, 이 문제에서는 \\( \\frac{\\sqrt{245}}{3} \\)이다.');
 
 -- Insert into user table
