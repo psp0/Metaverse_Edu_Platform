@@ -2,11 +2,7 @@ version: "3.8"
 
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
+    image: psp0/mep-frontend:latest
     depends_on:
       - backend
     environment:
