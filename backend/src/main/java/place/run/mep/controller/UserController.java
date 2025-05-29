@@ -1,5 +1,6 @@
 package place.run.mep.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import place.run.mep.dto.UserInfoDto;
 import place.run.mep.dto.PagedUserResponseDto;
 import place.run.mep.service.UserService;
@@ -19,11 +20,11 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/me")
-    public ResponseEntity<UserInfoDto> getCurrentUser(@AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
         // Assuming UserDetails.getUsername() returns the userId
         // You might need a custom UserDetails implementation to store more user info
         // or fetch it from the database using the username (userId)
-        UserInfoDto userInfoDto = userService.getUserInfo(userDetails.getUsername()); 
+        UserInfoDto userInfoDto = userService.getUserInfo(userDetails.getUsername());
         return ResponseEntity.ok(userInfoDto);
     }
 

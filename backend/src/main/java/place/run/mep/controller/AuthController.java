@@ -1,18 +1,21 @@
 package place.run.mep.controller;
 
+import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import place.run.mep.dto.LoginRequestDto;
 import place.run.mep.dto.RegisterRequestDto;
 import place.run.mep.dto.TokenResponseDto;
-import place.run.mep.dto.TokenRefreshRequestDto; // Added import
-import place.run.mep.service.AuthService; // Added import
+import place.run.mep.dto.TokenRefreshRequestDto;
+import place.run.mep.service.AuthService;
 import place.run.mep.service.UserService;
-// Import other necessary classes like AuthService, TokenProvider, etc.
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid; // Added import
+
 
 @RestController
 @RequestMapping("/api/users")
@@ -38,11 +41,6 @@ public class AuthController {
         return ResponseEntity.ok(tokenResponseDto);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(/* HttpServletRequest request */) {
-        // authService.logout(request); // Implement actual logout
-        return ResponseEntity.ok("{\"message\": \"로그아웃 되었습니다.\"}");
-    }
 
     @PostMapping("/token/refresh")
     public ResponseEntity<TokenResponseDto> refreshToken(@Valid @RequestBody TokenRefreshRequestDto tokenRefreshRequestDto) { // Added @Valid and DTO

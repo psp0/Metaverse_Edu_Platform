@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor; // Added
 import lombok.AllArgsConstructor; // Added
 import lombok.Setter;
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
