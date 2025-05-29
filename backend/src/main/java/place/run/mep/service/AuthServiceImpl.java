@@ -40,7 +40,7 @@ public class AuthServiceImpl implements AuthService {
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         User user = userRepository.findByUserId(userDetails.getUsername())
-            .orElseThrow(() -> new RuntimeException("User not found for refresh token persistence"));
+                .orElseThrow(() -> new RuntimeException("User not found for refresh token persistence"));
 
         UserRefreshToken userRefreshToken = userRefreshTokenRepository.findByUser_UserId(user.getUserId())
                 .orElse(new UserRefreshToken());
@@ -54,6 +54,19 @@ public class AuthServiceImpl implements AuthService {
 
         return new TokenResponseDto(accessToken, refreshTokenString);
     }
+
+    @Override
+    @Transactional
+    public void logout(String userId) {
+        UserRefreshToken token = userRefreshTokenRepository.findByUser_UserId(userId)
+                .orElseThrow(() -> new RuntimeException("The refresh token for that user does not exist."));
+        if (Boolean.TRUE.equals(token.getRevoked())) {
+            throw new IllegalArgumentException("이미 로그아웃된 사용자입니다.");
+        }
+        token.setRevoked(true);
+        userRefreshTokenRepository.save(token);
+    }
+
 
     @Override
     @Transactional
@@ -83,4 +96,5 @@ public class AuthServiceImpl implements AuthService {
 
         return new TokenResponseDto(newAccessToken, requestRefreshToken); // or newRefreshToken if re-issued
     }
+
 }

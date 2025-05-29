@@ -26,25 +26,26 @@ public class AuthController {
     private final AuthService authService; // Uncommented and finalized
 
     @PostMapping("/register")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) { // Added @Valid
-        try {
-            userService.registerUser(registerRequestDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"회원 가입이 완료되었습니다.\"}");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.CONFLICT).body("{\"error\": \"" + e.getMessage() + "\"}");
-        }
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
+        userService.registerUser(registerRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"회원 가입이 완료되었습니다.\"}");
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) { // Added @Valid
-        TokenResponseDto tokenResponseDto = authService.login(loginRequestDto); // Replaced dummy logic
+    public ResponseEntity<TokenResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+        TokenResponseDto tokenResponseDto = authService.login(loginRequestDto);
         return ResponseEntity.ok(tokenResponseDto);
     }
 
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
+        authService.logout(userDetails.getUsername());
+        return ResponseEntity.ok("{\"message\": \"로그아웃 되었습니다.\"}");
+    }
 
     @PostMapping("/token/refresh")
     public ResponseEntity<TokenResponseDto> refreshToken(@Valid @RequestBody TokenRefreshRequestDto tokenRefreshRequestDto) { // Added @Valid and DTO
-        TokenResponseDto tokenResponseDto = authService.refreshToken(tokenRefreshRequestDto); // Replaced dummy logic
+        TokenResponseDto tokenResponseDto = authService.refreshToken(tokenRefreshRequestDto);
         return ResponseEntity.ok(tokenResponseDto);
     }
 }
