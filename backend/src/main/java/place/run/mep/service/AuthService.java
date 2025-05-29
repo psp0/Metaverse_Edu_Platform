@@ -7,5 +7,5 @@ import place.run.mep.dto.TokenRefreshRequestDto;
 public interface AuthService {
     TokenResponseDto login(LoginRequestDto loginRequestDto); // Changed return type
     TokenResponseDto refreshToken(TokenRefreshRequestDto tokenRefreshRequestDto); // Changed return type
-    // void register(RegisterRequestDto registerRequestDto); // This is currently in UserService
+    void logout(String userId);
 }
