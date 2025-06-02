@@ -6,7 +6,6 @@ import place.run.mep.dto.PagedUserResponseDto; // Added
 import org.springframework.data.domain.Pageable; // Added
 
 public interface UserService {
-    void registerUser(RegisterRequestDto registerRequestDto);
     UserInfoDto getUserInfo(String userId);
     PagedUserResponseDto getAllUsers(Pageable pageable); // Added
 }

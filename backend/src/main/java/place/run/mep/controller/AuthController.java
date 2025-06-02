@@ -22,12 +22,11 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserService userService;
-    private final AuthService authService; // Uncommented and finalized
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequestDto registerRequestDto) {
-        userService.registerUser(registerRequestDto);
+        authService.registerUser(registerRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body("{\"message\": \"회원 가입이 완료되었습니다.\"}");
     }
 

@@ -30,41 +30,6 @@ public class UserServiceImpl implements UserService {
     private final UserProfileRepository userProfileRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
-    @Override
-    public void registerUser(RegisterRequestDto registerRequestDto) {
-        if (!registerRequestDto.getPassword().equals(registerRequestDto.getConfirmPassword())) {
-            throw new IllegalArgumentException("Passwords do not match.");
-        }
-        if (userRepository.existsByUserId(registerRequestDto.getUserId())) {
-            throw new IllegalArgumentException("User ID already exists.");
-        }
-        if (userProfileRepository.existsByEmail(registerRequestDto.getEmail())) {
-            throw new IllegalArgumentException("Email already exists.");
-        }
-        if (userProfileRepository.existsByNickname(registerRequestDto.getNickname())){
-            throw new IllegalArgumentException("Nickname already exists.");
-        }
-
-        User user = new User();
-        user.setUserId(registerRequestDto.getUserId());
-        userRepository.save(user);
-
-        UserAuth userAuth = new UserAuth();
-        userAuth.setUser(user);
-        userAuth.setPasswordHash(passwordEncoder.encode(registerRequestDto.getPassword()));
-        userAuthRepository.save(userAuth);
-
-        UserProfile userProfile = new UserProfile();
-        userProfile.setUser(user);
-        userProfile.setEmail(registerRequestDto.getEmail());
-        userProfile.setPhone(registerRequestDto.getPhone());
-        userProfile.setName(registerRequestDto.getName());
-        userProfile.setNickname(registerRequestDto.getNickname());
-        userProfile.setBirthDate(registerRequestDto.getBirthDate());
-        userProfile.setGender(registerRequestDto.getGender());
-        userProfileRepository.save(userProfile);
-    }
 
     @Override
     public UserInfoDto getUserInfo(String userId) {
