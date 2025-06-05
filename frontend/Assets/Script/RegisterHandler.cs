@@ -31,12 +31,22 @@ public class RegisterHandler : MonoBehaviour
     [Header("Register Panel")]
     public GameObject registerPanel;
 
+    [Header("Warning Panel")]
+    public GameObject warningPanel;
+    public TextMeshProUGUI warningMessageText;
+
     private string baseUrl = $"{Environment.GetEnvironmentVariable("BACK_SERVER_URL")}:{Environment.GetEnvironmentVariable("BACK_SERVER_PORT")}";
 
     void Start()
     {
         registerButton.onClick.AddListener(OnRegisterClicked);
     }
+    void ShowWarning(string message)
+    {
+        warningMessageText.text = message;
+        warningPanel.SetActive(true);
+    }
+
 
     void OnRegisterClicked()
     {
@@ -54,13 +64,13 @@ public class RegisterHandler : MonoBehaviour
             string.IsNullOrEmpty(email) || string.IsNullOrEmpty(phone) || string.IsNullOrEmpty(name) ||
             string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(birthDate) || string.IsNullOrEmpty(gender))
         {
-            messageText.text = "모든 항목을 입력해주세요.";
+            ShowWarning( "모든 항목을 입력해주세요.");
             return;
         }
 
         if (password != confirmPassword)
         {
-            messageText.text = "비밀번호가 일치하지 않습니다.";
+            ShowWarning( "비밀번호가 일치하지 않습니다.");
             return;
         }
 
@@ -100,7 +110,7 @@ public class RegisterHandler : MonoBehaviour
 
         if (request.result == UnityWebRequest.Result.Success)
         {
-            messageText.text = "회원가입 성공!";
+            ShowWarning("회원가입 성공!");
             // TODO: 자동 로그인 or 로그인 씬 이동
             if (registerPanel != null)
                 registerPanel.SetActive(false);
