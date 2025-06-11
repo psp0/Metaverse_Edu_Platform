@@ -6,6 +6,7 @@ import place.run.mep.entity.UserAuth;
 import place.run.mep.entity.UserProfile;
 import place.run.mep.repository.UserAuthRepository;
 import place.run.mep.repository.UserProfileRepository;
+import place.run.mep.repository.UserRefreshTokenRepository;
 import place.run.mep.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
     private final UserAuthRepository userAuthRepository;
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
 
@@ -120,7 +122,18 @@ public class UserServiceImpl implements UserService {
         auth.setPasswordHash(passwordEncoder.encode(dto.getNewPassword()));
         auth.setPwChanged(LocalDateTime.now());
     }
+    @Override
+    @Transactional
+    public void deleteUser(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Long userNo = user.getUserNo();
 
 
-
+        userRefreshTokenRepository.deleteAllByUser_UserNo(userNo);
+        userAuthRepository.deleteById(userNo);
+        userProfileRepository.deleteById(userNo);
+        userRepository.deleteById(userNo);
+    }
 }

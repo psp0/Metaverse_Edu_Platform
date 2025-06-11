@@ -11,5 +11,5 @@ public interface UserService {
     PagedUserResponseDto getAllUsers(Pageable pageable);
     void updateUserInfo(String userId, UpdateUserDto dto);
     void changePassword(String userId, ChangePasswordDto dto);
-
+    void deleteUser(String userId);
 }

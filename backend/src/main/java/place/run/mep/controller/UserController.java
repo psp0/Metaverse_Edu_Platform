@@ -11,7 +11,6 @@ import place.run.mep.dto.PagedUserResponseDto;
 import place.run.mep.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -59,6 +58,11 @@ public class UserController {
             @Valid @RequestBody ChangePasswordDto dto) {
         userService.changePassword(userDetails.getUsername(), dto);
         return ResponseEntity.ok("{\"message\": \"비밀번호가 성공적으로 변경되었습니다.\"}");
+    }
+    @DeleteMapping("/me")
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserDetails userDetails) {
+        userService.deleteUser(userDetails.getUsername());
+        return ResponseEntity.ok("{\"message\": \"회원 탈퇴가 완료되었습니다.\"}");
     }
 
 
