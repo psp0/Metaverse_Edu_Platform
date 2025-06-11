@@ -1,14 +1,12 @@
 package place.run.mep.service;
 
-import place.run.mep.dto.RegisterRequestDto;
-import place.run.mep.dto.UserInfoDto;
-import place.run.mep.dto.PagedUserResponseDto;
-import place.run.mep.dto.UserListInfoResponseDto;
+import place.run.mep.dto.*;
 import place.run.mep.entity.User;
 import place.run.mep.entity.UserAuth;
 import place.run.mep.entity.UserProfile;
 import place.run.mep.repository.UserAuthRepository;
 import place.run.mep.repository.UserProfileRepository;
+import place.run.mep.repository.UserRefreshTokenRepository;
 import place.run.mep.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,45 +25,11 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserAuthRepository userAuthRepository;
     private final UserProfileRepository userProfileRepository;
+    private final UserAuthRepository userAuthRepository;
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
 
-    @Transactional
-    @Override
-    public void registerUser(RegisterRequestDto registerRequestDto) {
-        if (!registerRequestDto.getPassword().equals(registerRequestDto.getConfirmPassword())) {
-            throw new IllegalArgumentException("Passwords do not match.");
-        }
-        if (userRepository.existsByUserId(registerRequestDto.getUserId())) {
-            throw new IllegalArgumentException("User ID already exists.");
-        }
-        if (userProfileRepository.existsByEmail(registerRequestDto.getEmail())) {
-            throw new IllegalArgumentException("Email already exists.");
-        }
-        if (userProfileRepository.existsByNickname(registerRequestDto.getNickname())){
-            throw new IllegalArgumentException("Nickname already exists.");
-        }
-
-        User user = new User();
-        user.setUserId(registerRequestDto.getUserId());
-        userRepository.save(user);
-
-        UserAuth userAuth = new UserAuth();
-        userAuth.setUser(user);
-        userAuth.setPasswordHash(passwordEncoder.encode(registerRequestDto.getPassword()));
-        userAuthRepository.save(userAuth);
-
-        UserProfile userProfile = new UserProfile();
-        userProfile.setUser(user);
-        userProfile.setEmail(registerRequestDto.getEmail());
-        userProfile.setPhone(registerRequestDto.getPhone());
-        userProfile.setName(registerRequestDto.getName());
-        userProfile.setNickname(registerRequestDto.getNickname());
-        userProfile.setBirthDate(registerRequestDto.getBirthDate());
-        userProfile.setGender(registerRequestDto.getGender());
-        userProfileRepository.save(userProfile);
-    }
 
     @Override
     public UserInfoDto getUserInfo(String userId) {
@@ -104,5 +69,71 @@ public class UserServiceImpl implements UserService {
                 .collect(Collectors.toList());
 
         return new PagedUserResponseDto(userPage.getTotalElements(), userPage.getTotalPages(), userList);
+    }
+    @Override
+    @Transactional
+    public void updateUserInfo(String userId, UpdateUserDto dto) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        UserProfile profile = userProfileRepository.findById(user.getUserNo())
+                .orElseThrow(() -> new RuntimeException("User profile not found"));
+
+        if (dto.getNickname() != null && !dto.getNickname().equals(profile.getNickname())) {
+            boolean exists = userProfileRepository.existsByNickname(dto.getNickname());
+            if (exists) {
+                throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+            }
+            profile.setNickname(dto.getNickname());
+        }
+
+        if (dto.getName() != null) {
+            profile.setName(dto.getName());
+        }
+
+        if (dto.getPhone() != null) {
+            profile.setPhone(dto.getPhone());
+        }
+
+        if (dto.getBirthdate() != null) {
+            profile.setBirthDate(LocalDate.parse(dto.getBirthdate()));
+        }
+
+        if (dto.getGender() != null) {
+            if (!dto.getGender().equals("M") && !dto.getGender().equals("F")) {
+                throw new IllegalArgumentException("성별은 'M' 또는 'F'이어야 합니다.");
+            }
+            profile.setGender(dto.getGender());
+        }
+    }
+    @Override
+    @Transactional
+    public void changePassword(String userId, ChangePasswordDto dto) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserAuth auth = userAuthRepository.findById(user.getUserNo())
+                .orElseThrow(() -> new RuntimeException("UserAuth not found"));
+
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), auth.getPasswordHash())) {
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+
+        auth.setPasswordHash(passwordEncoder.encode(dto.getNewPassword()));
+        auth.setPwChanged(LocalDateTime.now());
+    }
+    @Override
+    @Transactional
+    public void deleteUser(String userId) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Long userNo = user.getUserNo();
+
+
+        userRefreshTokenRepository.deleteAllByUser_UserNo(userNo);
+        userAuthRepository.deleteById(userNo);
+        userProfileRepository.deleteById(userNo);
+        userRepository.deleteById(userNo);
     }
 }

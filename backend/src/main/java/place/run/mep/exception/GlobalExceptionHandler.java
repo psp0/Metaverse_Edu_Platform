@@ -4,9 +4,12 @@ package place.run.mep.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.time.format.DateTimeParseException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -36,6 +39,13 @@ public class GlobalExceptionHandler {
                 .orElse("Validation error");
         return ResponseEntity.badRequest().body(new ErrorResult("VALIDATION_ERROR", errorMessage));
     }
+
+    @ExceptionHandler(DateTimeParseException.class)
+    public ResponseEntity<ErrorResult> handleDateTimeParseException(DateTimeParseException ex) {
+        return ResponseEntity.badRequest().body(
+                new ErrorResult("INVALID_DATE_FORMAT", "날짜 형식이 올바르지 않습니다. (예: 2000-01-01)"));
+    }
+
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResult> handleException(Exception e) {
