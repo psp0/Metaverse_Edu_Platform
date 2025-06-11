@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final UserProfileRepository userProfileRepository;
+    private final UserAuthRepository userAuthRepository;
+    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -101,5 +103,24 @@ public class UserServiceImpl implements UserService {
             profile.setGender(dto.getGender());
         }
     }
+    @Override
+    @Transactional
+    public void changePassword(String userId, ChangePasswordDto dto) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        UserAuth auth = userAuthRepository.findById(user.getUserNo())
+                .orElseThrow(() -> new RuntimeException("UserAuth not found"));
+
+        if (!passwordEncoder.matches(dto.getCurrentPassword(), auth.getPasswordHash())) {
+            throw new IllegalArgumentException("현재 비밀번호가 일치하지 않습니다.");
+        }
+
+
+        auth.setPasswordHash(passwordEncoder.encode(dto.getNewPassword()));
+        auth.setPwChanged(LocalDateTime.now());
+    }
+
+
 
 }

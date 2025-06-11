@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import place.run.mep.dto.ChangePasswordDto;
 import place.run.mep.dto.UpdateUserDto;
 import place.run.mep.dto.UserInfoDto;
 import place.run.mep.dto.PagedUserResponseDto;
@@ -51,5 +52,14 @@ public class UserController {
         userService.updateUserInfo(userDetails.getUsername(), updateUserDto);
         return ResponseEntity.ok("{\"message\": \"회원 정보가 수정되었습니다.\"}");
     }
+
+    @PutMapping("/me/password")
+    public ResponseEntity<?> changePassword(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody ChangePasswordDto dto) {
+        userService.changePassword(userDetails.getUsername(), dto);
+        return ResponseEntity.ok("{\"message\": \"비밀번호가 성공적으로 변경되었습니다.\"}");
+    }
+
 
 }
