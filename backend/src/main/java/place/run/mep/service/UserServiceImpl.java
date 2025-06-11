@@ -1,9 +1,6 @@
 package place.run.mep.service;
 
-import place.run.mep.dto.RegisterRequestDto;
-import place.run.mep.dto.UserInfoDto;
-import place.run.mep.dto.PagedUserResponseDto;
-import place.run.mep.dto.UserListInfoResponseDto;
+import place.run.mep.dto.*;
 import place.run.mep.entity.User;
 import place.run.mep.entity.UserAuth;
 import place.run.mep.entity.UserProfile;
@@ -17,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,9 +24,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserAuthRepository userAuthRepository;
     private final UserProfileRepository userProfileRepository;
-    private final PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -70,4 +66,40 @@ public class UserServiceImpl implements UserService {
 
         return new PagedUserResponseDto(userPage.getTotalElements(), userPage.getTotalPages(), userList);
     }
+    @Override
+    @Transactional
+    public void updateUserInfo(String userId, UpdateUserDto dto) {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        UserProfile profile = userProfileRepository.findById(user.getUserNo())
+                .orElseThrow(() -> new RuntimeException("User profile not found"));
+
+        if (dto.getNickname() != null && !dto.getNickname().equals(profile.getNickname())) {
+            boolean exists = userProfileRepository.existsByNickname(dto.getNickname());
+            if (exists) {
+                throw new IllegalArgumentException("이미 사용 중인 닉네임입니다.");
+            }
+            profile.setNickname(dto.getNickname());
+        }
+
+        if (dto.getName() != null) {
+            profile.setName(dto.getName());
+        }
+
+        if (dto.getPhone() != null) {
+            profile.setPhone(dto.getPhone());
+        }
+
+        if (dto.getBirthdate() != null) {
+            profile.setBirthDate(LocalDate.parse(dto.getBirthdate()));
+        }
+
+        if (dto.getGender() != null) {
+            if (!dto.getGender().equals("M") && !dto.getGender().equals("F")) {
+                throw new IllegalArgumentException("성별은 'M' 또는 'F'이어야 합니다.");
+            }
+            profile.setGender(dto.getGender());
+        }
+    }
+
 }

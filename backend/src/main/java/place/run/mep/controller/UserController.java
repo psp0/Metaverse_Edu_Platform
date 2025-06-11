@@ -1,8 +1,10 @@
 package place.run.mep.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import place.run.mep.dto.UpdateUserDto;
 import place.run.mep.dto.UserInfoDto;
 import place.run.mep.dto.PagedUserResponseDto;
 import place.run.mep.service.UserService;
@@ -42,12 +44,12 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
-    // PATCH /api/users/me endpoint for updating user info would go here
-    // Example:
-    // @PatchMapping("/me")
-    // public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserDto updateUserDto) {
-    //     userService.updateUserInfo(userDetails.getUsername(), updateUserDto);
-    //     return ResponseEntity.ok("{\"message\": \"회원 정보가 수정되었습니다.\"}");
-    // }
+    @PatchMapping("/me")
+    public ResponseEntity<?> updateCurrentUser(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUserInfo(userDetails.getUsername(), updateUserDto);
+        return ResponseEntity.ok("{\"message\": \"회원 정보가 수정되었습니다.\"}");
+    }
 
 }
