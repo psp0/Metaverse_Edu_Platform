@@ -1,14 +1,16 @@
 package place.run.mep.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import place.run.mep.dto.ChangePasswordDto;
+import place.run.mep.dto.UpdateUserDto;
 import place.run.mep.dto.UserInfoDto;
 import place.run.mep.dto.PagedUserResponseDto;
 import place.run.mep.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -42,12 +44,26 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
-    // PATCH /api/users/me endpoint for updating user info would go here
-    // Example:
-    // @PatchMapping("/me")
-    // public ResponseEntity<?> updateCurrentUser(@AuthenticationPrincipal UserDetails userDetails, @RequestBody UpdateUserDto updateUserDto) {
-    //     userService.updateUserInfo(userDetails.getUsername(), updateUserDto);
-    //     return ResponseEntity.ok("{\"message\": \"회원 정보가 수정되었습니다.\"}");
-    // }
+    @PatchMapping("/me")
+    public ResponseEntity<?> updateCurrentUser(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody UpdateUserDto updateUserDto) {
+        userService.updateUserInfo(userDetails.getUsername(), updateUserDto);
+        return ResponseEntity.ok("{\"message\": \"회원 정보가 수정되었습니다.\"}");
+    }
+
+    @PutMapping("/me/password")
+    public ResponseEntity<?> changePassword(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @Valid @RequestBody ChangePasswordDto dto) {
+        userService.changePassword(userDetails.getUsername(), dto);
+        return ResponseEntity.ok("{\"message\": \"비밀번호가 성공적으로 변경되었습니다.\"}");
+    }
+    @DeleteMapping("/me")
+    public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserDetails userDetails) {
+        userService.deleteUser(userDetails.getUsername());
+        return ResponseEntity.ok("{\"message\": \"회원 탈퇴가 완료되었습니다.\"}");
+    }
+
 
 }
