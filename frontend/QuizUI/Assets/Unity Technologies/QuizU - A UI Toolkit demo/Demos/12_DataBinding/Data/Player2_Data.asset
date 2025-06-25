@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bf4638638f34ea7891495257621574, type: 3}
+  m_Name: Player2_Data
+  m_EditorClassIdentifier: 
+  m_PlayerName: Player Two
+  m_Description: Binding in C#
+  m_MaximumHealth: 200
+  m_CurrentHealth: 200
+  m_Title: Support
+  m_ClassIcon: {fileID: 2800000, guid: 5ae444d8ff6b7467e8dd3ba270dd0583, type: 3}
+  m_RankIcon: {fileID: 2800000, guid: 1c06d711cd8b14c3aa0e0ed29771a3b2, type: 3}

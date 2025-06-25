@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 89c0892601b174ba3b9d864b23bcb982
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268492
+  packageName: QuizU - A UI toolkit sample
+  packageVersion: 1.2.0
+  assetPath: Assets/Unity Technologies/QuizU - A UI Toolkit demo/Demos/13_Localization/Google
+    Sheets Service.asset
+  uploadId: 752869

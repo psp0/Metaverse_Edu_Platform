@@ -1,0 +1,130 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/10_CustomControlsDemo/slide-toggle/SlideToggle.uss?fileID=7433441132597879392&amp;guid=7594e24cee5b740be813c06c4aaf5d65&amp;type=3#SlideToggle" />
+    <Style src="project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/13_Localization/LocalizationDemo.uss?fileID=7433441132597879392&amp;guid=3746e1692f5774ad2817261eb49e774f&amp;type=3#LocalizationDemo" />
+    <ui:VisualElement name="background" style="position: absolute; width: 100%; height: 100%; background-color: rgb(217, 217, 217); align-items: center; justify-content: center; flex-direction: row; top: -2px; left: 2px;">
+        <ui:VisualElement name="text-screen__container" style="flex-basis: 30%; height: 100%; padding-left: 2%; flex-wrap: wrap; white-space: normal;">
+            <ui:VisualElement name="text-screen__header" style="flex-basis: 15%; align-items: center; justify-content: flex-start; white-space: nowrap; margin-top: 7%;">
+                <ui:Label text="Title" display-tooltip-when-elided="true" name="text-screen__title" style="flex-basis: 100%; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Black%20SDF.asset?fileID=11400000&amp;guid=e74ebc05ab3564fb187648ced4e2c0fa&amp;type=2#Roboto-Black SDF&quot;); font-size: 92px; color: rgb(0, 127, 217); align-items: flex-start; -unity-text-align: upper-left; width: 100%;" />
+            </ui:VisualElement>
+            <ui:Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." display-tooltip-when-elided="true" name="text-screen__page-text" class="body-text" style="position: relative; font-size: 22px; flex-shrink: 1; white-space: normal; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); height: auto; width: auto; flex-grow: 0; flex-basis: auto;" />
+            <ui:VisualElement name="text-screen__footer" style="flex-basis: 9%; flex-grow: 1; padding-top: 6%;">
+                <ui:VisualElement name="text-screen__button-panel" style="flex-direction: row; justify-content: space-between; position: relative; width: 100%; height: auto; left: 0; top: 0;">
+                    <ui:Button display-tooltip-when-elided="true" name="text-screen__button-last" enable-rich-text="true" text="◀BACK" class="button-nextlast next-last-button" style="rotate: 0;" />
+                    <ui:Button text="Action" display-tooltip-when-elided="true" name="text-screen__action-button" class="tutorial-button" style="position: relative; flex-basis: 44%; left: 0; display: none;" />
+                    <ui:Button display-tooltip-when-elided="true" name="text-screen__button-next" text="MORE▶" class="button-nextlast next-last-button" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="demo__container" style="flex-basis: 69%; height: 100%; align-items: center; justify-content: center; padding-left: 2%; padding-right: 2%; padding-top: 2%; padding-bottom: 2%; flex-direction: column;">
+            <ui:VisualElement name="language__buttons" picking-mode="Ignore" style="flex-grow: 0; width: 77%; height: 10%; position: absolute; flex-direction: row; background-color: rgba(210, 237, 255, 0.21); justify-content: space-between; top: 9%; flex-basis: 20%; margin-bottom: 4%; -unity-text-align: upper-center; border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 20px; border-top-right-radius: 20px; border-bottom-right-radius: 20px; border-bottom-left-radius: 20px; padding-top: 1%; padding-right: 1%; padding-bottom: 1%; padding-left: 1%;">
+                <ui:Label text="Languages" name="language__label" picking-mode="Ignore" style="position: absolute; width: 100%; top: -91%; font-size: 45px; -unity-font-style: normal; color: rgb(0, 127, 217); -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;);">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(555521925120)" />
+                    </Bindings>
+                </ui:Label>
+                <ui:Button text="English" name="language__button--en" class="round-outline-button" style="flex-basis: 20%;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(626539880448)" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="French" name="language__button--fr" class="round-outline-button" style="flex-basis: 20%;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(676884111360)" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="Spanish" name="language__button--es" class="round-outline-button" style="flex-basis: 20%;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(704147087360)" />
+                    </Bindings>
+                </ui:Button>
+                <ui:Button text="Danish" name="language__button--da" class="round-outline-button" style="flex-basis: 20%;">
+                    <Bindings>
+                        <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(885064196096)" />
+                    </Bindings>
+                </ui:Button>
+            </ui:VisualElement>
+            <ui:VisualElement name="demo__page-0" class="page-0 page-1 page-2 page-3" style="flex-basis: 100%; width: 86%; align-items: center; justify-content: flex-start; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px; border-left-color: rgba(238, 0, 0, 0); border-right-color: rgba(238, 0, 0, 0); border-top-color: rgba(238, 0, 0, 0); border-bottom-color: rgba(238, 0, 0, 0); border-left-width: 5px; border-right-width: 5px; border-top-width: 5px; border-bottom-width: 5px; position: absolute; flex-grow: 0; flex-direction: column; top: 20%; height: 76%; left: 9%;">
+                <ui:Label name="demo__title" enable-rich-text="false" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 47px; flex-basis: 8%; position: absolute; top: -17%;" />
+                <ui:VisualElement name="text__container-group" picking-mode="Ignore" style="flex-grow: 0; flex-basis: 78%; flex-shrink: 0; width: 83%; flex-direction: row; position: absolute; top: 15%; height: 58%; border-left-color: rgb(0, 127, 217); border-right-color: rgb(0, 127, 217); border-top-color: rgb(0, 127, 217); border-bottom-color: rgb(0, 127, 217); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; justify-content: center;">
+                    <ui:VisualElement name="text__sub-container" style="flex-grow: 1; padding-top: 10%; padding-right: 10%; padding-bottom: 10%; padding-left: 10%;">
+                        <ui:Label text="This text binds to a LocalizedString in UXML." name="text__label-direct-localized" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 30%; color: rgb(0, 127, 217); white-space: normal; flex-basis: 40%;">
+                            <ui:Label text="•" picking-mode="Ignore" name="text__bullet-1" style="position: absolute; left: -5%; font-size: 60px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; top: -20%; height: 100%;" />
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(21793938071552)" />
+                            </Bindings>
+                        </ui:Label>
+                        <ui:Label text="This text binds to a LocalizedString at runtime using C#." name="text__label-script-localized" enable-rich-text="false" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 30%; color: rgb(0, 127, 217); white-space: normal; margin-top: 10%; flex-basis: 40%;">
+                            <ui:Label text="•" picking-mode="Ignore" name="text__bullet-1" style="position: absolute; left: -5%; font-size: 60px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; top: -20%; height: 100%;" />
+                        </ui:Label>
+                        <ui:Label name="text__label-preprocessed-localized" text="This text pre-processes the LocalizedString before binding." style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 30%; color: rgb(0, 127, 217); white-space: normal; margin-top: 10%; margin-right: 0; margin-bottom: 0; margin-left: 0; display: none;" />
+                        <ui:Label text="This uses Smart Text to show the locale: {0}" name="text__label-smart-localized" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 30%; color: rgb(0, 127, 217); white-space: normal; margin-top: 10%; margin-right: 0; margin-bottom: 0; margin-left: 0; display: none;" />
+                    </ui:VisualElement>
+                    <ui:Label text="String Localization" name="text__container-label" style="position: absolute; top: -16%; -unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 42%; color: rgb(0, 127, 217);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(2431582882226176)" />
+                        </Bindings>
+                    </ui:Label>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="demo__page-4" class="page-4 hidden" style="flex-grow: 1; flex-basis: 30%; width: 85%; height: 65%; position: absolute; top: 25%; flex-direction: row; justify-content: center; align-items: center;">
+                <ui:VisualElement name="container-1" picking-mode="Ignore" style="flex-grow: 0; flex-basis: 85%; align-items: center; position: relative; flex-direction: column; justify-content: center; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; border-left-color: rgb(0, 127, 217); border-right-color: rgb(0, 127, 217); border-top-color: rgb(0, 127, 217); border-bottom-color: rgb(0, 127, 217); height: 67%;">
+                    <ui:Label text="Default placeholder:" name="welcome__label-0" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 32px; color: rgb(0, 127, 217);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(2818517098291200)" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Welcome, {0}!" name="welcome__label" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 32px;" />
+                    <ui:Label text="Choose formatter:" name="welcome__label-0" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 32px; margin-top: 4%; color: rgb(0, 127, 217);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(2818521007382528)" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="Good {0:choose(1|2|3):morning|afternoon|evening|anytime}, {1}!" name="time-based__label" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 32px;" />
+                    <ui:Label text="Plural formatter:" name="welcome__label-0" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 32px; margin-top: 4%; color: rgb(0, 127, 217);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(2818522429251584)" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="You have {0:plural:one item|{} items} in your inventory." name="item-count__label" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 32px;" />
+                    <ui:Label text="Smart Strings" name="smart-string__container-label" style="position: absolute; -unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 44%; color: rgb(0, 127, 217); top: -20%;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="demo__page-5" class="page-5 hidden" style="flex-grow: 1; flex-basis: 30%; width: 87%; height: 65%; position: absolute; top: 25%; flex-direction: row; display: none; left: 13%;">
+                <ui:VisualElement name="preprocess__container" picking-mode="Ignore" style="flex-grow: 0; flex-basis: 82%; align-items: center; position: relative; flex-direction: column; justify-content: center; border-left-color: rgb(0, 127, 217); border-right-color: rgb(0, 127, 217); border-top-color: rgb(0, 127, 217); border-bottom-color: rgb(0, 127, 217); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; top: 9%; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 29px; height: 84%;">
+                    <ui:Label text="Pre-process LocalizedStrings" name="preprocess__container-label" style="position: absolute; top: -16%; -unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 44%; color: rgb(0, 127, 217);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(2809385444171776)" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:DropdownField label="Dropdown" choices="Easy,Normal,Hard,Nightmare" name="dropdown__field" index="0" style="width: 68%; top: -27%; height: 14%; border-top-left-radius: 17px; border-top-right-radius: 17px; border-bottom-right-radius: 17px; border-bottom-left-radius: 17px; color: rgb(0, 127, 217); align-self: auto; align-items: flex-start;">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="label" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(2807584615555072)" />
+                        </Bindings>
+                    </ui:DropdownField>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="demo__page-6" class="page-6 hidden" style="flex-grow: 1; flex-basis: 30%; width: 85%; height: 65%; position: absolute; top: 24%; left: 106px; align-items: center; justify-content: center;">
+                <ui:VisualElement name="icon__container" picking-mode="Ignore" style="flex-grow: 0; flex-basis: 71%; align-items: center; position: relative; flex-direction: row; justify-content: center; border-left-color: rgb(0, 127, 217); border-right-color: rgb(0, 127, 217); border-top-color: rgb(0, 127, 217); border-bottom-color: rgb(0, 127, 217); border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-top-left-radius: 15px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; border-bottom-left-radius: 15px; width: 72%;">
+                    <ui:VisualElement name="icon__left" style="flex-grow: 1; flex-basis: 50%; height: 100%;">
+                        <ui:VisualElement name="icon__flag-round" picking-mode="Ignore" style="flex-grow: 0; width: 100%; margin-top: 0; background-image: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/13_Localization/Localization/AssetTables/Sprites/flag-uk.png?fileID=2800000&amp;guid=367b61232578743f48d85dc27595783d&amp;type=3#flag-uk&quot;); scale: 0.5 0.5; height: 100%; position: absolute; top: 0; -unity-background-scale-mode: scale-to-fit; left: 5%;">
+                            <Bindings>
+                                <UnityEngine.Localization.LocalizedTexture property="style.backgroundImage" table="GUID:b1230cc3d87694d22a8e84371afac777" entry="Id(41163317829632)" />
+                            </Bindings>
+                        </ui:VisualElement>
+                        <ui:Label text="UXML binding" name="icon__flag-label" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 30px; color: rgb(0, 127, 217); position: absolute; width: 100%; bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:VisualElement name="icon__right" style="flex-grow: 1; flex-basis: 50%; height: 100%;">
+                        <ui:VisualElement name="icon__hello-world" picking-mode="Ignore" style="flex-grow: 0; width: 100%; margin-top: 0; background-image: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/13_Localization/Localization/AssetTables/Sprites/hello-world--en.png?fileID=2800000&amp;guid=22bfd7c32335b4bd3b25c994777c3d5a&amp;type=3#hello-world--en&quot;); -unity-background-scale-mode: scale-to-fit; scale: 1 1; height: 100%; position: absolute; top: 0; left: -5%;" />
+                        <ui:Label text="C# binding" name="icon__flag-label" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 30px; color: rgb(0, 127, 217); position: absolute; width: 100%; bottom: 0;" />
+                    </ui:VisualElement>
+                    <ui:Label text="Sprite/Texture" name="icon__container-label" style="position: absolute; top: -16%; -unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 42%; color: rgb(0, 127, 217);">
+                        <Bindings>
+                            <UnityEngine.Localization.LocalizedString property="text" table="GUID:6aaa262cde38a4024bc3fc7f5ce6d50d" entry="Id(254055602446336)" />
+                        </Bindings>
+                    </ui:Label>
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:Button text="◀MENU" display-tooltip-when-elided="true" name="back-button" class="back-button" />
+    </ui:VisualElement>
+</ui:UXML>

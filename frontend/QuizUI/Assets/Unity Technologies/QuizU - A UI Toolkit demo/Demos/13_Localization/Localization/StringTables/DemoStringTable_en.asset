@@ -1,0 +1,133 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: DemoStringTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 6aaa262cde38a4024bc3fc7f5ce6d50d, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 4101121520687644877
+  m_TableData:
+  - m_Id: 555521925120
+    m_Localized: Languages
+    m_Metadata:
+      m_Items: []
+  - m_Id: 942949785600
+    m_Localized: Radio Buttons
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626539880448
+    m_Localized: English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676884111360
+    m_Localized: French
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704147087360
+    m_Localized: Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 885064196096
+    m_Localized: Danish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21871222317056
+    m_Localized: 'Smart String formatting. Locale code: {0}'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21793938071552
+    m_Localized: 'UXML direct binding: Configured in UI Builder with no code.'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21820743868416
+    m_Localized: 'Script binding: Added at runtime using SetBinding().'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104135776002048
+    m_Localized: Preprocessed text via StringChanged event.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254055602446336
+    m_Localized: Sprite/Texture
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431582882226176
+    m_Localized: String localization
+    m_Metadata:
+      m_Items:
+      - rid: 4101121520687644877
+  - m_Id: 2552180048388096
+    m_Localized: Welcome, {0}!
+    m_Metadata:
+      m_Items:
+      - rid: 4101121520687644877
+  - m_Id: 2641850560143360
+    m_Localized: You have {0:plural:one item|{} items} in your inventory.
+    m_Metadata:
+      m_Items:
+      - rid: 4101121520687644877
+  - m_Id: 2642119964483584
+    m_Localized: Good {0:choose(1|2|3):morning|afternoon|evening|anytime}, {1}!
+    m_Metadata:
+      m_Items:
+      - rid: 4101121520687644877
+  - m_Id: 2807585420861440
+    m_Localized: Easy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807586406522880
+    m_Localized: Normal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807587446710272
+    m_Localized: Hard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807648226369536
+    m_Localized: Nightmare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807584615555072
+    m_Localized: Dropdown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2809385444171776
+    m_Localized: Pre-process LocalizedStrings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2818517098291200
+    m_Localized: Indexed placeholder
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2818521007382528
+    m_Localized: Choose formatter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2818522429251584
+    m_Localized: Plural formatter
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 4101121520687644877
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 
+        m_SharedEntries:
+        - id: 2552180048388096
+        - id: 2431582882226176
+        - id: 2641850560143360
+        - id: 2642119964483584

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6aaa262cde38a4024bc3fc7f5ce6d50d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268492
+  packageName: QuizU - A UI toolkit sample
+  packageVersion: 1.2.0
+  assetPath: Assets/Unity Technologies/QuizU - A UI Toolkit demo/Demos/13_Localization/Localization/StringTables/DemoStringTable
+    Shared Data.asset
+  uploadId: 752869

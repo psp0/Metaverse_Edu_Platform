@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6749cbcf2179445a6ba3aca3288adae5
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268492
+  packageName: QuizU - A UI toolkit sample
+  packageVersion: 1.2.0
+  assetPath: Assets/Unity Technologies/QuizU - A UI Toolkit demo/Demos/11_VectorAPIDemo/VectorAPIDemo_Data.asset
+  uploadId: 752869

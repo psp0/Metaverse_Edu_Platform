@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: fa911de2e5cfb406093c152e7933242b
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 268492
+  packageName: QuizU - A UI toolkit sample
+  packageVersion: 1.2.0
+  assetPath: Assets/Unity Technologies/QuizU - A UI Toolkit demo/Demos/0_DemoSelection/SceneInfo/13_LocalizationSceneInfo_Data.asset
+  uploadId: 752869
