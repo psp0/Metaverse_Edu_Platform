@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: DemoStringTable Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: DemoStringTable
+  m_TableCollectionNameGuidString: 6aaa262cde38a4024bc3fc7f5ce6d50d
+  m_Entries:
+  - m_Id: 21793938071552
+    m_Key: Text_LabelUXMLBinding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21820743868416
+    m_Key: Text_LabelScriptBinding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 21871222317056
+    m_Key: Text_LabelSmartStrings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 104135776002048
+    m_Key: Text_LabelStringChanged
+    m_Metadata:
+      m_Items: []
+  - m_Id: 555521925120
+    m_Key: Languages_Label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 626539880448
+    m_Key: Languages_English
+    m_Metadata:
+      m_Items: []
+  - m_Id: 676884111360
+    m_Key: Languages_French
+    m_Metadata:
+      m_Items: []
+  - m_Id: 704147087360
+    m_Key: Languages_Spanish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 885064196096
+    m_Key: Languages_Danish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 942949785600
+    m_Key: RadioButtons_Label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 254055602446336
+    m_Key: Sprite_Label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2431582882226176
+    m_Key: String_Localization
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2552180048388096
+    m_Key: Welcome_Message
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2641850560143360
+    m_Key: Item_Count
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2642119964483584
+    m_Key: TimeBased_Greeting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807584615555072
+    m_Key: 'Dropdown_Label
+
+'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807585420861440
+    m_Key: Dropdown_Choice1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807586406522880
+    m_Key: Dropdown_Choice2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807587446710272
+    m_Key: Dropdown_Choice3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2807648226369536
+    m_Key: Dropdown_Choice4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2809385444171776
+    m_Key: Preprocess_Label
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2818517098291200
+    m_Key: SmartString_Label1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2818521007382528
+    m_Key: SmartString_Label2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2818522429251584
+    m_Key: SmartString_Label3
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 4101121354731356794
+  references:
+    version: 2
+    RefIds:
+    - rid: 4101121354731356794
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables, asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1730959015733

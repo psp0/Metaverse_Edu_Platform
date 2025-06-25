@@ -1,0 +1,77 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c2d96b525a445ce8f4fb737b923a96, type: 3}
+  m_Name: DataBindingTextScreen_Data
+  m_EditorClassIdentifier: 
+  m_Description: 
+  m_Title: Data binding
+  m_BodyText:
+  - "Data binding is a technique that connects your app\u2019s data to its UI elements,
+    keeping them synchronized automatically. \n\nThis removes the need for manual
+    updates as the UI can dynamically reflect changes in the data. For example, a
+    health bar can update in real time as the player\u2019s health changes.\n\nSeparating
+    the <b>View (UI)</b> from the <b>Model (data)</b> is a core principle of UI architecture.
+    This decoupling  makes each layer of the application flexible and modular but
+    requires that they sync to one another.\n\nUnity 6 simplifies this synchronization
+    process using the runtime data binding system. You can set up bindings visually
+    in the UI Builder using UXML or at runtime with C# scripts.\n\nHere are a few
+    examples to see how runtime data binding works in practice.\n"
+  - 'Bindings in Unity can be set up using the UI Builder or C# scripting. The UI
+    Builder generates <b><Bindings></b> code blocks in UXML, which you can edit directly
+    if needed. C# scripting, on the other hand, allows for runtime adjustments through
+    the API.
+
+
+    The first health bar, for Player One, uses the UI Builder, storing
+    bindings in UXML. These bindings update automatically, even in the Editor, so
+    you can preview changes without entering Play mode.
+
+
+    The second health bar,
+    for Player Two, is configured with C# scripting. This method offers flexibility
+    for runtime adjustments, making it ideal for dynamic behaviors or conditional
+    logic.
+
+
+    To test, adjust the CurrentHealth slider in the Inspector for each
+    PlayerDataSO or use the demo controls to change health interactively.'
+  - "Data converters in Unity 6 let you transform data into formats that better suit
+    your UI. For instance, a health percentage stored as a float can be converted
+    into colors for a health bar, visually communicating the player\u2019s status
+    at a glance.\n\nUnity offers two types of converters: global converters, which
+    apply transformations automatically across the UI, and per-binding converters,
+    which are used for specific bindings.\n\nFor this health bar, a data converter
+    maps the health percentage to colors, transitioning from green for full health
+    to red for critical health. Additionally, you can display the health percentage
+    in one label and a status (full, mid, low, or critical) in another. \n\nOnce
+    the converter is applied, the UI updates automatically without the need for manual
+    intervention."
+  - "A ListView is an efficient way to create table-like user interfaces, like a
+    team roster or multiplayer leaderboard. Unity 6 makes it easy to bind a ListView
+    to a list of data objects using runtime data binding.\n\nStart by defining the
+    data structure for your ListView. In this example, a team ScriptableObject contains
+    a list of player data objects, where each entry represents a row in the ListView.\n\nNext,
+    use UI Builder to design an item template as a UXML file (a VisualTreeAsset). 
+    This UXML template specifies the layout and bindings for individual rows, such
+    as displaying a player\u2019s name and icons. \n\nInstead of directly linking
+    to a specific data source, set the dataSourceType property to leave the bindings
+    unresolved, allowing them to be finalized at runtime.\n"
+  - "Add the ListView element to the main UI\u2019s UXML file and assign the item
+    template as its Item Template. At this point, the ListView knows the row structure
+    but not the data source.\n\nAt runtime, a script assigns the data source to the
+    ListView and resolves the bindings. In the demo, the dataSourcePath property
+    connects the ListView to the Players property in the team ScriptableObject. Any
+    changes to the data source, such as adding or rearranging items, are automatically
+    reflected in the UI without additional scripting.\n\nUse this hybrid visual workflow
+    to set up complex UIs without burdening your scripts with repetitive sync logic.
+    This can make it easier to build interfaces for  multiplayer lobbies, inventory
+    screens, or any other display that represents data in rows."

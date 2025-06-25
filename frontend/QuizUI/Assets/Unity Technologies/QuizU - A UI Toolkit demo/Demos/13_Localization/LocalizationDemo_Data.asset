@@ -1,0 +1,92 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c2d96b525a445ce8f4fb737b923a96, type: 3}
+  m_Name: LocalizationDemo_Data
+  m_EditorClassIdentifier: 
+  m_Description: 
+  m_Title: Localization
+  m_BodyText:
+  - "Unity\u2019s <b>Localization</b> package, integrated with UI Toolkit, simplifies
+    enabling multi-language support and region-specific content variations. \n\nA
+    <b>Locale</b> represents a language and a set of regional variations, such as
+    currency and number formatting.\n\nSet up text and asset localization for different
+    languages, customize data binding, and switch between Locales at runtime \u2014
+    all within UI Toolkit. \n\nThis way your content isn't fixed -- it can change
+    dynamically to a different language with just one click.\n\nTo begin, install
+    the <b>Localization</b> package from the Package Manager. "
+  - 'Go to <b>Project Settings > Localization</b> and create a <b>Localization Settings</b>
+    asset. This asset manages all localized content and settings for your project.
+
+
+    <b>Define
+    Locales:</b> Use the Locale Generator to add languages and regions, creating
+    a separate locale asset for each. A unique two-letter code represents the Locale
+    (e.g., en for English, fr for French, es for Spanish).
+
+
+    <b>Create String
+    and Asset Tables:</b> String Tables store text translations for UI elements like
+    labels, buttons, and dropdowns. Asset Tables handle non-text assets such as images
+    and textures.'
+  - "Unity 6\u2019s runtime data binding connects UI Toolkit elements directly to
+    entries in your String and Asset Tables, simplifying localization.\n\nText-based
+    elements, such as labels, bind to entries in the <b>String Table</b>, while non-text
+    elements, like images, retrieve their content from the <b>Asset Table</b>.\n\nYou
+    can configure bindings interactively in UI Builder. Select the element you want
+    to localize, such as a label or an image, and use the Inspector to add a binding
+    to the content field. \n\nFrom there, choose <b>LocalizedString</b> or <b>LocalizedAsset</b>
+    and link it to the appropriate entry in your String or Asset Table. Once configured,
+    these bindings ensure your UI updates automatically whenever the Locale changes."
+  - "Use the dropdown in the Game View to preview different Locales. Each Locale
+    updates the UI to reflect its associated translations.\n\nYou'll also use the
+    Localization API to manage locales at runtime. In this sample, each Button's
+    ClickEvent change Locales in the LocalizationSettings. \n\nClick any of the four
+    buttons to localize the UI.\n\nWhen a new Locale is selected, the corresponding
+    text translation from the StringTable is automatically displayed."
+  - "<b>Smart Strings</b> enable you to create dynamic, localized text that adapts
+    to various situations using placeholders. These placeholders can be as simple
+    as {0} for basic substitutions or include advanced arguments for complex formatting
+    needs.\n\nFor example, placeholders can be used to adjust text based on gameplay
+    conditions or user data. The output of a Smart String is customized to match
+    the active Locale.\n\nThese Smart Strings (in English) correspond to the messages
+    on the right:\n\n\u2022 \"Welcome, {0}!\"\n\u2022 \"Good {0:choose(1|2|3):morning|afternoon|evening},
+    {1}!\"\n\u2022 \"You have {0:plural(one item|# items)}.\"\n\nEach Locale has
+    a corresponding Smart String, which dynamically replaces its placeholders at
+    runtime."
+  - "Binding UI elements directly to a LocalizedString doesn\u2019t always address
+    specific use cases. Pre-processing offers flexibility by letting you modify the
+    text dynamically before display.  Using methods like <b>GetLocalizedString</b>
+    or responding to the <b>StringChanged</b> event allow for custom formatting and
+    runtime adjustments.\n\nIn the demo, a <b>DropdownField</b> responds to the StringChanged
+    event to rebuild its list of localized options while keeping the user\u2019s
+    selection. Using <b>SetValueWithoutNotify</b> ensures updates happen without
+    triggering unnecessary events.\n\nPre-processing extends Smart Strings by enabling
+    advanced logic or runtime-specific adjustments, making it easy to create dynamic,
+    localized UIs."
+  - 'Localization in Unity extends beyond text. Here,  icons represent each Locale
+    visually, updating  alongside text labels when a new Locale is selected. This
+    provides clear visual feedback for the active Locale.
+
+
+    Asset localization
+    works similarly to string localization. While strings use StringTables, localized
+    visuals are stored in <b>AssetTables</b>. These tables let you define assets
+    for each Locale and ensure they update automatically at runtime.
+
+
+    In this
+    demo, one icon is LocalizedTexture using a binding defined in the UI Builder.
+    Another uses a binding set up in the script.
+
+
+    Both approaches update the
+    icons dynamically when the Locale changes, just like the text labels.'

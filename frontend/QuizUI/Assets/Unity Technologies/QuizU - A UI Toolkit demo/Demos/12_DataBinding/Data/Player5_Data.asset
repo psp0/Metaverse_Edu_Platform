@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83bf4638638f34ea7891495257621574, type: 3}
+  m_Name: Player5_Data
+  m_EditorClassIdentifier: 
+  m_PlayerName: 8BitHero
+  m_Description: Placeholder
+  m_MaximumHealth: 100
+  m_CurrentHealth: 100
+  m_Title: Light Tank
+  m_ClassIcon: {fileID: 2800000, guid: 02c6470516b60497683b1f22a1016fe3, type: 3}
+  m_RankIcon: {fileID: 2800000, guid: 1c06d711cd8b14c3aa0e0ed29771a3b2, type: 3}

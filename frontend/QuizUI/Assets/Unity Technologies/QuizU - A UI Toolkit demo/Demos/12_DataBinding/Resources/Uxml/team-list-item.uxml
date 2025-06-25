@@ -1,0 +1,30 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <engine:VisualElement name="item__container" data-source-type="PlayerDataSO, Assembly-CSharp" style="flex-grow: 0; flex-direction: row; flex-basis: 100%; width: 100%; height: 100%; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; flex-shrink: 0; padding-top: 1%; padding-right: 1%; padding-bottom: 1%; padding-left: 1%;">
+        <engine:VisualElement name="name__container" style="flex-grow: 1; flex-basis: 65%; -unity-background-image-tint-color: rgb(0, 127, 217); background-color: rgb(0, 127, 217); padding-top: 2%; padding-right: 2%; padding-bottom: 2%; padding-left: 2%; justify-content: center;">
+            <engine:Label text="Placeholder" name="name__player-username" style="-unity-text-align: lower-right; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); color: rgb(255, 255, 255); font-size: 33px; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; -unity-font-style: bold;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="PlayerName" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+            <engine:Label text="TITLE" name="name__title" style="-unity-text-align: upper-right; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); color: rgb(255, 255, 255); font-size: 16px; margin-top: 0; margin-right: 0; margin-bottom: 0; margin-left: 0; padding-top: 0; padding-right: 0; padding-bottom: 0; padding-left: 0;">
+                <Bindings>
+                    <engine:DataBinding property="text" data-source-path="Title" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:Label>
+        </engine:VisualElement>
+        <engine:VisualElement name="rank__container" style="flex-grow: 0; flex-basis: 12%; -unity-background-scale-mode: scale-to-fit; align-items: center; justify-content: center;">
+            <engine:VisualElement name="rank__icon" style="flex-grow: 1; -unity-background-scale-mode: scale-to-fit; width: 80%; height: 80%; -unity-background-image-tint-color: rgb(0, 127, 217);">
+                <Bindings>
+                    <engine:DataBinding property="style.backgroundImage" data-source-path="RankIcon" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:VisualElement>
+        </engine:VisualElement>
+        <engine:VisualElement name="class__container" style="flex-grow: 0; flex-basis: 7%; background-color: rgb(0, 127, 217); align-items: center; justify-content: center;">
+            <engine:VisualElement name="class__icon" style="flex-grow: 0; -unity-background-scale-mode: scale-to-fit; flex-shrink: 0; width: 100%; height: 100%;">
+                <Bindings>
+                    <engine:DataBinding property="style.backgroundImage" data-source-path="ClassIcon" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

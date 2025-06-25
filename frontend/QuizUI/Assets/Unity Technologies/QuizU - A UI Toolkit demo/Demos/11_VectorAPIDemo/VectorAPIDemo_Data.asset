@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c2d96b525a445ce8f4fb737b923a96, type: 3}
+  m_Name: VectorAPIDemo_Data
+  m_EditorClassIdentifier: 
+  m_Description: 
+  m_Title: Vector API
+  m_BodyText:
+  - "UI Toolkit provides a <b>Vector API</b>, a powerful and flexible way to generate
+    custom 2D visual content within UI elements. \n\nInspired by the HTML Canvas
+    API, it allows developers to draw vector graphics \u2014 such as lines, arcs,
+    and shapes \u2014 directly onto visual elements using simple commands.\n\nTo
+    utilize the Vector API, you access the Painter2D object from the <b>MeshGenerationContext</b>
+    within a VisualElement. \n\nThis object acts as a virtual \u201Cpen\u201D that
+    you can move and draw with by issuing commands. "
+  - "For example, to draw a quad, or four-sided shape, you begin by moving the pen
+    to a starting position using <b>MoveTo</b> method.\n\nThen, chain together <b>LineTo</b>
+    commands to define the shape\u2019s edges, and finally use <b>Fill</b> command
+    to render the shape.\n\nThis code snippet describes how this quad is drawn:\n<b>\n           
+    var painter2D = context.painter2D;\n            painter2D.fillColor = color;\n           
+    painter2D.strokeColor = Color.white;\n            painter2D.lineWidth = 10f;\n\n           
+    painter2D.BeginPath();\n            painter2D.MoveTo(p0);\n            painter2D.LineTo(p1);\n           
+    painter2D.LineTo(p2);\n            painter2D.LineTo(p3);\n            painter2D.ClosePath();\n           
+    painter2D.Stroke();\n            painter2D.Fill();</b>"
+  - "The API supports:\n\n\t\u2022<b>Lines:</b> Use LineTo to draw straight lines
+    from the current pen position to a new point. You can customize the appearance
+    with properties like strokeColor, lineWidth, lineJoin, and lineCap to control
+    the color, width, and style of the lines and their endpoints.\n\n\t\u2022<b>Arcs:</b>
+    The Arc method draws an arc based on a center point, radius, and start and end
+    angles. Alternatively, ArcTo creates an arc between two tangent lines, useful
+    for smoothing corners.\n\n\t\u2022<b>Curves:</b> For more complex shapes, BezierCurveTo
+    and QuadraticCurveTo allow you to draw cubic and quadratic B\xE9zier curves,
+    respectively, by specifying control points that define the curve\u2019s shape."
+  - "The Vector API has the ability to create shapes with holes or complex fill patterns.
+    \n\nBy starting new sub-paths with <b>MoveTo</b>, you can define multiple overlapping
+    shapes and use fill rules like <b>OddEven</b> or <b>NonZero</b> with the Fill
+    method to determine how these overlaps are rendered. \n\n\t\u2022<b>OddEven</b>
+    fills areas where a ray drawn from a point crosses the path an odd number of
+    times, ignoring path direction.\n\n\t\u2022<b>NonZero</b> fills areas based on
+    the winding direction of overlapping paths, canceling out regions when paths
+    wind in opposite directions.\n\nThis is useful for creating donuts or shapes
+    with cutouts. These examples demonstrate how to create shapes and drawings directly
+    from scripts without relying on external assets."

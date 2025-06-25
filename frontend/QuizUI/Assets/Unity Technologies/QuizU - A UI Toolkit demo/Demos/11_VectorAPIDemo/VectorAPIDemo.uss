@@ -1,0 +1,66 @@
+.page-0 {
+}
+
+.page-1 {
+}
+
+.page-2 {
+}
+
+.page-3 {
+}
+
+.page-4 {
+}
+
+.page-5 {
+}
+
+.hidden {
+    flex-basis: 66%;
+    display: none;
+}
+
+.visible {
+    display: flex;
+}
+
+.draggable {
+}
+
+.unity-base-slider__tracker {
+    background-color: rgb(128, 128, 128);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    top: 50%;
+}
+
+.unity-base-slider__dragger {
+    width: 13%;
+    height: 80%;
+    border-left-color: rgb(0, 127, 217);
+    border-right-color: rgb(0, 127, 217);
+    border-top-color: rgb(0, 127, 217);
+    border-bottom-color: rgb(0, 127, 217);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-bottom-width: 5px;
+    border-left-width: 5px;
+    top: 33%;
+}
+
+.quad-label {
+    position: absolute;
+    width: 10%;
+    height: 10%;
+    -unity-text-align: middle-center;
+    -unity-font-style: bold;
+    font-size: 21px;
+    -unity-font-definition: url("project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&guid=db5974fdd47364381a7edc91a9df9b2f&type=2#Roboto-Medium SDF");
+}

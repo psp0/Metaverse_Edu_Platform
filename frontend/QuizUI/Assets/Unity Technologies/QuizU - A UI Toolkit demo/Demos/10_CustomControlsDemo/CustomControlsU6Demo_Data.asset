@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9c2d96b525a445ce8f4fb737b923a96, type: 3}
+  m_Name: CustomControlsU6Demo_Data
+  m_EditorClassIdentifier: 
+  m_Description: 
+  m_Title: Custom controls
+  m_BodyText:
+  - "Custom controls allow you to encapsulate functionality and create reusable UI
+    elements. To create a custom control, start by defining a new C# script. Inherit
+    from the <b>VisualElement</b> class or a subclass that closely matches what you
+    want to create. \n\nFor example, start with the <b>Button</b> class if you aim
+    to develop a specialized button.\n\nTo make your custom control available in
+    <b>UXML</b> and the <b>UI Builder</b>, add the <b>UxmlElement</b> attribute to
+    your class.\n\nYour custom control will then appear in the Library section under
+    the <b>Custom Controls (C#)</b> category in the UI Builder. You can then drag
+    it into UI Builder's Hierarchy window."
+  - "Use the <b>UxmlAttribute</b> attribute on each property you want to expose,
+    customizing attribute names with the <b>name</b> argument.\n\nSelecting the control
+    in the Hierarchy will display your custom attributes in the Inspector window,
+    allowing you to configure them directly.\n\nAdd decorator attributes to your
+    custom attribute fields to enhance usability. Useful decorator attributes include
+    <b>TextArea</b>, <b>Tooltip</b>, <b>Range</b>, <b>Header</b>, <b>Min</b>, <b>Multiline</b>,
+    <b>Space</b>, and <b>Delayed</b>. \n\nFor example, using the <b>Range</b> attribute
+    adds a slider for selecting values within a range."
+  - "An effective custom control is abstract, self-contained, and reusable. For example,
+    a slide toggle can be repurposed in multiple contexts within a user interface.
+    Custom controls like this can promote code reuse and simplify project maintenance.
+    \n\nIn contrast, application-specific elements (e.g. a menu bar) are less suitable
+    as custom controls since they are tied to other components and aren't standalone.\n\nThis
+    example demonstrates how to create an element with custom attributes, exposing
+    them in UXML and UI Builder. "
+  - "To create a slide toggle custom control, inherit from a suitable base class,
+    such as <b>BaseField<bool></b>. This class encapsulates its behavior and appearance.
+    \n\nAdd the <b>UxmlElement</b> attribute to your class to expose it in <b>UXML</b>
+    and the <b>UI Builder</b>.\n\nBuild the visual hierarchy by adding child elements
+    for parts like the background and sliding knob, and assign USS classes to facilitate
+    styling. Implement event handling to respond to user interactions like clicks,
+    key presses, and navigation events.\n\nThe <b>slide-toggle</b> resources in this
+    scene folder shows one implementation of creating a custom slide toggle. Use
+    a mouse click or key press to toggle its active state."

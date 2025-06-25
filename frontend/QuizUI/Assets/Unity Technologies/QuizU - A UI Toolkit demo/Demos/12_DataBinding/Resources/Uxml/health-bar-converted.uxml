@@ -1,0 +1,55 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:Template name="DamageControl" src="project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/12_DataBinding/Resources/Uxml/DamageControl.uxml?fileID=9197481963319205126&amp;guid=ebcc8466a8dee44f99344f314374b62a&amp;type=3#DamageControl" />
+    <Style src="project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/12_DataBinding/Resources/Uss/HealthBarInspector.uss?fileID=7433441132597879392&amp;guid=3fa95d07f890f474296d352284d20021&amp;type=3#HealthBarInspector" />
+    <Style src="project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/Demos/12_DataBinding/Resources/Uss/DataBinding.uss?fileID=7433441132597879392&amp;guid=414f0dbb875a74bfb874a4f887d2e61c&amp;type=3#DataBinding" />
+    <ui:VisualElement name="health-bar__root" style="flex-grow: 1; width: 100%; height: 100%; align-items: center; justify-content: center; position: absolute; top: 0; left: 0;">
+        <ui:VisualElement name="health-bar__container" class="health-bar__container" style="margin-top: 2%; top: 5%; flex-basis: 27%;">
+            <ui:Label name="health-bar__label-group" picking-mode="Ignore" class="health-bar__label-group">
+                <ui:Label text="Placeholder" name="health-bar__player-name" picking-mode="Ignore" enable-rich-text="false" class="health-bar__player-name">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="PlayerName" binding-mode="ToTargetOnce" />
+                    </Bindings>
+                </ui:Label>
+                <ui:VisualElement name="health-bar__value-group" class="health-bar__value-group">
+                    <ui:Label text="000" name="health-bar__current-health" class="health-bar__current-health">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="CurrentHealth" binding-mode="ToTarget" />
+                        </Bindings>
+                    </ui:Label>
+                    <ui:Label text="/ 000" name="health-bar__max-health" class="health-bar__max-health">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="MaximumHealthFormatted" binding-mode="ToTarget" />
+                        </Bindings>
+                    </ui:Label>
+                </ui:VisualElement>
+            </ui:Label>
+            <ui:VisualElement name="health-bar__background" class="health-bar__background" />
+            <ui:VisualElement name="health-bar__progress" class="health-bar__progress">
+                <Bindings>
+                    <ui:DataBinding property="style.width" data-source-path="CurrentHealthProgress" binding-mode="ToTarget" />
+                    <ui:DataBinding property="style.backgroundColor" data-source-path="HealthPercentage" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="HealthColor" />
+                </Bindings>
+            </ui:VisualElement>
+            <ui:VisualElement name="status__container" class="hidden" style="flex-grow: 1; position: absolute; height: 63%; width: 27%; left: 47px; top: 13%; display: flex; flex-direction: row;">
+                <ui:Label text="Full" name="status__state-label" style="height: 100%; -unity-text-align: middle-left; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 24px; color: rgb(255, 255, 255); flex-basis: 50%; right: 0; position: absolute; width: 59%; text-shadow: 2px 2px 2px rgba(53, 53, 53, 0.69);">
+                    <ui:Label text="100%" name="status__percentage-label" style="width: 39%; height: 100%; -unity-text-align: middle-right; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); font-size: 22px; color: rgb(255, 255, 255); flex-basis: 30%; position: absolute; left: -63%; top: -6%;">
+                        <Bindings>
+                            <ui:DataBinding property="text" data-source-path="HealthPercentage" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="HealthPercentage" />
+                        </Bindings>
+                    </ui:Label>
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="HealthPercentage" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" source-to-ui-converters="HealthStatus" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
+        </ui:VisualElement>
+        <ui:VisualElement name="health-bar__footer" style="flex-grow: 0; flex-basis: 19%; width: 84%; margin-top: 3%; align-items: stretch;">
+            <ui:Label text="Placeholder label" name="health-bar__footer-label" style="-unity-text-align: middle-center; align-items: center; justify-content: flex-end; top: 0; flex-basis: 19%; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Technologies/QuizU%20-%20A%20UI%20Toolkit%20demo/_ThirdParty/Fonts/Roboto/Roboto-Medium%20SDF.asset?fileID=11400000&amp;guid=db5974fdd47364381a7edc91a9df9b2f&amp;type=2#Roboto-Medium SDF&quot;); color: rgb(0, 127, 217); font-size: 25px; position: absolute; left: 0;">
+                <Bindings>
+                    <ui:DataBinding property="text" data-source-path="Description" data-source-type="PlayerDataSO, Assembly-CSharp" binding-mode="ToTarget" />
+                </Bindings>
+            </ui:Label>
+            <ui:Instance template="DamageControl" name="health-bar__footer-controls" style="position: absolute; margin-top: 1%; right: 0; height: 70%; width: 33%;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
