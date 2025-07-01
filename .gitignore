@@ -12,6 +12,9 @@ frontend/[Uu]ser[Ss]ettings/
 frontend/[Mm]emory[Cc]aptures/
 frontend/[Rr]ecordings/
 
+# Photon Network Settings (contains sensitive App ID)
+frontend/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
+
 # Project files
 frontend/*.csproj
 frontend/*.unityproj
