@@ -22,10 +22,10 @@ public class SecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     private static final String[] WHITELIST = {
-            "/api/users/register",
-            "/api/users/login",
-            "/api/users",
-            "/api/users/token/refresh",
+            "/users/register",
+            "/users/login",
+            "/users",
+            "/users/token/refresh",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**"
