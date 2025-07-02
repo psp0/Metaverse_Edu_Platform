@@ -81,7 +81,7 @@ public class RegisterHandler : MonoBehaviour
                                    string email, string phone, string name, string nickname,
                                    string birthDate, string gender)
     {
-        string url = baseUrl + "/api/users/register";
+        string url = baseUrl + "/users/register";
 
         var data = new RegisterRequest
         {

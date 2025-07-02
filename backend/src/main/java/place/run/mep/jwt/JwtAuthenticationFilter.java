@@ -20,9 +20,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
 
     private static final List<String> WHITELIST = List.of(
-            "/api/users/login",
-            "/api/users/register",
-            "/api/users/token/refresh",
+            "/users/login",
+            "/users/register",
+            "/users/token/refresh",
             "/swagger-ui",
             "/swagger-ui/",
             "/swagger-ui.html",
