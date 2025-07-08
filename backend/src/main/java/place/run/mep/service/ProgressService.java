@@ -61,6 +61,11 @@ public class ProgressService {
         UserUnitProgress progress = getOrCreateProgress(user, subUnit);
 
         double watchedPercentage = ((double) lastTimestamp / lecture.getDurationSec()) * 100.0;
+
+        if (watchedPercentage >= 95.0) {
+            watchedPercentage = 100.0;
+        }
+
         BigDecimal newLectureProgress = BigDecimal.valueOf(watchedPercentage);
 
         // 진행도는 후퇴하지 않도록, 기존 값보다 클 경우에만 갱신
