@@ -1,6 +1,8 @@
 package place.run.mep.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -16,6 +18,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "사용자 정보 (User Info)", description = "사용자 정보 조회, 수정 및 관리 API")
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
@@ -23,6 +26,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(summary = "현재 로그인된 사용자 정보 조회", description = "인증된 사용자의 상세 정보를 반환합니다.")
     @GetMapping("/me")
     public ResponseEntity<UserInfoDto> getCurrentUser(@Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails) {
         // Assuming UserDetails.getUsername() returns the userId
@@ -32,6 +36,7 @@ public class UserController {
         return ResponseEntity.ok(userInfoDto);
     }
 
+    @Operation(summary = "전체 사용자 목록 조회", description = "페이지네이션을 통해 모든 사용자의 목록을 조회합니다.")
     @GetMapping
     public ResponseEntity<PagedUserResponseDto> getAllUsers(
             @Parameter(description = "페이지 번호") @RequestParam(defaultValue = "0") int page,
@@ -44,6 +49,7 @@ public class UserController {
         return ResponseEntity.ok(userService.getAllUsers(pageable));
     }
 
+    @Operation(summary = "현재 사용자 정보 수정", description = "로그인된 사용자의 프로필 정보(이메일, 닉네임 등)를 수정합니다.")
     @PatchMapping("/me")
     public ResponseEntity<?> updateCurrentUser(
             @AuthenticationPrincipal UserDetails userDetails,
@@ -52,6 +58,7 @@ public class UserController {
         return ResponseEntity.ok("{\"message\": \"회원 정보가 수정되었습니다.\"}");
     }
 
+    @Operation(summary = "현재 사용자 비밀번호 변경", description = "로그인된 사용자의 비밀번호를 변경합니다.")
     @PutMapping("/me/password")
     public ResponseEntity<?> changePassword(
             @AuthenticationPrincipal UserDetails userDetails,
@@ -59,6 +66,8 @@ public class UserController {
         userService.changePassword(userDetails.getUsername(), dto);
         return ResponseEntity.ok("{\"message\": \"비밀번호가 성공적으로 변경되었습니다.\"}");
     }
+
+    @Operation(summary = "회원 탈퇴 (현재 사용자)", description = "로그인된 사용자의 계정을 삭제합니다.")
     @DeleteMapping("/me")
     public ResponseEntity<?> deleteUser(@AuthenticationPrincipal UserDetails userDetails) {
         userService.deleteUser(userDetails.getUsername());

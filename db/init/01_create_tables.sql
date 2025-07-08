@@ -1,6 +1,5 @@
--- MySQL 데이터베이스 및 테이블 생성 스크립트
-CREATE DATABASE IF NOT EXISTS mep_db;
-USE mep_db;
+-- CREATE DATABASE IF NOT EXISTS mep_db;
+-- USE mep_db;
 
 -- 사용자 테이블
 CREATE TABLE `user` (
@@ -48,14 +47,25 @@ CREATE TABLE `user_refresh_token` (
     CONSTRAINT `fk_user_refresh_token_user` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- 과목 테이블
+CREATE TABLE `subject` (
+    `subject_id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(100) NOT NULL,
+    PRIMARY KEY (`subject_id`),
+    UNIQUE KEY `idx_subject_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- 학습 단원 테이블
 CREATE TABLE `unit` (
     `unit_id` INT NOT NULL AUTO_INCREMENT,
+    `subject_id` INT NOT NULL,
     `chapter_no` INT NULL,
     `title` VARCHAR(255) NOT NULL,
     `description` TEXT NULL,
     PRIMARY KEY (`unit_id`),
-    INDEX `idx_unit_chapter_no` (`chapter_no`)
+    INDEX `idx_unit_subject_id` (`subject_id`),
+    INDEX `idx_unit_chapter_no` (`chapter_no`),
+    CONSTRAINT `fk_unit_subject` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 소단원 테이블
@@ -149,10 +159,13 @@ CREATE TABLE `user_unit_progress` (
     `uup_id` BIGINT NOT NULL AUTO_INCREMENT,
     `user_no` BIGINT NOT NULL,
     `sub_unit_id` INT NOT NULL,
-    `progress_percentage` DECIMAL(5,2) NULL,
+    `progress_percentage` DECIMAL(5,2) DEFAULT 0.00,
+    `lecture_progress` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+    `quiz_progress` DECIMAL(5,2) NOT NULL DEFAULT 0.00,
+    `lecture_last_timestamp_sec` INT NOT NULL DEFAULT 0,
+    `updated_at` DATETIME NULL,
     PRIMARY KEY (`uup_id`),
     UNIQUE KEY `idx_uup_user_subunit` (`user_no`, `sub_unit_id`),
     CONSTRAINT `fk_uup_user` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE,
     CONSTRAINT `fk_uup_sub_unit` FOREIGN KEY (`sub_unit_id`) REFERENCES `sub_unit` (`sub_unit_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-

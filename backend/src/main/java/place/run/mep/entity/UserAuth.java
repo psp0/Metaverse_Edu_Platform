@@ -1,6 +1,7 @@
 package place.run.mep.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
@@ -9,13 +10,14 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "user_auth")
+@NoArgsConstructor
 public class UserAuth {
     @Id
     @Column(name = "user_no")
     private Long userNo;
 
-    @OneToOne
-    @MapsId // This ensures that user_no is taken from the User entity
+    @OneToOne(fetch = FetchType.LAZY)
+    @MapsId
     @JoinColumn(name = "user_no")
     private User user;
 

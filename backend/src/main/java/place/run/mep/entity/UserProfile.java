@@ -1,6 +1,7 @@
 package place.run.mep.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import jakarta.persistence.*;
 import java.time.LocalDate;
@@ -10,12 +11,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Table(name = "user_profile")
+@NoArgsConstructor
 public class UserProfile {
     @Id
     @Column(name = "user_no")
     private Long userNo;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "user_no")
     private User user;
@@ -35,7 +37,7 @@ public class UserProfile {
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthDate;
 
-    @Column(name = "gender", length = 1)
+    @Column(name = "gender", columnDefinition = "CHAR(1)")
     private String gender;
 
     @Column(name = "updated_at")

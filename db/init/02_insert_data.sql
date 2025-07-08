@@ -1,25 +1,28 @@
-USE mep_db;
+-- USE mep_db;
+
+INSERT INTO `subject` (`subject_id`, `name`) VALUES (1, '수학');
+INSERT INTO `subject` (`subject_id`, `name`) VALUES (2, '영어');
 
 -- Insert into chapter table
-INSERT INTO `unit` (`unit_id`, `chapter_no`, `title`, `description`) VALUES
-(201, 201, '다항식', '다항식의 기본 연산과 인수정리를 통해 다항식 구조를 이해한다.'),
-(202, 202, '방정식과 부등식', '복소수를 포함한 다양한 방정식과 부등식의 풀이 방법을 학습한다.'),
-(203, 203, '도형과 방정식', '좌표평면에서 도형을 방정식으로 표현하고 위치 관계를 분석한다.'),
-(204, 204, '집합과 명제', '집합 연산과 논리적 명제의 구조를 이해한다.'),
-(205, 205, '함수와 그래프', '함수 개념과 그래프 해석 능력을 기른다.'),
-(206, 206, '경우의 수', '사건 발생 경우를 수학적으로 계산하는 방법을 익힌다.'),
-(207, 207, '지수와 로그 함수', '지수와 로그의 개념 및 그래프를 이해하고 방정식을 푼다.'),
-(208, 208, '삼각함수', '삼각함수의 그래프와 주기·변환을 활용한다.'),
-(209, 209, '수열', '수열의 규칙성과 합을 분석하고 증명한다.'),
-(210, 210, '함수의 극한과 연속', '함수의 극한 값을 구하고 연속성을 탐구한다.'),
-(211, 211, '미분', '도함수를 이용해 함수의 변화를 해석한다.'),
-(212, 212, '적분', '적분의 개념과 정적분을 활용한다.'),
-(213, 213, '경우의 수(확통)', '확률 계산을 위한 경우의 수 원리를 학습한다.'),
-(214, 214, '확률', '확률의 개념과 조건부확률, 베이즈 정리를 이해한다.'),
-(215, 215, '통계', '자료 분석과 통계적 추정을 수행한다.'),
-(216, 216, '이차곡선', '원·타원·쌍곡선·포물선의 방정식과 성질을 탐구한다.'),
-(217, 217, '평면벡터', '평면벡터 연산과 내적을 통해 도형 문제를 해결한다.'),
-(218, 218, '공간도형과 공간좌표', '3차원 공간의 벡터와 도형을 분석한다.');
+INSERT INTO `unit` (`unit_id`, `subject_id`, `chapter_no`, `title`, `description`) VALUES
+(201, 1, 201, '다항식', '다항식의 기본 연산과 인수정리를 통해 다항식 구조를 이해한다.'),
+(202, 1, 202, '방정식과 부등식', '복소수를 포함한 다양한 방정식과 부등식의 풀이 방법을 학습한다.'),
+(203, 1, 203, '도형과 방정식', '좌표평면에서 도형을 방정식으로 표현하고 위치 관계를 분석한다.'),
+(204, 1, 204, '집합과 명제', '집합 연산과 논리적 명제의 구조를 이해한다.'),
+(205, 1, 205, '함수와 그래프', '함수 개념과 그래프 해석 능력을 기른다.'),
+(206, 1, 206, '경우의 수', '사건 발생 경우를 수학적으로 계산하는 방법을 익힌다.'),
+(207, 1, 207, '지수와 로그 함수', '지수와 로그의 개념 및 그래프를 이해하고 방정식을 푼다.'),
+(208, 1, 208, '삼각함수', '삼각함수의 그래프와 주기·변환을 활용한다.'),
+(209, 1, 209, '수열', '수열의 규칙성과 합을 분석하고 증명한다.'),
+(210, 1, 210, '함수의 극한과 연속', '함수의 극한 값을 구하고 연속성을 탐구다.'),
+(211, 1, 211, '미분', '도함수를 이용해 함수의 변화를 해석한다.'),
+(212, 1, 212, '적분', '적분의 개념과 정적분을 활용한다.'),
+(213, 1, 213, '경우의 수(확통)', '확률 계산을 위한 경우의 수 원리를 학습한다.'),
+(214, 1, 214, '확률', '확률의 개념과 조건부확률, 베이즈 정리를 이해한다.'),
+(215, 1, 215, '통계', '자료 분석과 통계적 추정을 수행한다.'),
+(216, 1, 216, '이차곡선', '원·타원·쌍곡선·포물선의 방정식과 성질을 탐구한다.'),
+(217, 1, 217, '평면벡터', '평면벡터 연산과 내적을 통해 도형 문제를 해결한다.'),
+(218, 1, 218, '공간도형과 공간좌표', '3차원 공간의 벡터와 도형을 분석한다.');
 
 -- Sub_unit table INSERT statements
 INSERT INTO `sub_unit` (`sub_unit_id`, `unit_id`, `sub_chapter_no`, `sub_title`, `description`) VALUES
@@ -78,376 +81,391 @@ INSERT INTO `sub_unit` (`sub_unit_id`, `unit_id`, `sub_chapter_no`, `sub_title`,
 (21803, 218, 3, '공간도형의 거리·각·부피 계산', '공간도형의 거리, 각도, 부피를 계산한다.');
 
 
+-- Quiz for sub_unit_id: 20101
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20101, '다음 중 다항식 (3x^2 + 2x - 5) + (x^2 - 4x + 1)의 올바른 결과는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20101_1234567890', 'A', '4x^2 - 2x - 6', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20101_1234567890', 'B', '4x^2 - 2x - 4', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20101_1234567890', 'C', '2x^2 - 2x - 4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20101_1234567890', 'D', '4x^2 + 6x - 4', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20101_1234567890', '동일한 차수끼리 항을 더하면 3x^2 + x^2 = 4x^2, 2x - 4x = -2x, -5 + 1 = -4가 되어 최종 결과는 4x^2 - 2x - 4이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '4x^2 - 2x - 6', FALSE), (@last_quiz_id, 'B', '4x^2 - 2x - 4', TRUE), (@last_quiz_id, 'C', '2x^2 - 2x - 4', FALSE), (@last_quiz_id, 'D', '4x^2 + 6x - 4', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '동일한 차수끼리 항을 더하면 3x^2 + x^2 = 4x^2, 2x - 4x = -2x, -5 + 1 = -4가 되어 최종 결과는 4x^2 - 2x - 4이다.');
 
+-- 추가 Quiz 2 for sub_unit_id: 20101
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20101, '다항식 (2x^2 - x + 4) - (x^2 + 3x - 2)의 결과는?');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES
+(@last_quiz_id, 'A', 'x^2 - 4x + 6', TRUE),
+(@last_quiz_id, 'B', '3x^2 + 2x + 2', FALSE),
+(@last_quiz_id, 'C', 'x^2 + 2x + 6', FALSE),
+(@last_quiz_id, 'D', 'x^2 - 2x + 2', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES
+(@last_quiz_id, '각 항끼리 뺍니다: 2x^2 - x^2 = x^2, -x - 3x = -4x, 4 - (-2) = 6 → x^2 - 4x + 6');
+
+-- 추가 Quiz 3 for sub_unit_id: 20101
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20101, '다항식 (x^2 - 2x + 1)(x + 3)을 전개한 결과는?');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES
+(@last_quiz_id, 'A', 'x^3 + x^2 - 5x + 3', FALSE),
+(@last_quiz_id, 'B', 'x^3 + x^2 - 5x + 1', FALSE),
+(@last_quiz_id, 'C', 'x^3 + x^2 - 5x + 3', FALSE),
+(@last_quiz_id, 'D', 'x^3 + x^2 - 5x + 3', TRUE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES
+(@last_quiz_id, '곱셈 분배법칙으로 전개: (x^2 - 2x + 1)(x + 3) = x^3 + 3x^2 - 2x^2 - 6x + x + 3 = x^3 + x^2 - 5x + 3');
+
+-- 추가 Quiz 4 for sub_unit_id: 20101
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20101, '다항식의 항 중 계수가 0인 항을 무엇이라 하는가?');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES
+(@last_quiz_id, 'A', '소멸항', TRUE),
+(@last_quiz_id, 'B', '상수항', FALSE),
+(@last_quiz_id, 'C', '유사항', FALSE),
+(@last_quiz_id, 'D', '주항', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES
+(@last_quiz_id, '계수가 0이 되어 사라진 항을 소멸항이라 합니다. 예: x^2 + 0x + 1에서 0x는 소멸항입니다.');
+
+
+-- Quiz for sub_unit_id: 20102
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20102, '다항식 f(x) = 2x^3 + 3x^2 - 5x + 6을 x - 2로 나눌 때의 나머지는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20102_1234567891', 'A', '0', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20102_1234567891', 'B', '24', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20102_1234567891', 'C', '-4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20102_1234567891', 'D', '10', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20102_1234567891', '나머지정리에 따라 다항식 f(x)를 x - 2로 나눌 때의 나머지는 f(2)이다. 계산하면 f(2) = 2×8 + 3×4 - 5×2 + 6 = 24가 되어 정답은 24이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '0', FALSE), (@last_quiz_id, 'B', '24', TRUE), (@last_quiz_id, 'C', '-4', FALSE), (@last_quiz_id, 'D', '10', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '나머지정리에 따라 다항식 f(x)를 x - 2로 나눌 때의 나머지는 f(2)이다. 계산하면 f(2) = 2×8 + 3×4 - 5×2 + 6 = 24가 되어 정답은 24이다.');
 
+-- 추가 Quiz 2 for sub_unit_id: 20102
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20102, '다항식 f(x) = x^3 + 3x^2 + 3x + 1을 x + 1로 나눌 때 나머지는?');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES
+(@last_quiz_id, 'A', '0', TRUE),
+(@last_quiz_id, 'B', '1', FALSE),
+(@last_quiz_id, 'C', '4', FALSE),
+(@last_quiz_id, 'D', '2', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES
+(@last_quiz_id, 'f(-1)를 계산: (-1)^3 + 3×(-1)^2 + 3×(-1) + 1 = -1 + 3 - 3 + 1 = 0 → 나머지는 0');
+
+-- 추가 Quiz 3 for sub_unit_id: 20102
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20102, '다항식 f(x)가 (x - 3)으로 나누어떨어질 때, f(3)의 값은?');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES
+(@last_quiz_id, 'A', '3', FALSE),
+(@last_quiz_id, 'B', '0', TRUE),
+(@last_quiz_id, 'C', '1', FALSE),
+(@last_quiz_id, 'D', '-1', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES
+(@last_quiz_id, '다항식이 (x - 3)으로 나누어떨어진다는 말은 f(3) = 0이라는 뜻입니다. 나머지정리의 정의입니다.');
+
+-- 추가 Quiz 4 for sub_unit_id: 20102
+INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20102, '다항식 f(x)를 x - a로 나눌 때의 나머지는 무엇인가?');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES
+(@last_quiz_id, 'A', '항의 개수', FALSE),
+(@last_quiz_id, 'B', 'f(a)', TRUE),
+(@last_quiz_id, 'C', '계수의 합', FALSE),
+(@last_quiz_id, 'D', 'f(-a)', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES
+(@last_quiz_id, '나머지정리에 따르면 f(x)를 x - a로 나눌 때의 나머지는 f(a)이다.');
+
+
+-- Quiz for sub_unit_id: 20103
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20103, '다항식 x^2 + 6x + 9를 인수분해한 결과로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20103_1234567892', 'A', '(x + 3)(x + 3)', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20103_1234567892', 'B', '(x + 1)(x + 9)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20103_1234567892', 'C', '(x + 2)(x + 4)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20103_1234567892', 'D', '(x - 3)(x - 3)', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20103_1234567892', '다항식 x^2 + 6x + 9는 완전제곱식이며, (x + 3)^2 = (x + 3)(x + 3)로 인수분해된다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '(x + 3)(x + 3)', TRUE), (@last_quiz_id, 'B', '(x + 1)(x + 9)', FALSE), (@last_quiz_id, 'C', '(x + 2)(x + 4)', FALSE), (@last_quiz_id, 'D', '(x - 3)(x - 3)', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '다항식 x^2 + 6x + 9는 완전제곱식이며, (x + 3)^2 = (x + 3)(x + 3)로 인수분해된다.');
 
+-- Quiz for sub_unit_id: 20201
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20201, '이차방정식 x^2 + 4x + 5 = 0의 근은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20201_1234567893', 'A', '-2 ± i', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20201_1234567893', 'B', '-2 ± √5', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20201_1234567893', 'C', '-4 ± i', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20201_1234567893', 'D', '-2 ± √-5', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20201_1234567893', '근의 공식을 사용하면 x = (-4 ± √(16 - 20))/2 = (-4 ± √-4)/2 = (-4 ± 2i)/2 = -2 ± i이므로 정답은 -2 ± i이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '-2 ± i', TRUE), (@last_quiz_id, 'B', '-2 ± √5', FALSE), (@last_quiz_id, 'C', '-4 ± i', FALSE), (@last_quiz_id, 'D', '-2 ± √-5', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '근의 공식을 사용하면 x = (-4 ± √(16 - 20))/2 = (-4 ± √-4)/2 = (-4 ± 2i)/2 = -2 ± i이므로 정답은 -2 ± i이다.');
 
+-- Quiz for sub_unit_id: 20202
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20202, '무리방정식 √(x + 1) = x - 1의 해는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20202_1234567894', 'A', '3', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20202_1234567894', 'B', '4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20202_1234567894', 'C', '2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20202_1234567894', 'D', '해가 없다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20202_1234567894', '양변을 제곱하면 x + 1 = (x - 1)^2가 되고, 정리하면 x = 0 또는 x = 3이다. 그러나 x = 0은 원래 식에 대입 시 성립하지 않으므로, 유일한 해는 x = 3이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '3', TRUE), (@last_quiz_id, 'B', '4', FALSE), (@last_quiz_id, 'C', '2', FALSE), (@last_quiz_id, 'D', '해가 없다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '양변을 제곱하면 x + 1 = (x - 1)^2가 되고, 정리하면 x = 0 또는 x = 3이다. 그러나 x = 0은 원래 식에 대입 시 성립하지 않으므로, 유일한 해는 x = 3이다.');
 
+-- Quiz for sub_unit_id: 20203
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20203, '다음 연립부등식의 해는?  x - 2 > 1  그리고  2x + 3 < 9');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20203_1234567895', 'A', 'x > 3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20203_1234567895', 'B', 'x < 3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20203_1234567895', 'C', '1 < x < 3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20203_1234567895', 'D', '해가 없다', TRUE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20203_1234567895', 'x - 2 > 1는 x > 3, 2x + 3 < 9는 x < 3이므로, 두 조건을 동시에 만족하는 x는 존재하지 않는다. 따라서 해가 없다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'x > 3', FALSE), (@last_quiz_id, 'B', 'x < 3', FALSE), (@last_quiz_id, 'C', '1 < x < 3', FALSE), (@last_quiz_id, 'D', '해가 없다', TRUE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, 'x - 2 > 1는 x > 3, 2x + 3 < 9는 x < 3이므로, 두 조건을 동시에 만족하는 x는 존재하지 않는다. 따라서 해가 없다.');
 
+-- Quiz for sub_unit_id: 20301
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20301, '두 점 A(1, 2), B(4, 8)을 지나는 직선의 기울기는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20301_1234567896', 'A', '3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20301_1234567896', 'B', '2', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20301_1234567896', 'C', '2/3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20301_1234567896', 'D', '3/2', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20301_1234567896', '기울기 공식 m = (y₂ - y₁)/(x₂ - x₁)를 사용하여 (8 - 2)/(4 - 1) = 6/3 = 2가 되어 정답은 2이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '3', FALSE), (@last_quiz_id, 'B', '2', TRUE), (@last_quiz_id, 'C', '2/3', FALSE), (@last_quiz_id, 'D', '3/2', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '기울기 공식 m = (y₂ - y₁)/(x₂ - x₁)를 사용하여 (8 - 2)/(4 - 1) = 6/3 = 2가 되어 정답은 2이다.');
 
+-- Quiz for sub_unit_id: 20302
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20302, '다음 중 중심이 (2, -3), 반지름의 길이가 5인 원의 방정식으로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20302_1234567897', 'A', '(x - 2)^2 + (y + 3)^2 = 25', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20302_1234567897', 'B', '(x + 2)^2 + (y - 3)^2 = 25', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20302_1234567897', 'C', '(x - 2)^2 + (y + 3)^2 = 5', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20302_1234567897', 'D', '(x - 2)^2 + (y - 3)^2 = 25', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20302_1234567897', '원의 표준형 방정식은 (x - a)^2 + (y - b)^2 = r^2이다. 중심이 (2, -3), 반지름이 5이므로 식은 (x - 2)^2 + (y + 3)^2 = 25이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '(x - 2)^2 + (y + 3)^2 = 25', TRUE), (@last_quiz_id, 'B', '(x + 2)^2 + (y - 3)^2 = 25', FALSE), (@last_quiz_id, 'C', '(x - 2)^2 + (y + 3)^2 = 5', FALSE), (@last_quiz_id, 'D', '(x - 2)^2 + (y - 3)^2 = 25', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '원의 표준형 방정식은 (x - a)^2 + (y - b)^2 = r^2이다. 중심이 (2, -3), 반지름이 5이므로 식은 (x - 2)^2 + (y + 3)^2 = 25이다.');
 
+-- Quiz for sub_unit_id: 20303
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20303, '다음 중 직선 y = 2x + 1과 원 (x - 1)^2 + (y - 2)^2 = 4의 위치 관계로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20303_1234567898', 'A', '서로 만나지 않는다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20303_1234567898', 'B', '한 점에서 만난다', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20303_1234567898', 'C', '두 점에서 만난다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20303_1234567898', 'D', '직선은 원의 중심을 지난다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20303_1234567898', '직선 y = 2x + 1과 원의 중심 (1,2) 사이의 거리는 반지름보다 작지만 실제로 대입해 보면 한 점에서 접하게 된다. 따라서 위치 관계는 ''한 점에서 만난다''이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '서로 만나지 않는다', FALSE), (@last_quiz_id, 'B', '한 점에서 만난다', TRUE), (@last_quiz_id, 'C', '두 점에서 만난다', FALSE), (@last_quiz_id, 'D', '직선은 원의 중심을 지난다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '직선 y = 2x + 1과 원의 중심 (1,2) 사이의 거리는 반지름보다 작지만 실제로 대입해 보면 한 점에서 접하게 된다. 따라서 위치 관계는 ''한 점에서 만난다''이다.');
 
+-- Quiz for sub_unit_id: 20401
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20401, '집합 A = {1, 2, 3, 4, 5}, B = {3, 4, 5, 6, 7}일 때, A ∩ B는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20401_1234567890', 'A', '{1, 2}', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20401_1234567890', 'B', '{3, 4, 5}', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20401_1234567890', 'C', '{1, 2, 6, 7}', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20401_1234567890', 'D', '{1, 2, 3, 6, 7}', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20401_1234567890', '집합 A와 B의 공통 원소는 3, 4, 5이므로, A ∩ B는 {3, 4, 5}입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '{1, 2}', FALSE), (@last_quiz_id, 'B', '{3, 4, 5}', TRUE), (@last_quiz_id, 'C', '{1, 2, 6, 7}', FALSE), (@last_quiz_id, 'D', '{1, 2, 3, 6, 7}', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '집합 A와 B의 공통 원소는 3, 4, 5이므로, A ∩ B는 {3, 4, 5}입니다.');
 
+-- Quiz for sub_unit_id: 20402
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20402, '다음 명제의 대우를 고르세요: "x가 짝수이면, x²는 짝수이다."');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20402_1234567891', 'A', 'x가 짝수가 아니면, x²는 짝수가 아니다.', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20402_1234567891', 'B', 'x²가 짝수이면, x는 짝수이다.', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20402_1234567891', 'C', 'x²가 짝수가 아니면, x는 짝수가 아니다.', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20402_1234567891', 'D', 'x가 짝수이고, x²도 짝수이다.', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20402_1234567891', '대우는 "조건의 결과를 부정하여 조건으로, 조건을 부정하여 결과로" 만드는 것입니다. 따라서 "x가 짝수이면 x²는 짝수이다"의 대우는 "x²가 짝수가 아니면 x는 짝수가 아니다"입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'x가 짝수가 아니면, x²는 짝수가 아니다.', FALSE), (@last_quiz_id, 'B', 'x²가 짝수이면, x는 짝수이다.', FALSE), (@last_quiz_id, 'C', 'x²가 짝수가 아니면, x는 짝수가 아니다.', TRUE), (@last_quiz_id, 'D', 'x가 짝수이고, x²도 짝수이다.', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '대우는 "조건의 결과를 부정하여 조건으로, 조건을 부정하여 결과로" 만드는 것입니다. 따라서 "x가 짝수이면 x²는 짝수이다"의 대우는 "x²가 짝수가 아니면 x는 짝수가 아니다"입니다.');
 
+-- Quiz for sub_unit_id: 20403
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20403, '다음 명제에서 "x가 3의 배수이다"는 "x는 6의 배수이다"의 어떤 조건인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20403_1234567892', 'A', '필요조건', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20403_1234567892', 'B', '충분조건', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20403_1234567892', 'C', '필요충분조건', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20403_1234567892', 'D', '조건이 아니다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20403_1234567892', '"x가 6의 배수이면 x는 3의 배수이다"는 참이지만, 그 역인 "x가 3의 배수이면 x는 6의 배수이다"는 거짓이므로, "x가 3의 배수이다"는 "x는 6의 배수이다"의 필요조건입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '필요조건', TRUE), (@last_quiz_id, 'B', '충분조건', FALSE), (@last_quiz_id, 'C', '필요충분조건', FALSE), (@last_quiz_id, 'D', '조건이 아니다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '"x가 6의 배수이면 x는 3의 배수이다"는 참이지만, 그 역인 "x가 3의 배수이면 x는 6의 배수이다"는 거짓이므로, "x가 3의 배수이다"는 "x는 6의 배수이다"의 필요조건입니다.');
 
+-- Quiz for sub_unit_id: 20501
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20501, '다음 중 함수가 아닌 것은 무엇인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20501_1234567893', 'A', 'y = 2x + 1', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20501_1234567893', 'B', 'y = x^2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20501_1234567893', 'C', 'x = y^2', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20501_1234567893', 'D', '(1,2), (2,3), (3,4)로 구성된 관계', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20501_1234567893', '함수는 한 입력값에 하나의 출력값만을 대응시켜야 합니다. C의 식 x = y^2에서는 하나의 x값에 대해 두 개의 y값이 가능하므로 함수가 아닙니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'y = 2x + 1', FALSE), (@last_quiz_id, 'B', 'y = x^2', FALSE), (@last_quiz_id, 'C', 'x = y^2', TRUE), (@last_quiz_id, 'D', '(1,2), (2,3), (3,4)로 구성된 관계', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '함수는 한 입력값에 하나의 출력값만을 대응시켜야 합니다. C의 식 x = y^2에서는 하나의 x값에 대해 두 개의 y값이 가능하므로 함수가 아닙니다.');
 
+-- Quiz for sub_unit_id: 20502
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20502, '다음 중 함수 y = |x - 2|의 그래프에 대한 설명으로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20502_1234567894', 'A', '그래프는 (0,0)을 꼭짓점으로 갖는다.', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20502_1234567894', 'B', '그래프는 x축에 평행한 직선이다.', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20502_1234567894', 'C', '그래프는 (2,0)을 꼭짓점으로 하는 V자 형태이다.', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20502_1234567894', 'D', '그래프는 원점을 지나고, 대칭축은 y축이다.', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20502_1234567894', '함수 y = |x - 2|는 x = 2에서 꼭짓점을 가지며, V자형 그래프입니다. 대칭축은 x = 2입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '그래프는 (0,0)을 꼭짓점으로 갖는다.', FALSE), (@last_quiz_id, 'B', '그래프는 x축에 평행한 직선이다.', FALSE), (@last_quiz_id, 'C', '그래프는 (2,0)을 꼭짓점으로 하는 V자 형태이다.', TRUE), (@last_quiz_id, 'D', '그래프는 원점을 지나고, 대칭축은 y축이다.', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '함수 y = |x - 2|는 x = 2에서 꼭짓점을 가지며, V자형 그래프입니다. 대칭축은 x = 2입니다.');
 
+-- Quiz for sub_unit_id: 20503
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20503, '함수 f(x) = 2x + 3의 역함수 f⁻¹(x)는 무엇인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20503_1234567895', 'A', 'f⁻¹(x) = (x + 3) / 2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20503_1234567895', 'B', 'f⁻¹(x) = 2x - 3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20503_1234567895', 'C', 'f⁻¹(x) = (x - 3) / 2', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20503_1234567895', 'D', 'f⁻¹(x) = x / 2 + 3', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20503_1234567895', '역함수를 구하기 위해 f(x) = 2x + 3을 y = 2x + 3으로 놓고 x에 대해 풀면 x = (y - 3)/2이므로, 역함수는 f⁻¹(x) = (x - 3)/2입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'f⁻¹(x) = (x + 3) / 2', FALSE), (@last_quiz_id, 'B', 'f⁻¹(x) = 2x - 3', FALSE), (@last_quiz_id, 'C', 'f⁻¹(x) = (x - 3) / 2', TRUE), (@last_quiz_id, 'D', 'f⁻¹(x) = x / 2 + 3', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '역함수를 구하기 위해 f(x) = 2x + 3을 y = 2x + 3으로 놓고 x에 대해 풀면 x = (y - 3)/2이므로, 역함수는 f⁻¹(x) = (x - 3)/2입니다.');
 
+-- Quiz for sub_unit_id: 20601
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20601, '5명의 학생 중에서 3명을 서로 다른 순서로 줄 세우는 방법의 수는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20601_1234567896', 'A', '10', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20601_1234567896', 'B', '20', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20601_1234567896', 'C', '60', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20601_1234567896', 'D', '120', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20601_1234567896', '줄을 세우는 문제는 순서를 고려하는 순열입니다. 5명 중 3명을 순서 있게 뽑는 경우의 수는 P(5,3) = 5 × 4 × 3 = 60입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '10', FALSE), (@last_quiz_id, 'B', '20', FALSE), (@last_quiz_id, 'C', '60', TRUE), (@last_quiz_id, 'D', '120', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '줄을 세우는 문제는 순서를 고려하는 순열입니다. 5명 중 3명을 순서 있게 뽑는 경우의 수는 P(5,3) = 5 × 4 × 3 = 60입니다.');
 
+-- Quiz for sub_unit_id: 20602
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20602, '4종류의 색 중에서 같은 색을 여러 번 사용할 수 있을 때, 3개의 구슬을 나란히 배열하는 방법의 수는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20602_1234567897', 'A', '12', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20602_1234567897', 'B', '24', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20602_1234567897', 'C', '64', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20602_1234567897', 'D', '256', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20602_1234567897', '같은 색을 반복해서 사용할 수 있는 경우는 중복순열입니다. 가능한 색이 4가지이고, 3개의 구슬을 나란히 배열하므로 4^3 = 64가지 경우가 있습니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '12', FALSE), (@last_quiz_id, 'B', '24', FALSE), (@last_quiz_id, 'C', '64', TRUE), (@last_quiz_id, 'D', '256', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '같은 색을 반복해서 사용할 수 있는 경우는 중복순열입니다. 가능한 색이 4가지이고, 3개의 구슬을 나란히 배열하므로 4^3 = 64가지 경우가 있습니다.');
 
+-- Quiz for sub_unit_id: 20603
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20603, '이항정리를 이용하여 (x + 2)^4을 전개할 때, x^2의 계수는 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20603_1716000000', 'A', '12', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20603_1716000000', 'B', '24', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20603_1716000000', 'C', '36', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20603_1716000000', 'D', '16', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20603_1716000000', '(x + 2)^4의 전개에서 x^2 항은 이항정리에 따라 \\binom{4}{2} x^2 \\cdot 2^2 = 6 \\cdot 4 = 24이므로, 계수는 24입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '12', FALSE), (@last_quiz_id, 'B', '24', TRUE), (@last_quiz_id, 'C', '36', FALSE), (@last_quiz_id, 'D', '16', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '(x + 2)^4의 전개에서 x^2 항은 이항정리에 따라 \\binom{4}{2} x^2 \\cdot 2^2 = 6 \\cdot 4 = 24이므로, 계수는 24입니다.');
 
+-- Quiz for sub_unit_id: 20701
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20701, '다음 지수방정식의 해는? 2^{x+1} = 16');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20701_1716000000', 'A', '2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20701_1716000000', 'B', '3', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20701_1716000000', 'C', '4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20701_1716000000', 'D', '5', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20701_1716000000', '우변의 16을 밑이 같은 2의 거듭제곱인 2^4로 바꾸면, 2^{x+1} = 2^4가 됩니다. 지수끼리 비교하면 x + 1 = 4, 따라서 x = 3입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '2', FALSE), (@last_quiz_id, 'B', '3', TRUE), (@last_quiz_id, 'C', '4', FALSE), (@last_quiz_id, 'D', '5', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '우변의 16을 밑이 같은 2의 거듭제곱인 2^4로 바꾸면, 2^{x+1} = 2^4가 됩니다. 지수끼리 비교하면 x + 1 = 4, 따라서 x = 3입니다.');
 
+-- Quiz for sub_unit_id: 20702
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20702, '다음 로그식의 값을 구하시오: log_2{8}');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20702_1716000000', 'A', '2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20702_1716000000', 'B', '3', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20702_1716000000', 'C', '4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20702_1716000000', 'D', '3/2', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20702_1716000000', 'log_2{8}은 x = 3을 의미하는데, 이는 2^3 = 8이므로 정답은 3입니다. 로그의 정의를 바탕으로 풀 수 있습니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '2', FALSE), (@last_quiz_id, 'B', '3', TRUE), (@last_quiz_id, 'C', '4', FALSE), (@last_quiz_id, 'D', '3/2', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, 'log_2{8}은 x = 3을 의미하는데, 이는 2^3 = 8이므로 정답은 3입니다. 로그의 정의를 바탕으로 풀 수 있습니다.');
 
+-- Quiz for sub_unit_id: 20801
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20801, 'sin 30°의 값은 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20801_1716000000', 'A', '√3/2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20801_1716000000', 'B', '1/2', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20801_1716000000', 'C', '1/√2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20801_1716000000', 'D', '√2/2', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20801_1716000000', 'sin 30°는 기본 삼각비 중 하나로 값은 1/2입니다. 이는 단위원상에서 30° 위치의 y좌표이거나, 빗변이 1인 직각삼각형에서의 대변 비율로도 유도할 수 있습니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '√3/2', FALSE), (@last_quiz_id, 'B', '1/2', TRUE), (@last_quiz_id, 'C', '1/√2', FALSE), (@last_quiz_id, 'D', '√2/2', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, 'sin 30°는 기본 삼각비 중 하나로 값은 1/2입니다. 이는 단위원상에서 30° 위치의 y좌표이거나, 빗변이 1인 직각삼각형에서의 대변 비율로도 유도할 수 있습니다.');
 
+-- Quiz for sub_unit_id: 20802
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20802, '함수 y = sin x의 주기는 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20802_1716000000', 'A', 'π', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20802_1716000000', 'B', '2π', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20802_1716000000', 'C', 'π/2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20802_1716000000', 'D', '4π', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20802_1716000000', '사인 함수 y = sin x는 2π마다 값을 반복하므로 주기는 2π입니다. 이는 그래프나 정의에서 쉽게 확인할 수 있습니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'π', FALSE), (@last_quiz_id, 'B', '2π', TRUE), (@last_quiz_id, 'C', 'π/2', FALSE), (@last_quiz_id, 'D', '4π', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '사인 함수 y = sin x는 2π마다 값을 반복하므로 주기는 2π입니다. 이는 그래프나 정의에서 쉽게 확인할 수 있습니다.');
 
+-- Quiz for sub_unit_id: 20803
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20803, '함수 y = sin(2x)의 주기는 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20803_1716000000', 'A', '2π', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20803_1716000000', 'B', 'π', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20803_1716000000', 'C', 'π/2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20803_1716000000', 'D', '2π/3', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20803_1716000000', '함수 y = sin(2x)는 주기 공식 2π/|b|에서 b=2를 대입해 주기가 π임을 알 수 있습니다. 따라서 정답은 π입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '2π', FALSE), (@last_quiz_id, 'B', 'π', TRUE), (@last_quiz_id, 'C', 'π/2', FALSE), (@last_quiz_id, 'D', '2π/3', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '함수 y = sin(2x)는 주기 공식 2π/|b|에서 b=2를 대입해 주기가 π임을 알 수 있습니다. 따라서 정답은 π입니다.');
 
+-- Quiz for sub_unit_id: 20901
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20901, '초항이 3이고 공차가 2인 등차수열의 10번째 항의 값은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20901_1716000000', 'A', '19', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20901_1716000000', 'B', '20', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20901_1716000000', 'C', '21', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20901_1716000000', 'D', '23', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20901_1716000000', '등차수열의 일반항 공식 aₙ = a + (n - 1)d를 이용하면 10번째 항은 3 + 9×2 = 21입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '19', FALSE), (@last_quiz_id, 'B', '20', FALSE), (@last_quiz_id, 'C', '21', TRUE), (@last_quiz_id, 'D', '23', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '등차수열의 일반항 공식 aₙ = a + (n - 1)d를 이용하면 10번째 항은 3 + 9×2 = 21입니다.');
 
+-- Quiz for sub_unit_id: 20902
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20902, '다음 시그마 값을 계산하시오: ∑_{k=1}^{5} (2k + 1)');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20902_1716000000', 'A', '30', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20902_1716000000', 'B', '33', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20902_1716000000', 'C', '35', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20902_1716000000', 'D', '37', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20902_1716000000', 'k = 1부터 5까지 대입하면 각 항은 3, 5, 7, 9, 11이며 이들을 모두 더하면 35입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '30', FALSE), (@last_quiz_id, 'B', '33', FALSE), (@last_quiz_id, 'C', '35', TRUE), (@last_quiz_id, 'D', '37', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, 'k = 1부터 5까지 대입하면 각 항은 3, 5, 7, 9, 11이며 이들을 모두 더하면 35입니다.');
 
+-- Quiz for sub_unit_id: 20903
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (20903, '다음과 같이 정의된 수열 aₙ의 네 번째 항 a₄의 값을 구하시오: a₁ = 2, aₙ₊₁ = aₙ + 3');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20903_1716000000', 'A', '9', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20903_1716000000', 'B', '10', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20903_1716000000', 'C', '11', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_20903_1716000000', 'D', '12', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_20903_1716000000', '점화식이 aₙ₊₁ = aₙ + 3이고 a₁ = 2이므로 a₂ = 5, a₃ = 8, a₄ = 11입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '9', FALSE), (@last_quiz_id, 'B', '10', FALSE), (@last_quiz_id, 'C', '11', TRUE), (@last_quiz_id, 'D', '12', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '점화식이 aₙ₊₁ = aₙ + 3이고 a₁ = 2이므로 a₂ = 5, a₃ = 8, a₄ = 11입니다.');
 
+-- Quiz for sub_unit_id: 21001
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21001, '다음 극한을 계산하시오: limₓ→2 (3x² - 4x + 1)');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21001_1716000000', 'A', '3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21001_1716000000', 'B', '4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21001_1716000000', 'C', '5', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21001_1716000000', 'D', '6', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21001_1716000000', '다항함수의 극한은 연속이므로, x에 2를 대입하여 계산하면 3(2)² - 4(2) + 1 = 12 - 8 + 1 = 5입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '3', FALSE), (@last_quiz_id, 'B', '4', FALSE), (@last_quiz_id, 'C', '5', TRUE), (@last_quiz_id, 'D', '6', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '다항함수의 극한은 연속이므로, x에 2를 대입하여 계산하면 3(2)² - 4(2) + 1 = 12 - 8 + 1 = 5입니다.');
 
+-- Quiz for sub_unit_id: 21002
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21002, '다음 극한의 값을 구하시오: limₓ→0⁺ (1/x)');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21002_1716000000', 'A', '0', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21002_1716000000', 'B', '-∞', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21002_1716000000', 'C', '+∞', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21002_1716000000', 'D', '극한은 존재하지 않는다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21002_1716000000', 'x가 0보다 큰 쪽에서 0으로 가까워지면 1/x는 매우 큰 양의 수가 되어 +∞로 발산합니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '0', FALSE), (@last_quiz_id, 'B', '-∞', FALSE), (@last_quiz_id, 'C', '+∞', TRUE), (@last_quiz_id, 'D', '극한은 존재하지 않는다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, 'x가 0보다 큰 쪽에서 0으로 가까워지면 1/x는 매우 큰 양의 수가 되어 +∞로 발산합니다.');
 
+-- Quiz for sub_unit_id: 21003
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21003, '함수 f(x) = { x² - 1 (x ≠ 2), 3 (x = 2) }는 x = 2에서 연속인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21003_1716000000', 'A', '연속이다', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21003_1716000000', 'B', '불연속이며, 제거 가능 불연속이다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21003_1716000000', 'C', '불연속이며, 점근 불연속이다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21003_1716000000', 'D', '불연속이며, 점프 불연속이다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21003_1716000000', '극한값과 함수값이 모두 3으로 같으므로, f(x)는 x = 2에서 연속이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '연속이다', TRUE), (@last_quiz_id, 'B', '불연속이며, 제거 가능 불연속이다', FALSE), (@last_quiz_id, 'C', '불연속이며, 점근 불연속이다', FALSE), (@last_quiz_id, 'D', '불연속이며, 점프 불연속이다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '극한값과 함수값이 모두 3으로 같으므로, f(x)는 x = 2에서 연속이다.');
 
+-- Quiz for sub_unit_id: 21101
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21101, '함수 f(x) = x² + 2x의 x = 1에서의 미분계수를 구하시오.');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21101_1716000000', 'A', '2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21101_1716000000', 'B', '3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21101_1716000000', 'C', '4', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21101_1716000000', 'D', '5', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21101_1716000000', '도함수 f''(x) = 2x + 2를 x = 1에 대입하면 2(1) + 2 = 4로, 미분계수는 4입니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '2', FALSE), (@last_quiz_id, 'B', '3', FALSE), (@last_quiz_id, 'C', '4', TRUE), (@last_quiz_id, 'D', '5', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '도함수 f''(x) = 2x + 2를 x = 1에 대입하면 2(1) + 2 = 4로, 미분계수는 4입니다.');
 
+-- Quiz for sub_unit_id: 21102
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21102, '다음 함수의 도함수를 구하시오: f(x) = (x² + 1)·sin x');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21102_1716000000', 'A', 'f''(x) = 2x·sin x + (x² + 1)·cos x', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21102_1716000000', 'B', 'f''(x) = 2x·cos x + (x² + 1)·sin x', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21102_1716000000', 'C', 'f''(x) = (2x + cos x)·sin x', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21102_1716000000', 'D', 'f''(x) = (2x + sin x)·cos x', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21102_1716000000', '곱의 미분법 (uv)'' = u''v + uv''에 따라, u = x² + 1, v = sin x 이므로 f''(x) = 2x·sin x + (x² + 1)·cos x 가 됩니다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'f''(x) = 2x·sin x + (x² + 1)·cos x', TRUE), (@last_quiz_id, 'B', 'f''(x) = 2x·cos x + (x² + 1)·sin x', FALSE), (@last_quiz_id, 'C', 'f''(x) = (2x + cos x)·sin x', FALSE), (@last_quiz_id, 'D', 'f''(x) = (2x + sin x)·cos x', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '곱의 미분법 (uv)'' = u''v + uv''에 따라, u = x² + 1, v = sin x 이므로 f''(x) = 2x·sin x + (x² + 1)·cos x 가 됩니다.');
 
+-- Quiz for sub_unit_id: 21103
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21103, '함수 f(x) = x³ - 3x²의 극값의 개수는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21103_1716000000', 'A', '극값이 없다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21103_1716000000', 'B', '극값이 1개 있다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21103_1716000000', 'C', '극값이 2개 있다', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21103_1716000000', 'D', '극값이 3개 있다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21103_1716000000', '도함수 f''(x) = 3x(x - 2)는 x = 0, 2에서 0이 되고, 부호 변화가 있으므로 극대와 극소가 각각 존재하여 극값은 총 2개이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '극값이 없다', FALSE), (@last_quiz_id, 'B', '극값이 1개 있다', FALSE), (@last_quiz_id, 'C', '극값이 2개 있다', TRUE), (@last_quiz_id, 'D', '극값이 3개 있다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '도함수 f''(x) = 3x(x - 2)는 x = 0, 2에서 0이 되고, 부호 변화가 있으므로 극대와 극소가 각각 존재하여 극값은 총 2개이다.');
 
+-- Quiz for sub_unit_id: 21201
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21201, '다음 중 함수 f(x) = 3x²의 부정적분으로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21201_1716000000', 'A', 'x³ + C', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21201_1716000000', 'B', '3x³ + C', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21201_1716000000', 'C', 'x² + C', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21201_1716000000', 'D', '3⁄2·x² + C', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21201_1716000000', '3x²의 부정적분은 x³ + C이다. 이는 거듭제곱 함수의 부정적분 공식 ∫xⁿ dx = xⁿ⁺¹⁄(n+1) + C를 적용해 계산한 결과이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'x³ + C', TRUE), (@last_quiz_id, 'B', '3x³ + C', FALSE), (@last_quiz_id, 'C', 'x² + C', FALSE), (@last_quiz_id, 'D', '3⁄2·x² + C', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '3x²의 부정적분은 x³ + C이다. 이는 거듭제곱 함수의 부정적분 공식 ∫xⁿ dx = xⁿ⁺¹⁄(n+1) + C를 적용해 계산한 결과이다.');
 
+-- Quiz for sub_unit_id: 21202
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21202, '치환 적분을 이용하여 ∫2x·cos(x²) dx를 계산한 결과는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21202_1716000000', 'A', 'cos(x²) + C', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21202_1716000000', 'B', 'sin(x²) + C', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21202_1716000000', 'C', '2sin(x) + C', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21202_1716000000', 'D', '½·sin(x²) + C', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21202_1716000000', 'u = x²로 치환하면 du = 2x dx가 되어 ∫2x·cos(x²) dx는 ∫cos(u) du = sin(u) + C가 되며, u = x²를 다시 대입하면 sin(x²) + C이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'cos(x²) + C', FALSE), (@last_quiz_id, 'B', 'sin(x²) + C', TRUE), (@last_quiz_id, 'C', '2sin(x) + C', FALSE), (@last_quiz_id, 'D', '½·sin(x²) + C', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, 'u = x²로 치환하면 du = 2x dx가 되어 ∫2x·cos(x²) dx는 ∫cos(u) du = sin(u) + C가 되며, u = x²를 다시 대입하면 sin(x²) + C이다.');
 
+-- Quiz for sub_unit_id: 21203
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21203, '함수 f(x) = x²에 대해 구간 [0, 2]에서의 평균값은 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21203_1716000000', 'A', '8⁄3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21203_1716000000', 'B', '2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21203_1716000000', 'C', '4⁄3', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21203_1716000000', 'D', '2⁄3', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21203_1716000000', '구간 [0, 2]에서 함수 x²의 평균값은 (1⁄2) × ∫₀² x² dx = (1⁄2) × (8⁄3) = 4⁄3이다. 평균값 공식을 적용하면 된다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '8⁄3', FALSE), (@last_quiz_id, 'B', '2', FALSE), (@last_quiz_id, 'C', '4⁄3', TRUE), (@last_quiz_id, 'D', '2⁄3', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '구간 [0, 2]에서 함수 x²의 평균값은 (1⁄2) × ∫₀² x² dx = (1⁄2) × (8⁄3) = 4⁄3이다. 평균값 공식을 적용하면 된다.');
 
+-- Quiz for sub_unit_id: 21301
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21301, '5개의 다른 책 중에서 2권을 순서 있게 고르는 방법의 수는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21301_1716000000', 'A', '10', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21301_1716000000', 'B', '20', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21301_1716000000', 'C', '25', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21301_1716000000', 'D', '5', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21301_1716000000', '순서 있게 2권을 고르는 경우는 순열로 계산하며, 5P2 = 5 × 4 = 20이다. 조합과 혼동하지 않도록 주의해야 한다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '10', FALSE), (@last_quiz_id, 'B', '20', TRUE), (@last_quiz_id, 'C', '25', FALSE), (@last_quiz_id, 'D', '5', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '순서 있게 2권을 고르는 경우는 순열로 계산하며, 5P2 = 5 × 4 = 20이다. 조합과 혼동하지 않도록 주의해야 한다.');
 
+-- Quiz for sub_unit_id: 21302
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21302, '이항정리를 이용하여 (x + 2)^3을 전개할 때, x²의 계수는 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21302_1716000000', 'A', '3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21302_1716000000', 'B', '4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21302_1716000000', 'C', '6', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21302_1716000000', 'D', '12', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21302_1716000000', '이항정리 (x + 2)^3에서 x² 항은 k = 1일 때 생성되며, 이때 항은 3 × x² × 2 = 6x²이므로 계수는 6이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '3', FALSE), (@last_quiz_id, 'B', '4', FALSE), (@last_quiz_id, 'C', '6', TRUE), (@last_quiz_id, 'D', '12', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '이항정리 (x + 2)^3에서 x² 항은 k = 1일 때 생성되며, 이때 항은 3 × x² × 2 = 6x²이므로 계수는 6이다.');
 
+-- Quiz for sub_unit_id: 21303
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21303, '4명을 원형 테이블에 앉히는 서로 다른 방법의 수는?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21303_1716000000', 'A', '12', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21303_1716000000', 'B', '6', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21303_1716000000', 'C', '24', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21303_1716000000', 'D', '4', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21303_1716000000', '원형 순열에서는 회전을 고려하여 중복을 제거하므로, 4명을 원형에 배치하는 경우는 (4-1)! = 3! = 6가지이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '12', FALSE), (@last_quiz_id, 'B', '6', TRUE), (@last_quiz_id, 'C', '24', FALSE), (@last_quiz_id, 'D', '4', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '원형 순열에서는 회전을 고려하여 중복을 제거하므로, 4명을 원형에 배치하는 경우는 (4-1)! = 3! = 6가지이다.');
 
+-- Quiz for sub_unit_id: 21401
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21401, '1부터 6까지의 숫자가 적힌 주사위를 한 번 던질 때, 2 또는 4가 나올 확률은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21401_1716000000', 'A', '1/2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21401_1716000000', 'B', '1/3', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21401_1716000000', 'C', '1/4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21401_1716000000', 'D', '2/3', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21401_1716000000', '전체 경우의 수는 6이고, 2 또는 4가 나올 경우는 2가지이므로 확률은 2/6 = 1/3이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '1/2', FALSE), (@last_quiz_id, 'B', '1/3', TRUE), (@last_quiz_id, 'C', '1/4', FALSE), (@last_quiz_id, 'D', '2/3', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '전체 경우의 수는 6이고, 2 또는 4가 나올 경우는 2가지이므로 확률은 2/6 = 1/3이다.');
 
+-- Quiz for sub_unit_id: 21402
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21402, '한 공장에서 생산된 제품 중 A기계에서 만든 것이 60%, B기계에서 만든 것이 40%이다. A기계의 불량률은 2%, B기계의 불량률은 5%이다. 임의로 뽑은 제품이 불량일 때, 그것이 B기계에서 만들어졌을 확률은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21402_1716000000', 'A', '3/8', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21402_1716000000', 'B', '1/2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21402_1716000000', 'C', '5/8', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21402_1716000000', 'D', '1/4', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21402_1716000000', '베이즈 정리에 따라, P(B|불량) = P(불량|B) * P(B) / P(불량) = (0.05*0.4)/(0.032) = 5/8.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '3/8', FALSE), (@last_quiz_id, 'B', '1/2', FALSE), (@last_quiz_id, 'C', '5/8', TRUE), (@last_quiz_id, 'D', '1/4', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '베이즈 정리에 따라, P(B|불량) = P(불량|B) * P(B) / P(불량) = (0.05*0.4)/(0.032) = 5/8.');
 
+-- Quiz for sub_unit_id: 21403
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21403, '어떤 두 사건 A와 B에 대하여 P(A) = 0.4, P(B) = 0.5, P(A ∩ B) = 0.2일 때, 두 사건 A와 B는 독립인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21403_1716000000', 'A', '독립이다', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21403_1716000000', 'B', '종속이다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21403_1716000000', 'C', '확률 정보가 부족하여 판단할 수 없다', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21403_1716000000', 'D', '두 사건은 서로 배반이다', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21403_1716000000', '독립 사건은 P(A ∩ B) = P(A) × P(B)일 때 성립한다. 여기서 0.4 × 0.5 = 0.2 = P(A ∩ B)이므로, 두 사건은 독립이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '독립이다', TRUE), (@last_quiz_id, 'B', '종속이다', FALSE), (@last_quiz_id, 'C', '확률 정보가 부족하여 판단할 수 없다', FALSE), (@last_quiz_id, 'D', '두 사건은 서로 배반이다', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '독립 사건은 P(A ∩ B) = P(A) × P(B)일 때 성립한다. 여기서 0.4 × 0.5 = 0.2 = P(A ∩ B)이므로, 두 사건은 독립이다.');
 
+-- Quiz for sub_unit_id: 21501
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21501, '다음은 어느 반 학생 5명의 수학 시험 점수이다: 70, 80, 90, 100, 110. 이 자료의 표준편차는 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21501_1716000000', 'A', '20', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21501_1716000000', 'B', '10√2', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21501_1716000000', 'C', '5√2', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21501_1716000000', 'D', '√2000', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21501_1716000000', '평균은 90이고, 각 편차의 제곱 평균은 200이므로, 표준편차는 √200 = 10√2이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '20', FALSE), (@last_quiz_id, 'B', '10√2', TRUE), (@last_quiz_id, 'C', '5√2', FALSE), (@last_quiz_id, 'D', '√2000', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '평균은 90이고, 각 편차의 제곱 평균은 200이므로, 표준편차는 √200 = 10√2이다.');
 
+-- Quiz for sub_unit_id: 21502
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21502, '어느 모집단의 평균이 60, 표준편차가 12일 때, 크기가 36인 표본을 여러 번 추출하여 표본평균의 분포를 만들었다. 이 표본평균의 표준편차(표준오차)는 얼마인가?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21502_1716000000', 'A', '12', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21502_1716000000', 'B', '6', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21502_1716000000', 'C', '2', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21502_1716000000', 'D', '12/36', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21502_1716000000', '표본평균의 표준편차(표준오차)는 모집단의 표준편차를 표본크기의 제곱근으로 나눈 값이다. 따라서 12 ÷ √36 = 2가 된다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '12', FALSE), (@last_quiz_id, 'B', '6', FALSE), (@last_quiz_id, 'C', '2', TRUE), (@last_quiz_id, 'D', '12/36', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '표본평균의 표준편차(표준오차)는 모집단의 표준편차를 표본크기의 제곱근으로 나눈 값이다. 따라서 12 ÷ √36 = 2가 된다.');
 
+-- Quiz for sub_unit_id: 21503
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21503, '어느 제품의 무게를 임의로 뽑은 100개의 표본으로 조사한 결과, 평균이 500g, 표준편차가 20g이었다. 이 표본을 바탕으로 95% 신뢰수준에서 모평균의 신뢰구간을 구하면? (단, Z_{0.025} = 1.96)');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21503_1716000000', 'A', '(495.00, 505.00)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21503_1716000000', 'B', '(498.00, 502.00)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21503_1716000000', 'C', '(494.12, 505.88)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21503_1716000000', 'D', '(496.08, 503.92)', TRUE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21503_1716000000', '신뢰구간은 표본평균 ± Z값 × 표준오차로 계산한다. 표준오차는 2이므로, 500 ± 3.92 → (496.08, 503.92)가 정답이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '(495.00, 505.00)', FALSE), (@last_quiz_id, 'B', '(498.00, 502.00)', FALSE), (@last_quiz_id, 'C', '(494.12, 505.88)', FALSE), (@last_quiz_id, 'D', '(496.08, 503.92)', TRUE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '신뢰구간은 표본평균 ± Z값 × 표준오차로 계산한다. 표준오차는 2이므로, 500 ± 3.92 → (496.08, 503.92)가 정답이다.');
 
+-- Quiz for sub_unit_id: 21601
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21601, '다음 중 타원 \\( \\frac{(x-2)^2}{9} + \\frac{(y+1)^2}{4} = 1 \\)의 중심 좌표와 장축의 길이로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21601_1716000000', 'A', '중심: (–2, 1), 장축 길이: 6', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21601_1716000000', 'B', '중심: (2, –1), 장축 길이: 6', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21601_1716000000', 'C', '중심: (2, –1), 장축 길이: 4', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21601_1716000000', 'D', '중심: (–2, –1), 장축 길이: 3', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21601_1716000000', '표준형 타원 \\( \\frac{(x-h)^2}{a^2} + \\frac{(y-k)^2}{b^2} = 1 \\)에서 중심은 (h, k)이고 장축 길이는 2a이다. \\( h=2, k=-1, a=3 \\)이므로 정답은 중심 (2, –1), 장축 길이 6이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '중심: (–2, 1), 장축 길이: 6', FALSE), (@last_quiz_id, 'B', '중심: (2, –1), 장축 길이: 6', TRUE), (@last_quiz_id, 'C', '중심: (2, –1), 장축 길이: 4', FALSE), (@last_quiz_id, 'D', '중심: (–2, –1), 장축 길이: 3', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '표준형 타원 \\( \\frac{(x-h)^2}{a^2} + \\frac{(y-k)^2}{b^2} = 1 \\)에서 중심은 (h, k)이고 장축 길이는 2a이다. \\( h=2, k=-1, a=3 \\)이므로 정답은 중심 (2, –1), 장축 길이 6이다.');
 
+-- Quiz for sub_unit_id: 21602
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21602, '다음 중 포물선 \\( y^2 = 8x \\)의 초점 좌표로 옳은 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21602_1716000000', 'A', '(–2, 0)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21602_1716000000', 'B', '(2, 0)', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21602_1716000000', 'C', '(0, 2)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21602_1716000000', 'D', '(0, –2)', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21602_1716000000', '포물선 \\( y^2 = 4px \\)의 초점은 \\( (p, 0) \\)이다. 주어진 식 \\( y^2 = 8x \\)에서 \\( 4p = 8 \\)이므로 \\( p = 2 \\), 따라서 초점은 (2, 0)이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '(–2, 0)', FALSE), (@last_quiz_id, 'B', '(2, 0)', TRUE), (@last_quiz_id, 'C', '(0, 2)', FALSE), (@last_quiz_id, 'D', '(0, –2)', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '포물선 \\( y^2 = 4px \\)의 초점은 \\( (p, 0) \\)이다. 주어진 식 \\( y^2 = 8x \\)에서 \\( 4p = 8 \\)이므로 \\( p = 2 \\), 따라서 초점은 (2, 0)이다.');
 
+-- Quiz for sub_unit_id: 21603
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21603, '다음 두 곡선 \\( y = x^2 \\)과 \\( y = 2x + 3 \\)의 교점의 x좌표를 모두 고르면?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21603_1716000000', 'A', 'x = -1, 3', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21603_1716000000', 'B', 'x = 1, 3', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21603_1716000000', 'C', 'x = -3, 1', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21603_1716000000', 'D', 'x = -1, -3', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21603_1716000000', '두 함수 \\( y = x^2 \\)와 \\( y = 2x + 3 \\)의 교점을 구하려면 \\( x^2 = 2x + 3 \\)을 풀어야 한다. 정리하면 \\( x^2 - 2x - 3 = 0 \\)이 되고, 인수분해하여 \\( (x - 3)(x + 1) = 0 \\)에서 x = -1, 3이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', 'x = -1, 3', TRUE), (@last_quiz_id, 'B', 'x = 1, 3', FALSE), (@last_quiz_id, 'C', 'x = -3, 1', FALSE), (@last_quiz_id, 'D', 'x = -1, -3', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '두 함수 \\( y = x^2 \\)와 \\( y = 2x + 3 \\)의 교점을 구하려면 \\( x^2 = 2x + 3 \\)을 풀어야 한다. 정리하면 \\( x^2 - 2x - 3 = 0 \\)이 되고, 인수분해하여 \\( (x - 3)(x + 1) = 0 \\)에서 x = -1, 3이다.');
 
+-- Quiz for sub_unit_id: 21701
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21701, '다음 벡터 \\( \\vec{a} = (2, -1) \\), \\( \\vec{b} = (-3, 4) \\)에 대해 \\( 2\\vec{a} + \\vec{b} \\)의 값을 구하시오.');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21701_1716000000', 'A', '(5, 3)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21701_1716000000', 'B', '(1, 2)', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21701_1716000000', 'C', '(-1, -6)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21701_1716000000', 'D', '(2, 1)', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21701_1716000000', '주어진 벡터 \\( \\vec{a} = (2, -1) \\), \\( \\vec{b} = (-3, 4) \\)에서 \\( 2\\vec{a} = (4, -2) \\)이고, 이를 \\( \\vec{b} \\)와 더하면 \\( (4 + (-3), -2 + 4) = (1, 2) \\)가 된다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '(5, 3)', FALSE), (@last_quiz_id, 'B', '(1, 2)', TRUE), (@last_quiz_id, 'C', '(-1, -6)', FALSE), (@last_quiz_id, 'D', '(2, 1)', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '주어진 벡터 \\( \\vec{a} = (2, -1) \\), \\( \\vec{b} = (-3, 4) \\)에서 \\( 2\\vec{a} = (4, -2) \\)이고, 이를 \\( \\vec{b} \\)와 더하면 \\( (4 + (-3), -2 + 4) = (1, 2) \\)가 된다.');
 
+-- Quiz for sub_unit_id: 21702
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21702, '벡터 \\( \\vec{a} = (3, 4) \\), \\( \\vec{b} = (x, 2) \\)가 서로 수직일 때, \\( x \\)의 값을 구하시오.');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21702_1716000000', 'A', '-\\frac{8}{3}', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21702_1716000000', 'B', '-\\frac{3}{8}', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21702_1716000000', 'C', '\\frac{8}{3}', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21702_1716000000', 'D', '-4', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21702_1716000000', '두 벡터가 수직이면 내적이 0이어야 하므로, \\( 3x + 8 = 0 \\rightarrow x = -\\frac{8}{3} \\)이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '-\\frac{8}{3}', TRUE), (@last_quiz_id, 'B', '-\\frac{3}{8}', FALSE), (@last_quiz_id, 'C', '\\frac{8}{3}', FALSE), (@last_quiz_id, 'D', '-4', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '두 벡터가 수직이면 내적이 0이어야 하므로, \\( 3x + 8 = 0 \\rightarrow x = -\\frac{8}{3} \\)이다.');
 
+-- Quiz for sub_unit_id: 21703
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21703, '삼각형 \\( ABC \\)에서 점 \\( D \\)는 변 \\( BC \\)의 중점이다. 벡터 \\( \\vec{AB} = \\vec{b} \\), \\( \\vec{AC} = \\vec{c} \\)일 때, 벡터 \\( \\vec{AD} \\)를 \\( \\vec{b}, \\vec{c} \\)로 나타낸 것은?');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'A', '\\vec{b} + \\vec{c}', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'B', '\\frac{1}{2} \\vec{b} - \\frac{1}{2} \\vec{c}', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'C', '\\frac{1}{2} \\vec{b} + \\frac{1}{2} \\vec{c}', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21703_1716000000', 'D', '\\vec{b} - \\vec{c}', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21703_1716000000', '중점 공식을 이용하면 \\( \\vec{BD} = \\frac{1}{2}(\\vec{c} - \\vec{b}) \\)이고, \\( \\vec{AD} = \\vec{AB} + \\vec{BD} = \\vec{b} + \\frac{1}{2}(\\vec{c} - \\vec{b}) = \\frac{1}{2} \\vec{b} + \\frac{1}{2} \\vec{c} \\)이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '\\vec{b} + \\vec{c}', FALSE), (@last_quiz_id, 'B', '\\frac{1}{2} \\vec{b} - \\frac{1}{2} \\vec{c}', FALSE), (@last_quiz_id, 'C', '\\frac{1}{2} \\vec{b} + \\frac{1}{2} \\vec{c}', TRUE), (@last_quiz_id, 'D', '\\vec{b} - \\vec{c}', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '중점 공식을 이용하면 \\( \\vec{BD} = \\frac{1}{2}(\\vec{c} - \\vec{b}) \\)이고, \\( \\vec{AD} = \\vec{AB} + \\vec{BD} = \\vec{b} + \\frac{1}{2}(\\vec{c} - \\vec{b}) = \\frac{1}{2} \\vec{b} + \\frac{1}{2} \\vec{c} \\)이다.');
 
+-- Quiz for sub_unit_id: 21801
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21801, '공간벡터 \\( \\vec{a} = (2, -1, 3) \\), \\( \\vec{b} = (x, 2, -6) \\)가 서로 수직일 때, \\( x \\)의 값을 구하시오.');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'A', '8', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'B', '10', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'C', '12', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21801_1716000000', 'D', '14', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21801_1716000000', '벡터의 내적이 0이면 수직이다. \\( \\vec{a} \\cdot \\vec{b} = 2x - 2 - 18 = 0 \\)이므로 \\( x = 10 \\)이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '8', FALSE), (@last_quiz_id, 'B', '10', TRUE), (@last_quiz_id, 'C', '12', FALSE), (@last_quiz_id, 'D', '14', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '벡터의 내적이 0이면 수직이다. \\( \\vec{a} \\cdot \\vec{b} = 2x - 2 - 18 = 0 \\)이므로 \\( x = 10 \\)이다.');
 
+-- Quiz for sub_unit_id: 21802
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21802, '직선 \\( \\vec{r}(t) = (1, 2, -1) + t(2, -1, 3) \\)과 평면 \\( 2x - y + z = 5 \\)가 만나는 점의 좌표를 구하시오.');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'A', '(3, 1, 2)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'B', '(2, 1.5, 1)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'C', '(2.5, 1.25, 1.25)', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21802_1716000000', 'D', '(1.5, 1.75, 0.5)', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21802_1716000000', '직선의 각 성분을 평면 방정식에 대입하여 \\( t = \\frac{3}{4} \\)을 구하고, 이를 통해 교점 좌표 \\( (2.5, 1.25, 1.25) \\)를 계산한다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '(3, 1, 2)', FALSE), (@last_quiz_id, 'B', '(2, 1.5, 1)', FALSE), (@last_quiz_id, 'C', '(2.5, 1.25, 1.25)', TRUE), (@last_quiz_id, 'D', '(1.5, 1.75, 0.5)', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '직선의 각 성분을 평면 방정식에 대입하여 \\( t = \\frac{3}{4} \\)을 구하고, 이를 통해 교점 좌표 \\( (2.5, 1.25, 1.25) \\)를 계산한다.');
 
+-- Quiz for sub_unit_id: 21803
 INSERT INTO `quiz` (`sub_unit_id`, `content`) VALUES (21803, '점 \\( A(1, 2, 3) \\)에서 직선 \\( \\vec{r}(t) = (4, 0, -1) + t(2, 1, 2) \\)까지의 거리를 구하시오.');
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'A', '\\( \\frac{\\sqrt{221}}{3} \\)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'B', '\\( \\frac{\\sqrt{245}}{3} \\)', TRUE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'C', '\\( \\frac{\\sqrt{170}}{5} \\)', FALSE);
-INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES ('quiz_for_subunit_21803_1716000000', 'D', '\\( \\frac{\\sqrt{261}}{2} \\)', FALSE);
-INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES ('quiz_for_subunit_21803_1716000000', '점과 직선 사이의 거리는, 점에서 직선 위 한 점까지의 벡터와 직선 방향벡터의 외적의 크기를 방향벡터의 크기로 나누어 계산하며, 이 문제에서는 \\( \\frac{\\sqrt{245}}{3} \\)이다.');
+SET @last_quiz_id = LAST_INSERT_ID();
+INSERT INTO `quiz_option` (`quiz_id`, `label`, `option_text`, `is_answer`) VALUES (@last_quiz_id, 'A', '\\( \\frac{\\sqrt{221}}{3} \\)', FALSE), (@last_quiz_id, 'B', '\\( \\frac{\\sqrt{245}}{3} \\)', TRUE), (@last_quiz_id, 'C', '\\( \\frac{\\sqrt{170}}{5} \\)', FALSE), (@last_quiz_id, 'D', '\\( \\frac{\\sqrt{261}}{2} \\)', FALSE);
+INSERT INTO `explanation` (`quiz_id`, `commentary`) VALUES (@last_quiz_id, '점과 직선 사이의 거리는, 점에서 직선 위 한 점까지의 벡터와 직선 방향벡터의 외적의 크기를 방향벡터의 크기로 나누어 계산하며, 이 문제에서는 \\( \\frac{\\sqrt{245}}{3} \\)이다.');
 
 -- Insert into user table
 INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
@@ -455,12 +473,12 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (2, 'user2', '2023-03-15 08:26:32', '2024-09-20 01:56:16'),
 (3, 'user3', '2023-03-15 09:11:55', '2024-09-20 01:38:41'),
 (4, 'user4', '2023-03-15 09:57:18', '2024-09-20 01:21:06'),
-(5, 'user5', '2023-03-15 10:42:41', '2024-09-20 01:03:31');
+(5, 'user5', '2023-03-15 10:42:41', '2024-09-20 01:03:31'),
 (6, 'user6', '2023-03-15 11:28:04', '2024-09-20 00:45:56'),
 (7, 'user7', '2023-03-15 12:13:27', '2024-09-20 00:28:21'),
 (8, 'user8', '2023-03-15 12:58:50', '2024-09-20 00:10:46'),
 (9, 'user9', '2023-03-15 13:44:13', '2024-09-19 23:53:11'),
-(10, 'user10', '2023-03-15 14:29:36', '2024-09-19 23:35:36');
+(10, 'user10', '2023-03-15 14:29:36', '2024-09-19 23:35:36'),
 (11, 'user11', '2023-03-15 15:14:59', '2024-09-19 23:18:01'),
 (12, 'user12', '2023-03-15 16:00:22', '2024-09-19 23:00:26'),
 (13, 'user13', '2023-03-15 16:45:45', '2024-09-19 22:42:51'),
@@ -470,7 +488,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (17, 'user17', '2023-03-15 19:47:17', '2024-09-19 21:32:31'),
 (18, 'user18', '2023-03-15 20:32:40', '2024-09-19 21:14:56'),
 (19, 'user19', '2023-03-15 21:17:03', '2024-09-19 20:57:21'),
-(20, 'user20', '2023-03-15 22:02:26', '2024-09-19 20:39:46');
+(20, 'user20', '2023-03-15 22:02:26', '2024-09-19 20:39:46'),
 (21, 'user21', '2023-03-18 22:47:49', '2024-09-19 20:22:11'),
 (22, 'user22', '2023-03-18 23:33:12', '2024-09-19 20:04:36'),
 (23, 'user23', '2023-03-19 00:18:35', '2024-09-19 19:46:01'),
@@ -480,7 +498,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (27, 'user27', '2023-03-19 03:20:07', '2024-09-23 18:35:41'),
 (28, 'user28', '2023-03-19 04:05:30', '2024-09-23 18:18:06'),
 (29, 'user29', '2023-03-19 04:50:53', '2024-09-23 18:00:31'),
-(30, 'user30', '2023-03-19 05:36:16', '2024-09-23 17:42:56');
+(30, 'user30', '2023-03-19 05:36:16', '2024-09-23 17:42:56'),
 (31, 'user31', '2023-03-19 06:21:39', '2024-09-23 17:25:21'),
 (32, 'user32', '2023-03-19 07:06:02', '2024-09-23 17:07:46'),
 (33, 'user33', '2023-03-19 07:51:25', '2024-09-23 16:50:11'),
@@ -490,7 +508,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (37, 'user37', '2023-03-19 10:52:57', '2024-09-23 15:39:51'),
 (38, 'user38', '2023-03-19 11:38:20', '2024-09-23 15:22:16'),
 (39, 'user39', '2023-03-19 12:23:43', '2024-09-23 15:04:41'),
-(40, 'user40', '2023-03-19 13:09:06', '2024-09-23 14:47:06');
+(40, 'user40', '2023-03-19 13:09:06', '2024-09-23 14:47:06'),
 (41, 'user41', '2023-03-19 13:54:29', '2024-09-23 14:29:31'),
 (42, 'user42', '2023-03-19 14:39:52', '2024-09-23 14:11:56'),
 (43, 'user43', '2023-03-19 15:25:15', '2024-09-23 13:54:21'),
@@ -500,7 +518,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (47, 'user47', '2023-03-19 18:25:47', '2024-09-23 12:44:01'),
 (48, 'user48', '2023-03-19 19:11:10', '2024-09-23 12:26:26'),
 (49, 'user49', '2023-03-19 19:56:33', '2024-09-23 12:08:51'),
-(50, 'user50', '2023-04-19 20:41:56', '2024-10-04 11:51:16');
+(50, 'user50', '2023-04-19 20:41:56', '2024-10-04 11:51:16'),
 (51, 'user51', '2023-04-19 21:27:19', '2024-10-04 11:33:41'),
 (52, 'user52', '2023-04-20 22:12:42', '2024-10-05 11:16:06'),
 (53, 'user53', '2023-04-19 22:58:05', '2024-10-06 10:58:31'),
@@ -510,7 +528,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (57, 'user57', '2023-04-20 01:59:37', '2024-10-06 09:48:11'),
 (58, 'user58', '2023-04-20 02:44:00', '2024-10-07 09:30:36'),
 (59, 'user59', '2023-04-20 03:29:23', '2024-10-12 09:13:01'),
-(60, 'user60', '2023-04-20 04:14:46', '2024-10-06 08:55:26');
+(60, 'user60', '2023-04-20 04:14:46', '2024-10-06 08:55:26'),
 (61, 'user61', '2023-04-20 05:00:09', '2024-10-07 08:37:51'),
 (62, 'user62', '2023-04-20 05:45:32', '2024-10-07 08:20:16'),
 (63, 'user63', '2023-04-20 06:30:55', '2024-10-30 08:02:41'),
@@ -520,7 +538,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (67, 'user67', '2023-04-20 09:32:27', '2024-10-17 06:52:21'),
 (68, 'user68', '2023-04-26 10:17:50', '2024-10-07 06:34:46'),
 (69, 'user69', '2023-04-20 11:03:13', '2024-10-07 06:17:11'),
-(70, 'user70', '2023-04-23 11:48:36', '2024-10-25 05:59:36');
+(70, 'user70', '2023-04-23 11:48:36', '2024-10-25 05:59:36'),
 (71, 'user71', '2023-04-20 12:33:59', '2024-10-07 05:41:01'),
 (72, 'user72', '2023-04-20 13:19:22', '2024-10-07 05:23:26'),
 (73, 'user73', '2023-04-20 14:04:45', '2024-10-30 05:05:51'),
@@ -530,7 +548,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (77, 'user77', '2023-04-20 17:06:17', '2024-10-07 03:55:31'),
 (78, 'user78', '2023-04-20 17:51:40', '2024-10-29 03:37:56'),
 (79, 'user79', '2023-04-20 18:36:03', '2024-10-07 03:20:21'),
-(80, 'user80', '2023-04-20 19:21:26', '2024-10-07 03:02:46');
+(80, 'user80', '2023-04-20 19:21:26', '2024-10-07 03:02:46'),
 (81, 'user81', '2023-04-20 20:06:49', '2024-10-07 02:45:11'),
 (82, 'user82', '2023-04-20 20:52:12', '2024-10-07 02:27:36'),
 (83, 'user83', '2023-04-20 21:37:35', '2024-10-07 02:10:01'),
@@ -540,7 +558,7 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (87, 'user87', '2023-04-21 00:39:07', '2024-10-07 00:59:41'),
 (88, 'user88', '2023-04-21 01:24:30', '2024-10-07 00:42:06'),
 (89, 'user89', '2023-04-24 02:09:53', '2024-10-07 00:24:31'),
-(90, 'user90', '2023-04-29 02:55:16', '2024-10-24 00:06:56');
+(90, 'user90', '2023-04-29 02:55:16', '2024-10-24 00:06:56'),
 (91, 'user91', '2023-05-01 03:40:39', '2024-10-07 23:49:21'),
 (92, 'user92', '2023-05-01 04:25:02', '2024-10-07 23:31:46'),
 (93, 'user93', '2023-05-01 05:10:25', '2024-10-07 23:14:11'),
@@ -551,7 +569,6 @@ INSERT INTO `user` (`user_no`, `user_id`, `created_at`, `updated_at`) VALUES
 (98, 'user98', '2023-05-01 08:57:20', '2024-10-07 21:46:16'),
 (99, 'user99', '2023-05-01 09:42:43', '2024-10-07 21:28:41'),
 (100, 'user100', '2023-05-01 10:28:06', '2024-10-07 21:11:06');
-
 
 -- Insert into user_auth table
 INSERT INTO `user_auth` (`user_no`, `password_hash`, `pw_changed`) VALUES
@@ -765,92 +782,92 @@ INSERT INTO `user_refresh_token` (`user_no`, `refresh_token`, `issued_at`, `expi
 (2, 'refresh_token_example_string_for_user2_another_long_one', '2025-05-12 14:05:00', '2025-06-11 14:05:00', FALSE),
 (3, 'refresh_token_example_string_for_user3_yet_another_token', '2025-05-12 14:10:00', '2025-06-11 14:10:00', FALSE),
 (4, 'refresh_token_example_string_for_user4_unique_value_here', '2025-05-12 14:15:00', '2025-06-11 14:15:00', FALSE),
-(5, 'refresh_token_example_string_for_user5_secure_and_random', '2025-05-12 14:20:00', '2025-06-11 14:20:00', FALSE);
+(5, 'refresh_token_example_string_for_user5_secure_and_random', '2025-05-12 14:20:00', '2025-06-11 14:20:00', FALSE),
 (6, 'refresh_token_example_string_for_user6_another_unique', '2025-05-12 14:25:00', '2025-06-11 14:25:00', FALSE),
 (7, 'refresh_token_example_string_for_user7_different_value', '2025-05-12 14:30:00', '2025-06-11 14:30:00', FALSE),
 (8, 'refresh_token_example_string_for_user8_another_random', '2025-05-12 14:35:00', '2025-06-11 14:35:00', FALSE),
 (9, 'refresh_token_example_string_for_user9_unique_value', '2025-05-12 14:40:00', '2025-06-11 14:40:00', FALSE),
-(10, 'refresh_token_example_string_for_user10_another_secure', '2025-05-12 14:45:00', '2025-06-11 14:45:00', FALSE);
+(10, 'refresh_token_example_string_for_user10_another_secure', '2025-05-12 14:45:00', '2025-06-11 14:45:00', FALSE),
 (11, 'refresh_token_example_string_for_user11_unique_value', '2025-05-12 14:50:00', '2025-06-11 14:50:00', FALSE),
 (12, 'refresh_token_example_string_for_user12_another_secure', '2025-05-12 14:55:00', '2025-06-11 14:55:00', FALSE),
 (13, 'refresh_token_example_string_for_user13_unique_value', '2025-05-12 15:00:00', '2025-06-11 15:00:00', FALSE),
 (14, 'refresh_token_example_string_for_user14_another_secure', '2025-05-12 15:05:00', '2025-06-11 15:05:00', FALSE),
-(15, 'refresh_token_example_string_for_user15_unique_value', '2025-05-12 15:10:00', '2025-06-11 15:10:00', FALSE);
+(15, 'refresh_token_example_string_for_user15_unique_value', '2025-05-12 15:10:00', '2025-06-11 15:10:00', FALSE),
 (16, 'refresh_token_example_string_for_user16_another_secure', '2025-05-12 15:15:00', '2025-06-11 15:15:00', FALSE),
 (17, 'refresh_token_example_string_for_user17_unique_value', '2025-05-12 15:20:00', '2025-06-11 15:20:00', FALSE),
 (18, 'refresh_token_example_string_for_user18_another_secure', '2025-05-12 15:25:00', '2025-06-11 15:25:00', FALSE),
 (19, 'refresh_token_example_string_for_user19_unique_value', '2025-05-12 15:30:00', '2025-06-11 15:30:00', FALSE),
-(20, 'refresh_token_example_string_for_user20_another_secure', '2025-05-12 15:35:00', '2025-06-11 15:35:00', FALSE);
+(20, 'refresh_token_example_string_for_user20_another_secure', '2025-05-12 15:35:00', '2025-06-11 15:35:00', FALSE),
 (21, 'refresh_token_example_string_for_user21_unique_value', '2025-05-12 15:40:00', '2025-06-11 15:40:00', FALSE),
 (22, 'refresh_token_example_string_for_user22_another_secure', '2025-05-12 15:45:00', '2025-06-11 15:45:00', FALSE),
 (23, 'refresh_token_example_string_for_user23_unique_value', '2025-05-12 15:50:00', '2025-06-11 15:50:00', FALSE),
 (24, 'refresh_token_example_string_for_user24_another_secure', '2025-05-12 15:55:00', '2025-06-11 15:55:00', FALSE),
-(25, 'refresh_token_example_string_for_user25_unique_value', '2025-05-12 16:00:00', '2025-06-11 16:00:00', FALSE);
+(25, 'refresh_token_example_string_for_user25_unique_value', '2025-05-12 16:00:00', '2025-06-11 16:00:00', FALSE),
 (26, 'refresh_token_example_string_for_user26_another_secure', '2025-05-12 16:05:00', '2025-06-11 16:05:00', FALSE),
 (27, 'refresh_token_example_string_for_user27_unique_value', '2025-05-12 16:10:00', '2025-06-11 16:10:00', FALSE),
 (28, 'refresh_token_example_string_for_user28_another_secure', '2025-05-12 16:15:00', '2025-06-11 16:15:00', FALSE),
 (29, 'refresh_token_example_string_for_user29_unique_value', '2025-05-12 16:20:00', '2025-06-11 16:20:00', FALSE),
-(30, 'refresh_token_example_string_for_user30_another_secure', '2025-05-12 16:25:00', '2025-06-11 16:25:00', FALSE);
+(30, 'refresh_token_example_string_for_user30_another_secure', '2025-05-12 16:25:00', '2025-06-11 16:25:00', FALSE),
 (31, 'refresh_token_example_string_for_user31_unique_value', '2025-05-12 16:30:00', '2025-06-11 16:30:00', FALSE),
 (32, 'refresh_token_example_string_for_user32_another_secure', '2025-05-12 16:35:00', '2025-06-11 16:35:00', FALSE),
 (33, 'refresh_token_example_string_for_user33_unique_value', '2025-05-12 16:40:00', '2025-06-11 16:40:00', FALSE),
 (34, 'refresh_token_example_string_for_user34_another_secure', '2025-05-12 16:45:00', '2025-06-11 16:45:00', FALSE),
-(35, 'refresh_token_example_string_for_user35_unique_value', '2025-05-12 16:50:00', '2025-06-11 16:50:00', FALSE);
+(35, 'refresh_token_example_string_for_user35_unique_value', '2025-05-12 16:50:00', '2025-06-11 16:50:00', FALSE),
 (36, 'refresh_token_example_string_for_user36_another_secure', '2025-05-12 16:55:00', '2025-06-11 16:55:00', FALSE),
 (37, 'refresh_token_example_string_for_user37_unique_value', '2025-05-12 17:00:00', '2025-06-11 17:00:00', FALSE),
 (38, 'refresh_token_example_string_for_user38_another_secure', '2025-05-12 17:05:00', '2025-06-11 17:05:00', FALSE),
 (39, 'refresh_token_example_string_for_user39_unique_value', '2025-05-12 17:10:00', '2025-06-11 17:10:00', FALSE),
-(40, 'refresh_token_example_string_for_user40_another_secure', '2025-05-12 17:15:00', '2025-06-11 17:15:00', FALSE);
+(40, 'refresh_token_example_string_for_user40_another_secure', '2025-05-12 17:15:00', '2025-06-11 17:15:00', FALSE),
 (41, 'refresh_token_example_string_for_user41_unique_value', '2025-05-12 17:20:00', '2025-06-11 17:20:00', FALSE),
 (42, 'refresh_token_example_string_for_user42_another_secure', '2025-05-12 17:25:00', '2025-06-11 17:25:00', FALSE),
 (43, 'refresh_token_example_string_for_user43_unique_value', '2025-05-12 17:30:00', '2025-06-11 17:30:00', FALSE),
 (44, 'refresh_token_example_string_for_user44_another_secure', '2025-05-12 17:35:00', '2025-06-11 17:35:00', FALSE),
-(45, 'refresh_token_example_string_for_user45_unique_value', '2025-05-12 17:40:00', '2025-06-11 17:40:00', FALSE);
+(45, 'refresh_token_example_string_for_user45_unique_value', '2025-05-12 17:40:00', '2025-06-11 17:40:00', FALSE),
 (46, 'refresh_token_example_string_for_user46_another_secure', '2025-05-12 17:45:00', '2025-06-11 17:45:00', FALSE),
 (47, 'refresh_token_example_string_for_user47_unique_value', '2025-05-12 17:50:00', '2025-06-11 17:50:00', FALSE),
 (48, 'refresh_token_example_string_for_user48_another_secure', '2025-05-12 17:55:00', '2025-06-11 17:55:00', FALSE),
 (49, 'refresh_token_example_string_for_user49_unique_value', '2025-05-12 18:00:00', '2025-06-11 18:00:00', FALSE),
-(50, 'refresh_token_example_string_for_user50_another_secure', '2025-05-12 18:05:00', '2025-06-11 18:05:00', FALSE);
+(50, 'refresh_token_example_string_for_user50_another_secure', '2025-05-12 18:05:00', '2025-06-11 18:05:00', FALSE),
 (51, 'refresh_token_example_string_for_user51_unique_value', '2025-05-12 18:10:00', '2025-06-11 18:10:00', FALSE),
 (52, 'refresh_token_example_string_for_user52_another_secure', '2025-05-12 18:15:00', '2025-06-11 18:15:00', FALSE),
 (53, 'refresh_token_example_string_for_user53_unique_value', '2025-05-12 18:20:00', '2025-06-11 18:20:00', FALSE),
 (54, 'refresh_token_example_string_for_user54_another_secure', '2025-05-12 18:25:00', '2025-06-11 18:25:00', FALSE),
-(55, 'refresh_token_example_string_for_user55_unique_value', '2025-05-12 18:30:00', '2025-06-11 18:30:00', FALSE);
+(55, 'refresh_token_example_string_for_user55_unique_value', '2025-05-12 18:30:00', '2025-06-11 18:30:00', FALSE),
 (56, 'refresh_token_example_string_for_user56_another_secure', '2025-05-12 18:35:00', '2025-06-11 18:35:00', FALSE),
 (57, 'refresh_token_example_string_for_user57_unique_value', '2025-05-12 18:40:00', '2025-06-11 18:40:00', FALSE),
 (58, 'refresh_token_example_string_for_user58_another_secure', '2025-05-12 18:45:00', '2025-06-11 18:45:00', FALSE),
 (59, 'refresh_token_example_string_for_user59_unique_value', '2025-05-12 18:50:00', '2025-06-11 18:50:00', FALSE),
-(60, 'refresh_token_example_string_for_user60_another_secure', '2025-05-12 18:55:00', '2025-06-11 18:55:00', FALSE);
+(60, 'refresh_token_example_string_for_user60_another_secure', '2025-05-12 18:55:00', '2025-06-11 18:55:00', FALSE),
 (61, 'refresh_token_example_string_for_user61_unique_value', '2025-05-12 19:00:00', '2025-06-11 19:00:00', FALSE),
 (62, 'refresh_token_example_string_for_user62_another_secure', '2025-05-12 19:05:00', '2025-06-11 19:05:00', FALSE),
 (63, 'refresh_token_example_string_for_user63_unique_value', '2025-05-12 19:10:00', '2025-06-11 19:10:00', FALSE),
 (64, 'refresh_token_example_string_for_user64_another_secure', '2025-05-12 19:15:00', '2025-06-11 19:15:00', FALSE),
-(65, 'refresh_token_example_string_for_user65_unique_value', '2025-05-12 19:20:00', '2025-06-11 19:20:00', FALSE);
+(65, 'refresh_token_example_string_for_user65_unique_value', '2025-05-12 19:20:00', '2025-06-11 19:20:00', FALSE),
 (66, 'refresh_token_example_string_for_user66_another_secure', '2025-05-12 19:25:00', '2025-06-11 19:25:00', FALSE),
 (67, 'refresh_token_example_string_for_user67_unique_value', '2025-05-12 19:30:00', '2025-06-11 19:30:00', FALSE),
 (68, 'refresh_token_example_string_for_user68_another_secure', '2025-05-12 19:35:00', '2025-06-11 19:35:00', FALSE),
 (69, 'refresh_token_example_string_for_user69_unique_value', '2025-05-12 19:40:00', '2025-06-11 19:40:00', FALSE),
-(70, 'refresh_token_example_string_for_user70_another_secure', '2025-05-12 19:45:00', '2025-06-11 19:45:00', FALSE);
+(70, 'refresh_token_example_string_for_user70_another_secure', '2025-05-12 19:45:00', '2025-06-11 19:45:00', FALSE),
 (71, 'refresh_token_example_string_for_user71_unique_value', '2025-05-12 19:50:00', '2025-06-11 19:50:00', FALSE),
 (72, 'refresh_token_example_string_for_user72_another_secure', '2025-05-12 19:55:00', '2025-06-11 19:55:00', FALSE),
 (73, 'refresh_token_example_string_for_user73_unique_value', '2025-05-12 20:00:00', '2025-06-11 20:00:00', FALSE),
 (74, 'refresh_token_example_string_for_user74_another_secure', '2025-05-12 20:05:00', '2025-06-11 20:05:00', FALSE),
-(75, 'refresh_token_example_string_for_user75_unique_value', '2025-05-12 20:10:00', '2025-06-11 20:10:00', FALSE);
+(75, 'refresh_token_example_string_for_user75_unique_value', '2025-05-12 20:10:00', '2025-06-11 20:10:00', FALSE),
 (76, 'refresh_token_example_string_for_user76_another_secure', '2025-05-12 20:15:00', '2025-06-11 20:15:00', FALSE),
 (77, 'refresh_token_example_string_for_user77_unique_value', '2025-05-12 20:20:00', '2025-06-11 20:20:00', FALSE),
 (78, 'refresh_token_example_string_for_user78_another_secure', '2025-05-12 20:25:00', '2025-06-11 20:25:00', FALSE),
 (79, 'refresh_token_example_string_for_user79_unique_value', '2025-05-12 20:30:00', '2025-06-11 20:30:00', FALSE),
-(80, 'refresh_token_example_string_for_user80_another_secure', '2025-05-12 20:35:00', '2025-06-11 20:35:00', FALSE);
+(80, 'refresh_token_example_string_for_user80_another_secure', '2025-05-12 20:35:00', '2025-06-11 20:35:00', FALSE),
 (81, 'refresh_token_example_string_for_user81_unique_value', '2025-05-12 20:40:00', '2025-06-11 20:40:00', FALSE),
 (82, 'refresh_token_example_string_for_user82_another_secure', '2025-05-12 20:45:00', '2025-06-11 20:45:00', FALSE),
 (83, 'refresh_token_example_string_for_user83_unique_value', '2025-05-12 20:50:00', '2025-06-11 20:50:00', FALSE),
 (84, 'refresh_token_example_string_for_user84_another_secure', '2025-05-12 20:55:00', '2025-06-11 20:55:00', FALSE),
-(85, 'refresh_token_example_string_for_user85_unique_value', '2025-05-12 21:00:00', '2025-06-11 21:00:00', FALSE);
+(85, 'refresh_token_example_string_for_user85_unique_value', '2025-05-12 21:00:00', '2025-06-11 21:00:00', FALSE),
 (86, 'refresh_token_example_string_for_user86_another_secure', '2025-05-12 21:05:00', '2025-06-11 21:05:00', FALSE),
 (87, 'refresh_token_example_string_for_user87_unique_value', '2025-05-12 21:10:00', '2025-06-11 21:10:00', FALSE),
 (88, 'refresh_token_example_string_for_user88_another_secure', '2025-05-12 21:15:00', '2025-06-11 21:15:00', FALSE),
 (89, 'refresh_token_example_string_for_user89_unique_value', '2025-05-12 21:20:00', '2025-06-11 21:20:00', FALSE),
-(90, 'refresh_token_example_string_for_user90_another_secure', '2025-05-12 21:25:00', '2025-06-11 21:25:00', FALSE);
+(90, 'refresh_token_example_string_for_user90_another_secure', '2025-05-12 21:25:00', '2025-06-11 21:25:00', FALSE),
 (91, 'refresh_token_example_string_for_user91_unique_value', '2025-05-12 21:30:00', '2025-06-11 21:30:00', FALSE),
 (92, 'refresh_token_example_string_for_user92_another_secure', '2025-05-12 21:35:00', '2025-06-11 21:35:00', FALSE),
 (93, 'refresh_token_example_string_for_user93_unique_value', '2025-05-12 21:40:00', '2025-06-11 21:40:00', FALSE),
@@ -861,4 +878,3 @@ INSERT INTO `user_refresh_token` (`user_no`, `refresh_token`, `issued_at`, `expi
 (98, 'refresh_token_example_string_for_user98_another_secure', '2025-05-12 22:05:00', '2025-06-11 22:05:00', FALSE),
 (99, 'refresh_token_example_string_for_user99_unique_value', '2025-05-12 22:10:00', '2025-06-11 22:10:00', FALSE),
 (100, 'refresh_token_example_string_for_user100_another_secure', '2025-05-12 22:15:00', '2025-06-11 22:15:00', FALSE);
-
