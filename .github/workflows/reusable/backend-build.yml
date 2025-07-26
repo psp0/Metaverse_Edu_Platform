@@ -278,7 +278,6 @@ jobs:
           ignore-tags: main-latest
           delete-untagged-versions: true
           delete-tagged-versions: true
-          num-to-delete: 0
 
       - name: Build and push Docker image
         if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
