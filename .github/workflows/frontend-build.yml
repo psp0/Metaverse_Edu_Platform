@@ -31,6 +31,15 @@ on:
       AWS_INFRA_ROLE_ARN:
         description: "AWS Management account role ARN"
         required: true
+      UNITY_LICENSE:
+        description: "Unity license file content"
+        required: true
+      UNITY_EMAIL:
+        description: "Unity account email"
+        required: true
+      UNITY_PASSWORD:
+        description: "Unity account password"
+        required: true
 
 env:
   AWS_REGION: ${{ vars.AWS_REGION || 'ap-northeast-2' }}
