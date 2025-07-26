@@ -1,0 +1,53 @@
+name: Manual Main Branch Backend Build
+
+description: "메인 브랜치에 대해 수동으로 백엔드 빌드를 트리거하는 워크플로우입니다."
+
+on:
+  workflow_dispatch:
+    inputs:
+      java_version:
+        description: "Java 버전 (기본값: 17)"
+        required: false
+        default: "17"
+      image_tags:
+        description: 'Docker 이미지 태그 (줄바꿈으로 구분, 예: latest\nmain)'
+        required: true
+        default: "main-latest"
+      image_labels:
+        description: "Docker 이미지 라벨 (줄바꿈으로 구분, key=value 형식)"
+        required: false
+        default: ""
+      run_tests:
+        description: "테스트 실행 여부"
+        required: false
+        default: "true"
+      upload_artifacts:
+        description: "JAR 파일 아티팩트 업로드 여부"
+        required: false
+        default: "false"
+      artifact_retention_days:
+        description: "아티팩트 보관 기간 (일)"
+        required: false
+        default: "7"
+      run_security_scan:
+        description: "보안 스캔 실행 여부"
+        required: false
+        default: "false"
+
+jobs:
+  call-backend-build:
+    name: Call Reusable Backend Build
+    uses: ./.github/workflows/reusable/backend-build.yml
+    with:
+      java_version: ${{ github.event.inputs.java_version }}
+      image_tags: ${{ github.event.inputs.image_tags }}
+      image_labels: ${{ github.event.inputs.image_labels }}
+      run_tests: ${{ github.event.inputs.run_tests == 'true' }}
+      upload_artifacts: ${{ github.event.inputs.upload_artifacts == 'true' }}
+      artifact_retention_days: ${{ github.event.inputs.artifact_retention_days }}
+      run_security_scan: ${{ github.event.inputs.run_security_scan == 'true' }}
+      build_context: main
+      commit_sha: ${{ github.sha }}
+      ref_name: "main"
+    secrets:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

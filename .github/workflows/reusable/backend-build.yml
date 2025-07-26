@@ -1,0 +1,380 @@
+name: Backend Build (Reusable)
+
+permissions:
+  id-token: write
+  contents: read
+  packages: write
+
+on:
+  workflow_call:
+    inputs:
+      java_version:
+        description: "Java 버전"
+        required: false
+        type: string
+        default: "17"
+      image_tags:
+        description: "Docker 이미지 태그 (줄바꿈으로 구분, 여러 태그 지원)"
+        required: true
+        type: string
+      image_labels:
+        description: "Docker 이미지 라벨 (줄바꿈으로 구분, key=value 형식)"
+        required: false
+        type: string
+        default: ""
+      run_tests:
+        description: "테스트 실행 여부"
+        required: false
+        type: boolean
+        default: true
+      upload_artifacts:
+        description: "JAR 파일 아티팩트 업로드 여부"
+        required: false
+        type: boolean
+        default: false
+      artifact_retention_days:
+        description: "아티팩트 보관 기간 (일)"
+        required: false
+        type: number
+        default: 7
+      run_security_scan:
+        description: "보안 스캔 실행 여부"
+        required: false
+        type: boolean
+        default: false
+      build_context:
+        description: "빌드 컨텍스트 (pr, main, manual 등)"
+        required: false
+        type: string
+        default: "manual"
+      pr_number:
+        description: "PR 번호 (PR 빌드인 경우)"
+        required: false
+        type: string
+        default: ""
+      commit_sha:
+        description: "커밋 SHA"
+        required: false
+        type: string
+        default: ""
+      ref_name:
+        description: "The name of the ref (branch or tag) that triggered the workflow"
+        required: false
+        type: string
+        default: ""
+    outputs:
+      build_success:
+        description: "빌드 성공 여부"
+        value: ${{ jobs.backend-build.outputs.build_success }}
+      docker_image_digest:
+        description: "Docker 이미지 다이제스트"
+        value: ${{ jobs.backend-build.outputs.docker_image_digest }}
+      test_success:
+        description: "테스트 성공 여부"
+        value: ${{ jobs.backend-build.outputs.test_success }}
+      security_scan_success:
+        description: "보안 스캔 성공 여부"
+        value: ${{ jobs.backend-build.outputs.security_scan_success }}
+      critical_vulnerabilities:
+        description: "CRITICAL 취약점 개수"
+        value: ${{ jobs.backend-build.outputs.critical_vulnerabilities }}
+      high_vulnerabilities:
+        description: "HIGH 취약점 개수"
+        value: ${{ jobs.backend-build.outputs.high_vulnerabilities }}
+
+jobs:
+  backend-build:
+    name: Backend Build & Test
+    runs-on: ubuntu-latest
+    outputs:
+      build_success: ${{ steps.build-result.outputs.success }}
+      docker_image_digest: ${{ steps.docker-build.outputs.digest }}
+      test_success: ${{ steps.test-result.outputs.success }}
+      security_scan_success: ${{ steps.security-scan.outputs.success }}
+      critical_vulnerabilities: ${{ steps.security-scan.outputs.critical_count }}
+      high_vulnerabilities: ${{ steps.security-scan.outputs.high_count }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up JDK ${{ inputs.java_version }}
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ inputs.java_version }}
+          distribution: "temurin"
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x backend/gradlew
+
+      - name: Run unit tests
+        if: inputs.run_tests
+        id: test-run
+        continue-on-error: true # 테스트 실패해도 워크플로우 계속 진행
+        run: |
+          cd backend
+          echo "단위 테스트 실행 중..."
+          ./gradlew test --info
+
+      - name: Generate test report
+        if: inputs.run_tests && (success() || failure())
+        uses: dorny/test-reporter@v1
+        with:
+          name: Backend Unit Tests
+          path: backend/build/test-results/test/*.xml
+          reporter: java-junit
+
+      - name: Build application
+        id: build-run
+        run: |
+          cd backend
+          echo "애플리케이션 빌드 중..."
+          # bootJar 태스크를 사용하여 실행 가능한 JAR 생성
+          ./gradlew bootJar --no-daemon
+
+      - name: Set build result
+        id: build-result
+        run: |
+          # 빌드 결과 검증
+          cd backend
+          if [ -f "build/libs/"*.jar ]; then
+            JAR_FILE=$(find build/libs -name "*.jar" | head -1)
+            echo "✅ 빌드 성공: $JAR_FILE"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ 빌드 실패: JAR 파일을 찾을 수 없습니다."
+            echo "success=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+      - name: Set test result
+        id: test-result
+        if: inputs.run_tests
+        run: |
+          # 이전 단계(test-run)의 실제 결과(outcome)를 확인
+          if [[ "${{ steps.test-run.outcome }}" == "success" ]]; then
+            echo "✅ 테스트 성공"
+            echo "success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ 테스트 실패"
+            echo "success=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload build artifact
+        if: inputs.upload_artifacts && steps.build-result.outputs.success == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-jar-${{ inputs.commit_sha || github.sha }}-${{ github.ref_name }}-${{ github.run_number }}
+          path: backend/build/libs/*.jar
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Install jq for security scan
+        if: inputs.run_security_scan
+        run: |
+          echo "jq 설치 중..."
+          sudo apt-get update && sudo apt-get install -y jq
+
+      - name: Run security scan
+        if: inputs.run_security_scan
+        id: security-scan
+        continue-on-error: true
+        run: |
+          cd backend
+          echo "보안 스캔 실행 중..."
+
+          # Run dependency check
+          ./gradlew dependencyCheckAnalyze
+
+          # Check results
+          if [[ -f "build/reports/dependency-check-report.json" ]]; then
+            echo "✅ 보안 스캔 완료. 결과 분석 중..."
+            
+            # Parse vulnerabilities using jq
+            CRITICAL_COUNT=$(jq '[.dependencies[]?.vulnerabilities[]? | select(.severity == "CRITICAL")] | length' build/reports/dependency-check-report.json 2>/dev/null || echo "0")
+            HIGH_COUNT=$(jq '[.dependencies[]?.vulnerabilities[]? | select(.severity == "HIGH")] | length' build/reports/dependency-check-report.json 2>/dev/null || echo "0")
+            
+            echo "##[group]취약점 요약"
+            echo "- CRITICAL: $CRITICAL_COUNT"
+            echo "- HIGH: $HIGH_COUNT"
+            echo "##[endgroup]"
+            
+            echo "critical_count=$CRITICAL_COUNT" >> $GITHUB_OUTPUT
+            echo "high_count=$HIGH_COUNT" >> $GITHUB_OUTPUT
+            
+            if [[ $CRITICAL_COUNT -gt 0 ]] || [[ $HIGH_COUNT -gt 0 ]]; then
+              echo "success=false" >> $GITHUB_OUTPUT
+              echo "##[warning]보안 취약점이 발견되었습니다."
+            else
+              echo "success=true" >> $GITHUB_OUTPUT
+              echo "✅ 보안 취약점이 발견되지 않았습니다."
+            fi
+          else
+            echo "##[error]보안 스캔 결과 파일을 찾을 수 없습니다."
+            echo "critical_count=0" >> $GITHUB_OUTPUT
+            echo "high_count=0" >> $GITHUB_OUTPUT
+            echo "success=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Upload security scan results
+        if: inputs.run_security_scan && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: security-scan-report-${{ inputs.build_context }}-${{ inputs.pr_number || 'main' }}
+          path: |
+            backend/build/reports/dependency-check-report.html
+            backend/build/reports/dependency-check-report.json
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Set up Docker Buildx
+        if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract Docker metadata
+        if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
+        id: docker-meta
+        uses: docker/metadata-action@v5
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          tags: |
+            ${{ inputs.image_tags }}
+          labels: |
+            org.opencontainers.image.title=Backend
+            org.opencontainers.image.description=Metaverse Education Platform Backend
+            org.opencontainers.image.url=https://github.com/${{ github.repository }}
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.revision=${{ inputs.commit_sha || github.sha }}
+            mep.build-type=${{ inputs.build_context }}
+            mep.commit-sha=${{ inputs.commit_sha || github.sha }}
+            mep.timestamp=${{ github.run_number }}
+            mep.jar-built-at=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+            ${{ inputs.pr_number && format('mep.pr-number={0}', inputs.pr_number) || '' }}
+
+      - name: Clean up old main branch images from GHCR
+        if: success() && inputs.ref_name == 'main' && inputs.image_tags != ''
+        uses: actions/delete-package-versions@v5
+        with:
+          package-name: ${{ lower(github.repository) }}
+          package-type: "container"
+          min-versions-to-keep: 3
+          ignore-tags: main-latest
+          delete-untagged-versions: true
+          delete-tagged-versions: true
+          num-to-delete: 0
+
+      - name: Build and push Docker image
+        if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
+        id: docker-build
+        uses: docker/build-push-action@v5
+        with:
+          context: backend/
+          file: backend/Dockerfile.optimized
+          push: true
+          tags: ${{ steps.docker-meta.outputs.tags }}
+          labels: ${{ steps.docker-meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+          provenance: false
+
+      - name: Save image tag for promotion
+        if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
+        run: |
+          # Save the primary tag from the first tag in the list
+          PRIMARY_TAG=$(echo "${{ steps.docker-meta.outputs.tags }}" | head -n1 | cut -d':' -f2)
+          echo "$PRIMARY_TAG" > image-tag.txt
+          echo "primary_image_tag=$PRIMARY_TAG" >> $GITHUB_OUTPUT
+          echo "Primary image tag for outputs: $PRIMARY_TAG"
+
+      - name: Upload image tag artifact
+        if: steps.build-result.outputs.success == 'true' && inputs.image_tags != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: image-tag-${{ inputs.build_context }}-${{ inputs.pr_number || 'main' }}-${{ inputs.commit_sha || github.sha }}
+          path: image-tag.txt
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Create build summary
+        if: always()
+        run: |
+          echo "## Backend 빌드 결과" >> $GITHUB_STEP_SUMMARY
+          echo "### 빌드 정보" >> $GITHUB_STEP_SUMMARY
+          echo "- **빌드 컨텍스트**: ${{ inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Java 버전**: ${{ inputs.java_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **커밋 SHA**: ${{ inputs.commit_sha || github.sha }}" >> $GITHUB_STEP_SUMMARY
+
+          if [ -n "${{ inputs.pr_number }}" ]; then
+            echo "- **PR 번호**: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "### 실행 단계" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ inputs.run_tests }}" = "true" ]; then
+            echo "- **테스트**: ${{ steps.test-result.outputs.success == 'true' && '✅ 성공' || '❌ 실패' }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- **테스트**: 건너뜀" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "- **빌드**: ${{ steps.build-result.outputs.success == 'true' && '✅ 성공' || '❌ 실패' }}" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ inputs.run_security_scan }}" = "true" ]; then
+            CRITICAL_COUNT="${{ steps.security-scan.outputs.critical_count }}"
+            HIGH_COUNT="${{ steps.security-scan.outputs.high_count }}"
+            
+            if [ "$CRITICAL_COUNT" -gt 0 ] || [ "$HIGH_COUNT" -gt 0 ]; then
+              echo "- **보안 스캔**: 취약점 발견 (CRITICAL: $CRITICAL_COUNT, HIGH: $HIGH_COUNT)" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- **보안 스캔**: 취약점 없음" >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "- **보안 스캔**: 건너뜀" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Docker 이미지 빌드 결과 요약
+          if [ "${{ steps.build-result.outputs.success }}" = "true" ]; then
+            if [ -n "${{ inputs.image_tags }}" ]; then
+              echo "- **Docker 이미지**: ✅ 성공적으로 빌드 및 푸시되었습니다!" >> $GITHUB_STEP_SUMMARY
+              echo "### Docker 이미지 태그" >> $GITHUB_STEP_SUMMARY
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "${{ inputs.image_tags }}" | while read -r tag; do
+                echo "- $tag" >> $GITHUB_STEP_SUMMARY
+              done
+              echo '```' >> $GITHUB_STEP_SUMMARY
+              
+              # 추가 정보 표시 (PR 빌드인 경우)
+              if [ -n "${{ inputs.pr_number }}" ]; then
+                echo "- **배포 환경**: PR 미리보기 환경" >> $GITHUB_STEP_SUMMARY
+                echo "- **PR 번호**: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+              else
+                echo "- **배포 환경**: ${{ inputs.build_context == 'main' && '프로덕션' || inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
+              fi
+            else
+              echo "- **Docker 이미지**: 이미지 태그가 지정되지 않아 빌드를 건너뛰었습니다." >> $GITHUB_STEP_SUMMARY
+            fi
+          else
+            echo "- **Docker 이미지**: ❌ 빌드에 실패했습니다. 자세한 내용은 위의 로그를 확인해주세요." >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # 아티팩트 업로드 결과
+          if [ "${{ inputs.upload_artifacts }}" = "true" ]; then
+            echo "- **빌드 아티팩트**: JAR 파일이 성공적으로 업로드되었습니다." >> $GITHUB_STEP_SUMMARY
+            echo "  - 보관 기간: ${{ inputs.artifact_retention_days }}일" >> $GITHUB_STEP_SUMMARY
+            echo "  - 다운로드: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_STEP_SUMMARY
+          fi

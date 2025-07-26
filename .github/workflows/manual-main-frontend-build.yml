@@ -1,0 +1,25 @@
+name: Manual Main Branch Frontend Build
+
+description: "메인 브랜치에 대해 수동으로 프론트엔드 빌드를 트리거하는 워크플로우입니다."
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: '빌드 환경 (예: prod, dev)'
+        required: true
+        default: 'prod'
+      ref_name:
+        description: '브랜치 이름 (기본값: main)'
+        required: false
+        default: 'main'
+
+jobs:
+  call-frontend-build:
+    name: Call Reusable Frontend Build
+    uses: ./.github/workflows/reusable/frontend-build.yml
+    with:
+      environment: ${{ github.event.inputs.environment }}
+      ref_name: ${{ github.event.inputs.ref_name }}
+    secrets:
+      AWS_INFRA_ROLE_ARN: ${{ secrets.AWS_INFRA_ROLE_ARN }}
