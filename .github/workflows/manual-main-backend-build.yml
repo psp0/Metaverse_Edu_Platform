@@ -37,7 +37,7 @@ on:
 jobs:
   call-backend-build:
     name: Call Reusable Backend Build
-    uses: ./.github/workflows/reusable/backend-build.yml
+    uses: ./.github/workflows/backend-build.yml
     with:
       java_version: ${{ github.event.inputs.java_version }}
       image_tags: ${{ github.event.inputs.image_tags }}
