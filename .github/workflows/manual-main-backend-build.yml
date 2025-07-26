@@ -49,7 +49,7 @@ jobs:
       image_labels: ${{ github.event.inputs.image_labels }}
       run_tests: ${{ github.event.inputs.run_tests == 'true' }}
       upload_artifacts: ${{ github.event.inputs.upload_artifacts == 'true' }}
-      artifact_retention_days: ${{ github.event.inputs.artifact_retention_days }}
+      artifact_retention_days: ${{ toNumber(github.event.inputs.artifact_retention_days) }}
       run_security_scan: ${{ github.event.inputs.run_security_scan == 'true' }}
       build_context: main
       commit_sha: ${{ github.sha }}
