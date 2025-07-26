@@ -2,6 +2,10 @@ name: Manual Main Branch Frontend Build
 
 description: "메인 브랜치에 대해 수동으로 프론트엔드 빌드를 트리거하는 워크플로우입니다."
 
+permissions:
+  id-token: write # OIDC 토큰 생성을 위해 필요
+  contents: read # 리포지토리 읽기 권한
+
 on:
   workflow_dispatch:
     inputs:

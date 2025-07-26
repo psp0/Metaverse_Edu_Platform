@@ -2,6 +2,11 @@ name: Manual Main Branch Backend Build
 
 description: "메인 브랜치에 대해 수동으로 백엔드 빌드를 트리거하는 워크플로우입니다."
 
+permissions:
+  id-token: write # OIDC 토큰 생성을 위해 필요
+  contents: read # 리포지토리 읽기 권한
+  packages: write # 패키지 업로드 권한
+
 on:
   workflow_dispatch:
     inputs:
@@ -49,5 +54,3 @@ jobs:
       build_context: main
       commit_sha: ${{ github.sha }}
       ref_name: "main"
-    secrets:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
