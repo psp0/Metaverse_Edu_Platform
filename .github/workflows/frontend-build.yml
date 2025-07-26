@@ -1,0 +1,233 @@
+name: Unity WebGL Build
+
+permissions:
+  id-token: write # OIDC 토큰 생성 권한
+  contents: read # 리포지토리 읽기 권한
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+      pr_number:
+        required: false
+        type: string
+      head_sha:
+        required: false
+        type: string
+      ref_name:
+        description: "The name of the ref (branch or tag) that triggered the workflow"
+        required: false
+        type: string
+        default: ""
+      artifact_retention_days:
+        description: "Number of days to retain build artifacts"
+        required: false
+        type: number
+        default: 1
+
+    secrets:
+      AWS_INFRA_ROLE_ARN:
+        description: "AWS Management account role ARN"
+        required: true
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION || 'ap-northeast-2' }}
+
+jobs:
+  unity-webgl-build:
+    name: Unity WebGL Build
+    runs-on: ubuntu-latest
+    outputs:
+      status: ${{ job.status }}
+      pr_number: ${{ inputs.pr_number || '' }}
+    env:
+      FINAL_HEAD_SHA: ${{ inputs.head_sha || github.event.pull_request.head.sha || github.sha }}
+
+    steps:
+      - name: Set pending status
+        if: inputs.pr_number
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const sha = '${{ env.FINAL_HEAD_SHA }}';
+
+            await github.rest.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state: 'pending',
+              context: 'WebGL Build',
+              description: 'Build is in progress...',
+              target_url: `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`
+            });
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache Unity library
+        uses: actions/cache@v4
+        with:
+          path: frontend/Library
+          key: Library-frontend-${{ runner.os }}-${{ hashFiles('frontend/ProjectSettings/ProjectVersion.txt', 'frontend/ProjectSettings/EditorBuildSettings.asset', 'frontend/Packages/packages-lock.json') }}
+          restore-keys: |
+            Library-frontend-${{ runner.os }}-
+
+      - name: Build Unity project
+        uses: game-ci/unity-builder@v4
+        id: unity-build
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+          BUILD_NAME: build-${{ github.run_id }}
+        with:
+          targetPlatform: WebGL
+          projectPath: frontend/
+          buildName: ${{ env.BUILD_NAME }}
+          buildPath: build
+          cleanup: true
+
+      - name: Compress build output
+        if: success()
+        run: |
+          cd build
+          tar -czvf ../webgl-build-${{ github.run_id }}.tar.gz .
+          echo "COMPRESSED_FILE=../webgl-build-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
+
+      - name: Configure AWS credentials for infra account
+        if: success()
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-region: ${{ env.AWS_REGION }}
+          role-to-assume: ${{ secrets.AWS_INFRA_ROLE_ARN }}
+          role-session-name: github-actions-${{ github.run_id }}-infra-frontend
+
+      - name: Clean up previous build artifacts for this PR
+        # Only run for PR builds
+        if: success() && inputs.pr_number != ''
+        env:
+          S3_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
+        run: |
+          # Delete all files in the PR's preview directory
+          aws s3 rm "s3://$S3_BUCKET/previews/pr-${{ inputs.pr_number }}/" --recursive
+          echo "Cleaned up previous build artifacts for PR #${{ inputs.pr_number }}"
+
+      - name: Clean up old main build artifacts
+        # Only run for main branch builds (not PRs)
+        if: success() && inputs.pr_number == '' && inputs.ref_name == 'main'
+        env:
+          S3_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
+          KEEP_COUNT: 2 # Number of latest artifacts to keep
+        run: |
+          # List objects in main/ directory, sort by LastModified in descending order, and get keys after KEEP_COUNT
+          OBJECTS_TO_DELETE=$(aws s3api list-objects-v2 --bucket "$S3_BUCKET" --prefix "main/" --query "reverse(sort_by(Contents, &LastModified))[$KEEP_COUNT:].Key" --output json)
+
+          # Check if there are objects to delete
+          if [[ $(echo "$OBJECTS_TO_DELETE" | jq 'length') -gt 0 ]]; then
+            echo "Found old artifacts in main/ to delete:"
+            echo "$OBJECTS_TO_DELETE" | jq -r '.[]'
+
+            # Convert to JSON format required by delete-objects API
+            DELETE_JSON=$(echo "$OBJECTS_TO_DELETE" | jq '{Objects: [.[] | {Key: .}], Quiet: false}')
+
+            echo "Deleting objects with payload: $DELETE_JSON"
+            aws s3api delete-objects --bucket "$S3_BUCKET" --delete "$DELETE_JSON"
+            echo "Cleaned up old main branch artifacts, keeping the latest $KEEP_COUNT."
+          else
+            echo "No old main branch artifacts to clean up (found $KEEP_COUNT or fewer artifacts)."
+          fi
+
+      - name: Upload build artifact to infra S3 bucket
+        if: success()
+        env:
+          ARTIFACT_NAME: webgl-build-${{ env.FINAL_HEAD_SHA }}.tar.gz
+          S3_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
+        run: |
+          # Set S3 path based on build context
+          if [[ -n "${{ inputs.pr_number }}" ]]; then
+            # PR build path: s3://bucket/previews/pr-[PR_NUMBER]/[COMMIT_SHA].tar.gz
+            S3_PATH="previews/pr-${{ inputs.pr_number }}/${{ env.FINAL_HEAD_SHA }}.tar.gz"
+          elif [[ "${{ inputs.ref_name }}" == "main" ]]; then
+            # Main branch build path: s3://bucket/main/[COMMIT_SHA].tar.gz
+            S3_PATH="main/${{ env.FINAL_HEAD_SHA }}.tar.gz"
+          else
+            # Fallback for other builds (e.g., branch push without PR)
+            S3_PATH="builds/commit/${{ env.FINAL_HEAD_SHA }}.tar.gz"
+          fi
+
+          # Upload compressed build to infra account's S3 bucket
+          echo "Uploading build artifact to s3://$S3_BUCKET/$S3_PATH"
+          aws s3 cp ${{ env.COMPRESSED_FILE }} s3://$S3_BUCKET/$S3_PATH
+
+          echo "Frontend artifact uploaded to infra S3 bucket"
+          echo "S3 URI: s3://$S3_BUCKET/$S3_PATH"
+          echo "ARTIFACT_S3_URI=s3://$S3_BUCKET/$S3_PATH" >> $GITHUB_ENV
+
+      - name: Upload build artifact (GitHub Actions)
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: webgl-build-${{ github.run_id }}
+          path: ${{ env.COMPRESSED_FILE }}
+          retention-days: ${{ inputs.artifact_retention_days }}
+
+      - name: Update PR status on success
+        if: success() && inputs.pr_number
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const sha = '${{ env.FINAL_HEAD_SHA }}';
+
+            await github.rest.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state: 'success',
+              context: 'WebGL Build',
+              description: 'Build completed successfully',
+              target_url: `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`
+            });
+
+      - name: Update PR status on failure
+        if: failure() && inputs.pr_number
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const { owner, repo } = context.repo;
+            const sha = '${{ env.FINAL_HEAD_SHA }}';
+
+            await github.rest.repos.createCommitStatus({
+              owner,
+              repo,
+              sha,
+              state: 'failure',
+              context: 'WebGL Build',
+              description: 'Build failed - check logs',
+              target_url: `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`
+            });
+
+      - name: Create build summary
+        if: always()
+        run: |
+          echo "## Frontend (Unity WebGL) 빌드 결과" >> $GITHUB_STEP_SUMMARY
+          echo "### 빌드 상태: ${{ job.status == 'success' && '✅ 성공' || '❌ 실패' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          echo "### 빌드 결과물 정보" >> $GITHUB_STEP_SUMMARY
+          if [[ "${{ job.status }}" == "success" ]]; then
+            echo "- 빌드가 성공적으로 완료되었습니다." >> $GITHUB_STEP_SUMMARY
+            echo "- 빌드 아티팩트가 생성되었습니다." >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- 빌드가 실패했습니다. 자세한 내용은 로그를 확인해주세요." >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "### 빌드 컨텍스트" >> $GITHUB_STEP_SUMMARY
+          if [[ -n "${{ inputs.pr_number }}" ]]; then
+            echo "- **PR 번호**: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "- **커밋 SHA**: \`${{ env.FINAL_HEAD_SHA }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **환경**: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
