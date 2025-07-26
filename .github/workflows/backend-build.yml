@@ -149,10 +149,10 @@ jobs:
           cd backend
           if [ -f "build/libs/"*.jar ]; then
             JAR_FILE=$(find build/libs -name "*.jar" | head -1)
-            echo "✅ 빌드 성공: $JAR_FILE"
+            echo "빌드 성공: $JAR_FILE"
             echo "success=true" >> $GITHUB_OUTPUT
           else
-            echo "❌ 빌드 실패: JAR 파일을 찾을 수 없습니다."
+            echo "빌드 실패: JAR 파일을 찾을 수 없습니다."
             echo "success=false" >> $GITHUB_OUTPUT
             exit 1
           fi
@@ -163,10 +163,10 @@ jobs:
         run: |
           # 이전 단계(test-run)의 실제 결과(outcome)를 확인
           if [[ "${{ steps.test-run.outcome }}" == "success" ]]; then
-            echo "✅ 테스트 성공"
+            echo "테스트 성공"
             echo "success=true" >> $GITHUB_OUTPUT
           else
-            echo "❌ 테스트 실패"
+            echo "테스트 실패"
             echo "success=false" >> $GITHUB_OUTPUT
           fi
 
@@ -197,29 +197,28 @@ jobs:
 
           # Check results
           if [[ -f "build/reports/dependency-check-report.json" ]]; then
-            echo "✅ 보안 스캔 완료. 결과 분석 중..."
+            echo "보안 스캔 완료. 결과 분석 중..."
             
             # Parse vulnerabilities using jq
             CRITICAL_COUNT=$(jq '[.dependencies[]?.vulnerabilities[]? | select(.severity == "CRITICAL")] | length' build/reports/dependency-check-report.json 2>/dev/null || echo "0")
             HIGH_COUNT=$(jq '[.dependencies[]?.vulnerabilities[]? | select(.severity == "HIGH")] | length' build/reports/dependency-check-report.json 2>/dev/null || echo "0")
             
-            echo "##[group]취약점 요약"
+            echo "취약점 요약"
             echo "- CRITICAL: $CRITICAL_COUNT"
             echo "- HIGH: $HIGH_COUNT"
-            echo "##[endgroup]"
             
             echo "critical_count=$CRITICAL_COUNT" >> $GITHUB_OUTPUT
             echo "high_count=$HIGH_COUNT" >> $GITHUB_OUTPUT
             
             if [[ $CRITICAL_COUNT -gt 0 ]] || [[ $HIGH_COUNT -gt 0 ]]; then
               echo "success=false" >> $GITHUB_OUTPUT
-              echo "##[warning]보안 취약점이 발견되었습니다."
+              echo "보안 취약점이 발견되었습니다."
             else
               echo "success=true" >> $GITHUB_OUTPUT
-              echo "✅ 보안 취약점이 발견되지 않았습니다."
+              echo "보안 취약점이 발견되지 않았습니다."
             fi
           else
-            echo "##[error]보안 스캔 결과 파일을 찾을 수 없습니다."
+            echo "보안 스캔 결과 파일을 찾을 수 없습니다."
             echo "critical_count=0" >> $GITHUB_OUTPUT
             echo "high_count=0" >> $GITHUB_OUTPUT
             echo "success=false" >> $GITHUB_OUTPUT
@@ -319,67 +318,65 @@ jobs:
       - name: Create build summary
         if: always()
         run: |
-          echo "## Backend 빌드 결과" >> $GITHUB_STEP_SUMMARY
-          echo "### 빌드 정보" >> $GITHUB_STEP_SUMMARY
-          echo "- **빌드 컨텍스트**: ${{ inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Java 버전**: ${{ inputs.java_version }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **커밋 SHA**: ${{ inputs.commit_sha || github.sha }}" >> $GITHUB_STEP_SUMMARY
+          echo "Backend 빌드 결과" >> $GITHUB_STEP_SUMMARY
+          echo "빌드 정보" >> $GITHUB_STEP_SUMMARY
+          echo "- 빌드 컨텍스트: ${{ inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Java 버전: ${{ inputs.java_version }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 커밋 SHA: ${{ inputs.commit_sha || github.sha }}" >> $GITHUB_STEP_SUMMARY
 
           if [ -n "${{ inputs.pr_number }}" ]; then
-            echo "- **PR 번호**: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+            echo "- PR 번호: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
           fi
 
-          echo "### 실행 단계" >> $GITHUB_STEP_SUMMARY
+          echo "실행 단계" >> $GITHUB_STEP_SUMMARY
 
           if [ "${{ inputs.run_tests }}" = "true" ]; then
-            echo "- **테스트**: ${{ steps.test-result.outputs.success == 'true' && '✅ 성공' || '❌ 실패' }}" >> $GITHUB_STEP_SUMMARY
+            echo "- 테스트: ${{ steps.test-result.outputs.success == 'true' && '성공' || '실패' }}" >> $GITHUB_STEP_SUMMARY
           else
-            echo "- **테스트**: 건너뜀" >> $GITHUB_STEP_SUMMARY
+            echo "- 테스트: 건너뜀" >> $GITHUB_STEP_SUMMARY
           fi
 
-          echo "- **빌드**: ${{ steps.build-result.outputs.success == 'true' && '✅ 성공' || '❌ 실패' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 빌드: ${{ steps.build-result.outputs.success == 'true' && '성공' || '실패' }}" >> $GITHUB_STEP_SUMMARY
 
           if [ "${{ inputs.run_security_scan }}" = "true" ]; then
             CRITICAL_COUNT="${{ steps.security-scan.outputs.critical_count }}"
             HIGH_COUNT="${{ steps.security-scan.outputs.high_count }}"
             
             if [ "$CRITICAL_COUNT" -gt 0 ] || [ "$HIGH_COUNT" -gt 0 ]; then
-              echo "- **보안 스캔**: 취약점 발견 (CRITICAL: $CRITICAL_COUNT, HIGH: $HIGH_COUNT)" >> $GITHUB_STEP_SUMMARY
+              echo "- 보안 스캔: 취약점 발견 (CRITICAL: $CRITICAL_COUNT, HIGH: $HIGH_COUNT)" >> $GITHUB_STEP_SUMMARY
             else
-              echo "- **보안 스캔**: 취약점 없음" >> $GITHUB_STEP_SUMMARY
+              echo "- 보안 스캔: 취약점 없음" >> $GITHUB_STEP_SUMMARY
             fi
           else
-            echo "- **보안 스캔**: 건너뜀" >> $GITHUB_STEP_SUMMARY
+            echo "- 보안 스캔: 건너뜀" >> $GITHUB_STEP_SUMMARY
           fi
 
           # Docker 이미지 빌드 결과 요약
           if [ "${{ steps.build-result.outputs.success }}" = "true" ]; then
             if [ -n "${{ inputs.image_tags }}" ]; then
-              echo "- **Docker 이미지**: ✅ 성공적으로 빌드 및 푸시되었습니다!" >> $GITHUB_STEP_SUMMARY
-              echo "### Docker 이미지 태그" >> $GITHUB_STEP_SUMMARY
-              echo '```' >> $GITHUB_STEP_SUMMARY
+              echo "- Docker 이미지: 성공적으로 빌드 및 푸시되었습니다!" >> $GITHUB_STEP_SUMMARY
+              echo "Docker 이미지 태그" >> $GITHUB_STEP_SUMMARY
               echo "${{ inputs.image_tags }}" | while read -r tag; do
                 echo "- $tag" >> $GITHUB_STEP_SUMMARY
               done
-              echo '```' >> $GITHUB_STEP_SUMMARY
               
               # 추가 정보 표시 (PR 빌드인 경우)
               if [ -n "${{ inputs.pr_number }}" ]; then
-                echo "- **배포 환경**: PR 미리보기 환경" >> $GITHUB_STEP_SUMMARY
-                echo "- **PR 번호**: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+                echo "- 배포 환경: PR 미리보기 환경" >> $GITHUB_STEP_SUMMARY
+                echo "- PR 번호: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
               else
-                echo "- **배포 환경**: ${{ inputs.build_context == 'main' && '프로덕션' || inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
+                echo "- 배포 환경: ${{ inputs.build_context == 'main' && '프로덕션' || inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
               fi
             else
-              echo "- **Docker 이미지**: 이미지 태그가 지정되지 않아 빌드를 건너뛰었습니다." >> $GITHUB_STEP_SUMMARY
+              echo "- Docker 이미지: 이미지 태그가 지정되지 않아 빌드를 건너뛰었습니다." >> $GITHUB_STEP_SUMMARY
             fi
           else
-            echo "- **Docker 이미지**: ❌ 빌드에 실패했습니다. 자세한 내용은 위의 로그를 확인해주세요." >> $GITHUB_STEP_SUMMARY
+            echo "- Docker 이미지: 빌드에 실패했습니다. 자세한 내용은 위의 로그를 확인해주세요." >> $GITHUB_STEP_SUMMARY
           fi
 
           # 아티팩트 업로드 결과
           if [ "${{ inputs.upload_artifacts }}" = "true" ]; then
-            echo "- **빌드 아티팩트**: JAR 파일이 성공적으로 업로드되었습니다." >> $GITHUB_STEP_SUMMARY
+            echo "- 빌드 아티팩트: JAR 파일이 성공적으로 업로드되었습니다." >> $GITHUB_STEP_SUMMARY
             echo "  - 보관 기간: ${{ inputs.artifact_retention_days }}일" >> $GITHUB_STEP_SUMMARY
             echo "  - 다운로드: $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" >> $GITHUB_STEP_SUMMARY
           fi
