@@ -6,18 +6,18 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: '빌드 환경 (예: prod, dev)'
+        description: "빌드 환경 (예: prod, dev)"
         required: true
-        default: 'prod'
+        default: "prod"
       ref_name:
-        description: '브랜치 이름 (기본값: main)'
+        description: "브랜치 이름 (기본값: main)"
         required: false
-        default: 'main'
+        default: "main"
 
 jobs:
   call-frontend-build:
     name: Call Reusable Frontend Build
-    uses: ./.github/workflows/reusable/frontend-build.yml
+    uses: ./.github/workflows/frontend-build.yml
     with:
       environment: ${{ github.event.inputs.environment }}
       ref_name: ${{ github.event.inputs.ref_name }}
