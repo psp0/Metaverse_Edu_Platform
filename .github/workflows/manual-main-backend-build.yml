@@ -29,5 +29,5 @@ jobs:
       upload_artifacts: false
       build_context: "manual-main"
       commit_sha: ${{ github.sha }}
-      ref_name: ${{ github.ref_name }}
+      ref_name: "main"
     secrets: inherit
