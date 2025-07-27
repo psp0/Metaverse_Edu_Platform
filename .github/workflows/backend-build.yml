@@ -245,6 +245,7 @@ jobs:
       - name: Clean up old main branch images from GHCR
         if: success() && inputs.ref_name == 'main' && inputs.image_tags != ''
         uses: actions/delete-package-versions@v5
+        continue-on-error: true
         with:
           package-name: ${{ steps.repo-lower.outputs.repo_lower }}
           package-type: "container"
@@ -341,10 +342,3 @@ jobs:
               echo "배포 환경: ${{ inputs.build_context == 'main' && '프로덕션' || inputs.build_context }}" >> $GITHUB_STEP_SUMMARY
             fi
           fi
-
-          # 개선 사항 안내
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "개선 사항" >> $GITHUB_STEP_SUMMARY
-          echo "- 테스트와 보안 스캔이 Docker 빌드 내에서 통합 실행됩니다" >> $GITHUB_STEP_SUMMARY
-          echo "- 빌드 환경의 일관성이 향상되었습니다" >> $GITHUB_STEP_SUMMARY
-          echo "- 호스트 환경에 추가 도구 설치가 불필요합니다" >> $GITHUB_STEP_SUMMARY
