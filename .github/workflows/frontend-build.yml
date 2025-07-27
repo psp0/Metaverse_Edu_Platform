@@ -136,8 +136,8 @@ jobs:
           S3_BUCKET: ${{ secrets.INFRA_ARTIFACT_BUCKET }}
           KEEP_COUNT: 2 # Number of latest artifacts to keep
         run: |
-          # List objects in main/ directory, sort by LastModified in descending order, and get keys after KEEP_COUNT
-          OBJECTS_TO_DELETE=$(aws s3api list-objects-v2 --bucket "$S3_BUCKET" --prefix "main/" --query "reverse(sort_by(Contents, &LastModified))[$KEEP_COUNT:].Key" --output json)
+          # List objects, use an empty array if Contents is null, sort, and get keys after KEEP_COUNT
+          OBJECTS_TO_DELETE=$(aws s3api list-objects-v2 --bucket "$S3_BUCKET" --prefix "main/" --query "reverse(sort_by(Contents || `[]`, &LastModified))[$KEEP_COUNT:].Key" --output json)
 
           # Check if there are objects to delete
           if [[ $(echo "$OBJECTS_TO_DELETE" | jq 'length') -gt 0 ]]; then
