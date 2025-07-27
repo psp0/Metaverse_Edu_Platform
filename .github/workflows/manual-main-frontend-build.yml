@@ -25,9 +25,9 @@ jobs:
     with:
       environment: ${{ github.event.inputs.environment }}
       ref_name: ${{ github.event.inputs.ref_name }}
-      INFRA_ARTIFACT_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET }}
     secrets:
       AWS_INFRA_ROLE_ARN: ${{ secrets.AWS_INFRA_ROLE_ARN }}
+      INFRA_ARTIFACT_BUCKET: ${{ secrets.INFRA_ARTIFACT_BUCKET }}
       UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
       UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
       UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
