@@ -9,13 +9,42 @@ on:
   workflow_dispatch:
     inputs:
       image_tags:
-        description: "게시할 Docker 이미지 태그를 입력하세요. (기본값: main-latest)"
+        description: "게시할 Docker 이미지 태그를 입력하세요"
         required: true
         default: "main-latest"
+        type: string
+      java_version:
+        description: "Java 버전"
+        required: false
+        default: "17"
+        type: choice
+        options:
+          - "17"
+          - "21"
+      run_tests:
+        description: "단위 테스트 실행"
+        required: false
+        default: true
+        type: boolean
+      run_security_scan:
+        description: "보안 취약점 스캔 실행"
+        required: false
+        default: true
+        type: boolean
+      upload_artifacts:
+        description: "빌드 아티팩트 업로드"
+        required: false
+        default: false
+        type: boolean
+      artifact_retention_days:
+        description: "아티팩트 보관 기간 (일)"
+        required: false
+        default: "7"
+        type: string
 
 jobs:
   call-reusable-backend-build:
-    name: Call Reusable Backend Build
+    name: Build Backend Application
     permissions:
       id-token: write
       contents: read
@@ -23,10 +52,11 @@ jobs:
     uses: ./.github/workflows/backend-build.yml
     with:
       image_tags: ${{ github.event.inputs.image_tags }}
-      java_version: "17"
-      run_tests: true
-      run_security_scan: true
-      upload_artifacts: false
+      java_version: ${{ github.event.inputs.java_version }}
+      run_tests: ${{ github.event.inputs.run_tests }}
+      run_security_scan: ${{ github.event.inputs.run_security_scan }}
+      upload_artifacts: ${{ github.event.inputs.upload_artifacts }}
+      artifact_retention_days: ${{ fromJson(github.event.inputs.artifact_retention_days) }}
       build_context: "manual-main"
       commit_sha: ${{ github.sha }}
       ref_name: "main"

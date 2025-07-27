@@ -1,0 +1,88 @@
+ARG JAVA_VERSION=17
+
+# Build stage
+FROM gradle:8.5.0-jdk${JAVA_VERSION} AS builder
+
+# 빌드 인수
+ARG RUN_TESTS=true
+ARG RUN_SECURITY_SCAN=false
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 빌드 파일들 복사 (의존성 캐시 최적화)
+COPY build.gradle settings.gradle ./
+
+# 의존성 다운로드 (캐시 최적화)
+RUN gradle dependencies --no-daemon
+
+# 소스 코드 복사
+COPY src ./src
+
+# 테스트 실행 (선택적)
+RUN if [ "$RUN_TESTS" = "true" ]; then \
+        echo "테스트 실행 중..." && \
+        gradle test --no-daemon && \
+        mkdir -p /app/test-results && \
+        find build/test-results/test -type f -name "*.xml" -exec cp {} /app/test-results/ \; ; \
+    else \
+        echo "테스트 건너뜀" && \
+        mkdir -p /app/test-results; \
+    fi
+
+# 보안 스캔 실행 (선택적)
+RUN if [ "$RUN_SECURITY_SCAN" = "true" ]; then \
+        echo "보안 스캔 실행 중..." && \
+        apt-get update && apt-get install -y --no-install-recommends jq && \
+        rm -rf /var/lib/apt/lists/* && \
+        gradle dependencyCheckAnalyze --no-daemon && \
+        mkdir -p /app/security-reports && \
+        cp build/reports/dependency-check-report.json /app/security-reports/security-report.json 2>/dev/null || echo "보안 스캔 결과 없음" && \
+        cp build/reports/dependency-check-report.html /app/security-reports/security-report.html 2>/dev/null || echo "보안 스캔 HTML 결과 없음"; \
+    else \
+        echo "보안 스캔 건너뜀" && \
+        mkdir -p /app/security-reports; \
+    fi
+
+# 애플리케이션 빌드
+RUN echo "애플리케이션 빌드 중..." && \
+    gradle bootJar --no-daemon && \
+    cp build/libs/*.jar app.jar
+
+# 빌드 아티팩트 스테이지 (로컬 출력용)
+FROM scratch as build-artifacts
+COPY --from=builder /app/app.jar /app.jar
+COPY --from=builder /app/test-results /test-results
+COPY --from=builder /app/security-reports /security-reports
+
+# Runtime stage
+FROM openjdk:${JAVA_VERSION}-jre-slim as runtime
+
+# 메타데이터
+LABEL maintainer="MEP Team"
+LABEL description="Metaverse Education Platform Backend"
+
+# 비root 사용자 생성
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# 빌드된 JAR 파일 복사
+COPY --from=builder --chown=appuser:appuser /app/app.jar app.jar
+
+# 사용자 전환
+USER appuser
+
+# 포트 노출
+EXPOSE 8080
+
+# 헬스체크
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl --silent --fail http://localhost:8080/actuator/health || exit 1
+
+# JVM 옵션 (환경변수로 오버라이드 가능)
+ENV JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+UseContainerSupport"
+
+# 애플리케이션 실행
+CMD ["sh", "-c", "java $JAVA_OPTS -jar app.jar"]
