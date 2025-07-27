@@ -144,6 +144,7 @@ jobs:
             JAVA_VERSION=${{ inputs.java_version }}
             APP_VERSION=${{ inputs.commit_sha || github.sha }}
             RUN_SECURITY_SCAN=${{ inputs.run_security_scan }}
+            RUN_TESTS=${{ inputs.run_tests }}
           # 빌드가 실패하면 테스트나 보안 스캔 실패로 인한 것일 수 있음
           outputs: type=local,dest=./build-outputs
 
