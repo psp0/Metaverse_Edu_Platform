@@ -56,7 +56,7 @@ COPY --from=builder /app/test-results /test-results
 COPY --from=builder /app/security-reports /security-reports
 
 # Runtime stage
-FROM openjdk:${JAVA_VERSION}-jre-slim as runtime
+FROM openjdk:${JAVA_VERSION}-jdk-slim as runtime
 
 # 메타데이터
 LABEL maintainer="MEP Team"
