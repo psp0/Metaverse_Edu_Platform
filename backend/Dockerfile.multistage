@@ -79,7 +79,7 @@ EXPOSE 8080
 
 # 헬스체크
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/actuator/health || exit 1
+    CMD curl --silent --fail http://localhost:8080/actuator/health || exit 1
 
 # JVM 옵션 (환경변수로 오버라이드 가능)
 ENV JAVA_OPTS="-Xms512m -Xmx1024m -XX:+UseG1GC -XX:+UseContainerSupport"
