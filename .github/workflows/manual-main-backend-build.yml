@@ -53,10 +53,10 @@ jobs:
     with:
       image_tags: ${{ github.event.inputs.image_tags }}
       java_version: ${{ github.event.inputs.java_version }}
-      run_tests: ${{ github.event.inputs.run_tests }}
-      run_security_scan: ${{ github.event.inputs.run_security_scan }}
-      upload_artifacts: ${{ github.event.inputs.upload_artifacts }}
-      artifact_retention_days: ${{ fromJson(github.event.inputs.artifact_retention_days) }}
+      run_tests: ${{ fromJSON(github.event.inputs.run_tests) }}
+      run_security_scan: ${{ fromJSON(github.event.inputs.run_security_scan) }}
+      upload_artifacts: ${{ fromJSON(github.event.inputs.upload_artifacts) }}
+      artifact_retention_days: ${{ fromJSON(github.event.inputs.artifact_retention_days) }}
       build_context: "manual-main"
       commit_sha: ${{ github.sha }}
       ref_name: ${{ github.ref_name }}
