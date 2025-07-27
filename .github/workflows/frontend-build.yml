@@ -26,6 +26,10 @@ on:
         required: false
         type: number
         default: 1
+      INFRA_ARTIFACT_BUCKET:
+        description: "S3 bucket for infra artifacts"
+        required: false
+        type: string
 
     secrets:
       AWS_INFRA_ROLE_ARN:
@@ -118,7 +122,7 @@ jobs:
         # Only run for PR builds
         if: success() && inputs.pr_number != ''
         env:
-          S3_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
+          S3_BUCKET: ${{ inputs.INFRA_ARTIFACT_BUCKET || vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
         run: |
           # Delete all files in the PR's preview directory
           aws s3 rm "s3://$S3_BUCKET/previews/pr-${{ inputs.pr_number }}/" --recursive
@@ -128,7 +132,7 @@ jobs:
         # Only run for main branch builds (not PRs)
         if: success() && inputs.pr_number == '' && inputs.ref_name == 'main'
         env:
-          S3_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
+          S3_BUCKET: ${{ inputs.INFRA_ARTIFACT_BUCKET || vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
           KEEP_COUNT: 2 # Number of latest artifacts to keep
         run: |
           # List objects in main/ directory, sort by LastModified in descending order, and get keys after KEEP_COUNT
@@ -153,7 +157,7 @@ jobs:
         if: success()
         env:
           ARTIFACT_NAME: webgl-build-${{ env.FINAL_HEAD_SHA }}.tar.gz
-          S3_BUCKET: ${{ vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
+          S3_BUCKET: ${{ inputs.INFRA_ARTIFACT_BUCKET || vars.INFRA_ARTIFACT_BUCKET || 'mep-infra-artifacts' }}
         run: |
           # Set S3 path based on build context
           if [[ -n "${{ inputs.pr_number }}" ]]; then
