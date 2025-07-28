@@ -106,10 +106,12 @@ jobs:
 
       - name: Compress build output
         if: success()
+        id: compress
         run: |
-          cd build
-          tar -czvf ../webgl-build-${{ github.run_id }}.tar.gz .
-          echo "COMPRESSED_FILE=../webgl-build-${{ github.run_id }}.tar.gz" >> $GITHUB_ENV
+          ARTIFACT_FILENAME="webgl-build-${{ github.run_id }}.tar.gz"
+          tar -czvf "${ARTIFACT_FILENAME}" -C build .
+          echo "filename=${ARTIFACT_FILENAME}" >> "$GITHUB_OUTPUT"
+          echo "COMPRESSED_FILE=${ARTIFACT_FILENAME}" >> "$GITHUB_ENV" # 이전 버전과의 호환성을 위해 유지
 
       - name: Configure AWS credentials for infra account
         if: success()
