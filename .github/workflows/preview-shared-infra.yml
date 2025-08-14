@@ -1,0 +1,290 @@
+name: Preview Shared Infra Management
+
+on:
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Action to perform (apply or destroy)"
+        required: true
+        default: "apply"
+        type: choice
+        options:
+          - apply
+          - destroy
+
+  workflow_call:
+    inputs:
+      action:
+        required: false
+        type: string
+        default: "apply"
+        description: "Action to perform (apply or destroy)"
+
+    secrets:
+      AWS_DEV_GHA_DEPLOY_ROLE_ARN:
+        required: true
+      AWS_PREVIEW_DEV_CERTIFICATE_ARN:
+        required: true
+      AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN:
+        required: true
+
+permissions:
+  contents: read
+  id-token: write
+  actions: read
+  statuses: write
+  deployments: write
+
+jobs:
+  deploy-preview-shared-infra:
+    name: Deploy Preview Shared Infra
+    runs-on: ubuntu-latest
+    environment: preview-shared-infra
+
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      TF_STATE_BUCKET: ${{ vars.TF_STATE_BUCKET }}
+      ACM_CERTIFICATE_ARN: ${{ secrets.AWS_PREVIEW_DEV_CERTIFICATE_ARN }}
+      TF_WORKING_DIR: terraform/environments/preview-shared-infra
+      TF_STATE_KEY: environments/preview-shared-infra/terraform.tfstate
+
+    outputs:
+      vpc_id: ${{ steps.set-outputs.outputs.vpc_id }}
+      public_subnet_ids: ${{ steps.set-outputs.outputs.public_subnet_ids }}
+      private_subnet_ids: ${{ steps.set-outputs.outputs.private_subnet_ids }}
+      ecs_cluster_name: ${{ steps.set-outputs.outputs.ecs_cluster_name }}
+      alb_arn: ${{ steps.set-outputs.outputs.alb_arn }}
+      alb_https_listener_arn: ${{ steps.set-outputs.outputs.alb_https_listener_arn }}
+      alb_security_group_id: ${{ steps.set-outputs.outputs.alb_security_group_id }}
+      db_subnet_group_name: ${{ steps.set-outputs.outputs.db_subnet_group_name }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set action variable
+        id: set-action
+        run: echo "action=${{ inputs.action || github.event.inputs.action }}" >> $GITHUB_OUTPUT
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: github-actions-preview-shared-infra
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.12.1
+          terraform_wrapper: false
+
+      - name: Terraform Init
+        id: terraform_init
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        env:
+          TF_LOG: ERROR
+        run: |
+          set -e
+          echo "::group::Terraform Init"
+          terraform init \
+            -backend-config="bucket=${{ env.TF_STATE_BUCKET }}" \
+            -backend-config="key=${{ env.TF_STATE_KEY }}" \
+            -backend-config="region=${{ env.AWS_REGION }}" \
+            -backend-config="encrypt=true" \
+            -backend-config="role_arn=${{ secrets.AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN }}"
+          echo "Terraform initialization completed successfully"
+          echo "::endgroup::"
+
+      - name: Terraform Validate
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: |
+          echo "::group::Terraform Validate"
+          terraform validate
+          echo "Terraform configuration is valid"
+          echo "::endgroup::"
+
+      # Apply workflow
+      - name: Terraform Plan
+        id: plan
+        if: steps.set-action.outputs.action == 'apply'
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        env:
+          TF_LOG: ERROR
+        run: |
+          set -e
+          echo "::group::Terraform Plan"
+          terraform plan \
+            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \          
+            -var="provider_assume_role_arn=" \
+            -out=tfplan \
+            -detailed-exitcode || exit_code=$?
+
+          # Handle terraform plan exit codes
+          if [ "${exit_code:-0}" -eq 0 ]; then
+            echo "No changes needed"
+            echo "plan_has_changes=false" >> $GITHUB_OUTPUT
+          elif [ "${exit_code:-0}" -eq 2 ]; then
+            echo "Changes detected"
+            echo "plan_has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "Plan failed with exit code: ${exit_code:-0}"
+            exit ${exit_code:-1}
+          fi
+          echo "::endgroup::"
+
+      - name: Terraform Apply
+        id: apply
+        if: steps.set-action.outputs.action == 'apply' && steps.plan.outcome == 'success'
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        env:
+          TF_LOG: ERROR
+        run: |
+          set -e
+          echo "::group::Terraform Apply"
+          if [ "${{ steps.plan.outputs.plan_has_changes }}" = "true" ]; then
+            terraform apply -auto-approve tfplan
+            echo "apply_success=true" >> $GITHUB_OUTPUT
+            echo "Resources applied successfully"
+          else
+            echo "No changes to apply"
+            echo "apply_success=true" >> $GITHUB_OUTPUT
+          fi
+          echo "::endgroup::"
+
+      # Destroy workflow
+      - name: Terraform Plan (Destroy)
+        id: plan-destroy
+        if: steps.set-action.outputs.action == 'destroy'
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        env:
+          TF_LOG: ERROR
+        run: |
+          set -e
+          echo "::group::Terraform Plan (Destroy)"        
+          terraform plan -destroy \
+            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \
+            -var="provider_assume_role_arn=" \
+            -out=tfdestroyplan \
+            -detailed-exitcode || exit_code=$?
+
+          # Handle terraform plan exit codes
+          if [ "${exit_code:-0}" -eq 0 ]; then
+            echo "No resources to destroy"
+            echo "destroy_plan_has_changes=false" >> $GITHUB_OUTPUT
+          elif [ "${exit_code:-0}" -eq 2 ]; then
+            echo "Resources to destroy detected"
+            echo "destroy_plan_has_changes=true" >> $GITHUB_OUTPUT
+          else
+            echo "Destroy plan failed with exit code: ${exit_code:-0}"
+            exit ${exit_code:-1}
+          fi
+          echo "::endgroup::"
+
+      - name: Terraform Destroy
+        id: destroy
+        if: steps.set-action.outputs.action == 'destroy' && steps.plan-destroy.outcome == 'success'
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        env:
+          TF_LOG: ERROR
+        run: |
+          set -e
+          echo "::group::Terraform Destroy"
+          if [ "${{ steps.plan-destroy.outputs.destroy_plan_has_changes }}" = "true" ]; then
+            terraform apply -auto-approve tfdestroyplan
+            echo "destroy_success=true" >> $GITHUB_OUTPUT
+            echo "Resources destroyed successfully"
+          else
+            echo "No resources to destroy"
+            echo "destroy_success=true" >> $GITHUB_OUTPUT
+          fi
+          echo "::endgroup::"
+
+      # Install jq for output parsing
+      - name: Install jq
+        if: steps.set-action.outputs.action == 'apply'
+        run: sudo apt-get update && sudo apt-get install -y jq
+
+      # Set outputs only after successful apply
+      - name: Set Terraform Outputs
+        id: set-outputs
+        if: steps.set-action.outputs.action == 'apply' && steps.apply.outcome == 'success' && steps.apply.outputs.apply_success == 'true'
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: |
+          set -e
+          echo "Setting Terraform outputs..."
+
+          # Define output variables
+          outputs=(
+            "vpc_id"
+            "public_subnet_ids"
+            "private_subnet_ids"
+            "ecs_cluster_name"
+            "alb_arn"
+            "alb_listener_https_arn"
+            "alb_security_group_id"
+            "db_subnet_group_name"
+          )
+
+          # Set outputs with error handling
+          for output in "${outputs[@]}"; do
+            if terraform output "$output" >/dev/null 2>&1; then
+              if [[ "$output" == *"subnet_ids" ]]; then
+                # Handle array outputs
+                value=$(terraform output -json "$output" | jq -r 'join(",")')
+                echo "${output}=${value}" >> $GITHUB_OUTPUT
+              else
+                # Handle string outputs
+                value=$(terraform output -raw "$output")
+                echo "${output}=${value}" >> $GITHUB_OUTPUT
+              fi
+            else
+              echo "Warning: $output output not found"
+              echo "${output}=" >> $GITHUB_OUTPUT
+            fi
+          done
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "Workflow Summary" >> $GITHUB_STEP_SUMMARY
+          echo "- Action: ${{ steps.set-action.outputs.action }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Environment: preview-shared-infra" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.set-action.outputs.action }}" = "apply" ]; then
+            if [ "${{ steps.apply.outcome }}" = "success" ] && [ "${{ steps.apply.outputs.apply_success }}" = "true" ]; then
+              echo "- Status: Apply completed successfully" >> $GITHUB_STEP_SUMMARY
+            elif [ "${{ steps.apply.outcome }}" = "failure" ]; then
+              echo "- Status: Apply failed" >> $GITHUB_STEP_SUMMARY
+            elif [ "${{ steps.plan.outcome }}" = "failure" ]; then
+              echo "- Status: Plan failed" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- Status: Apply was skipped or incomplete" >> $GITHUB_STEP_SUMMARY
+            fi
+          elif [ "${{ steps.set-action.outputs.action }}" = "destroy" ]; then
+            if [ "${{ steps.destroy.outcome }}" = "success" ] && [ "${{ steps.destroy.outputs.destroy_success }}" = "true" ]; then
+              echo "- Status: Destroy completed successfully" >> $GITHUB_STEP_SUMMARY
+            elif [ "${{ steps.destroy.outcome }}" = "failure" ]; then
+              echo "- Status: Destroy failed" >> $GITHUB_STEP_SUMMARY
+            elif [ "${{ steps.plan-destroy.outcome }}" = "failure" ]; then
+              echo "- Status: Destroy plan failed" >> $GITHUB_STEP_SUMMARY
+            else
+              echo "- Status: Destroy was skipped or incomplete" >> $GITHUB_STEP_SUMMARY
+            fi
+          fi
+
+      # Clean up tfplan file if it exists
+      - name: Cleanup tfplan file
+        if: always()
+        working-directory: ${{ env.TF_WORKING_DIR }}
+        run: |
+          for plan_file in tfplan tfdestroyplan; do
+            if [ -f "$plan_file" ]; then
+              rm -f "$plan_file"
+              echo "$plan_file file removed."
+            else
+              echo "No $plan_file file to remove."
+            fi
+          done
