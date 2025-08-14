@@ -460,7 +460,7 @@ resource "aws_launch_template" "ecs" {
 
   metadata_options {
     http_endpoint = "enabled"
-    http_tokens   = "required" # IMDSv2 활성화
+    http_tokens   = "required" # Enable IMDSv2
   }
 
   tag_specifications {
