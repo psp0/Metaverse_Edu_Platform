@@ -17,7 +17,7 @@ iptables -F FORWARD
 iptables -t nat -F
 iptables -t nat -A POSTROUTING -o $PRIMARY_INTERFACE -j MASQUERADE
 
-# 여러 CIDR을 처리하기 위해 루프 사용
+# Loop to handle multiple CIDRs
 for cidr in $(echo $PRIVATE_CIDRS | sed "s/,/ /g"); do
     iptables -A FORWARD -s $cidr -o $PRIMARY_INTERFACE -j ACCEPT
 done
