@@ -223,7 +223,7 @@ jobs:
             "private_subnet_ids"
             "ecs_cluster_name"
             "alb_arn"
-            "alb_https_listener_arn"
+            "alb_listener_https_arn"
             "alb_security_group_id"
             "db_subnet_group_name"
           )
