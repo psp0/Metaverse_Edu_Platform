@@ -72,7 +72,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-          role-session-name: github-actions-preview-shared-infra
+          role-session-name: github-actions-preview-infra-backend
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -109,7 +109,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-          role-session-name: github-actions-preview-shared-infra
+          role-session-name: github-actions-preview-deployment
 
       # Apply workflow
       - name: Terraform Plan
