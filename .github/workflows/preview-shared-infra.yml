@@ -32,7 +32,6 @@ jobs:
   deploy-preview-shared-infra:
     name: Deploy Preview Shared Infra
     runs-on: ubuntu-latest
-    environment: preview-shared-infra
 
     permissions:
       contents: read
@@ -250,8 +249,7 @@ jobs:
         if: always()
         run: |
           echo "Workflow Summary" >> $GITHUB_STEP_SUMMARY
-          echo "- Action: ${{ steps.set-action.outputs.action }}" >> $GITHUB_STEP_SUMMARY
-          echo "- Environment: preview-shared-infra" >> $GITHUB_STEP_SUMMARY
+          echo "- Action: ${{ steps.set-action.outputs.action }}" >> $GITHUB_STEP_SUMMARY          
 
           if [ "${{ steps.set-action.outputs.action }}" = "apply" ]; then
             if [ "${{ steps.apply.outcome }}" = "success" ] && [ "${{ steps.apply.outputs.apply_success }}" = "true" ]; then
