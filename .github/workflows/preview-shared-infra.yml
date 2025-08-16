@@ -70,9 +70,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-          role-session-name: github-actions-preview-shared-infra
+          role-session-name: github-actions-preview-infra-backend
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -92,8 +92,7 @@ jobs:
             -backend-config="bucket=${{ env.TF_STATE_BUCKET }}" \
             -backend-config="key=${{ env.TF_STATE_KEY }}" \
             -backend-config="region=${{ env.AWS_REGION }}" \
-            -backend-config="encrypt=true" \
-            -backend-config="role_arn=${{ secrets.AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN }}"
+            -backend-config="encrypt=true"
           echo "Terraform initialization completed successfully"
           echo "::endgroup::"
 
@@ -104,6 +103,13 @@ jobs:
           terraform validate
           echo "Terraform configuration is valid"
           echo "::endgroup::"
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: github-actions-preview-deployment
 
       # Apply workflow
       - name: Terraform Plan
@@ -116,8 +122,7 @@ jobs:
           set -e
           echo "::group::Terraform Plan"
           terraform plan \
-            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \          
-            -var="provider_assume_role_arn=" \
+            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \         
             -out=tfplan \
             -detailed-exitcode || exit_code=$?
 
@@ -164,8 +169,7 @@ jobs:
           set -e
           echo "::group::Terraform Plan (Destroy)"        
           terraform plan -destroy \
-            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \
-            -var="provider_assume_role_arn=" \
+            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \            
             -out=tfdestroyplan \
             -detailed-exitcode || exit_code=$?
 
