@@ -28,18 +28,18 @@ on:
       AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN:
         required: true
 
-permissions:
-  contents: read
-  id-token: write
-  actions: read
-  statuses: write
-  deployments: write
-
 jobs:
   deploy-preview-shared-infra:
     name: Deploy Preview Shared Infra
     runs-on: ubuntu-latest
     environment: preview-shared-infra
+
+    permissions:
+      contents: read
+      id-token: write
+      actions: read
+      statuses: write
+      deployments: write
 
     env:
       AWS_REGION: ${{ vars.AWS_REGION }}
