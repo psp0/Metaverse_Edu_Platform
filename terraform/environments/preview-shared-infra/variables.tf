@@ -10,12 +10,6 @@ variable "aws_profile" {
   type        = string
 }
 
-variable "provider_assume_role_arn" {
-  description = "The ARN of the IAM role for the AWS provider to assume. Leave empty if using credentials from the environment (e.g., in GitHub Actions)."
-  type        = string
-  default     = ""
-}
-
 # IAM Configuration
 variable "iam_role_environment" {
   description = "The environment name for constructing the IAM Role ARN."
