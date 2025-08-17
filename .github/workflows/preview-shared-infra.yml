@@ -122,7 +122,7 @@ jobs:
           set -e
           echo "::group::Terraform Plan"
           terraform plan \
-            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \         
+            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \
             -out=tfplan \
             -detailed-exitcode || exit_code=$?
 
@@ -169,7 +169,7 @@ jobs:
           set -e
           echo "::group::Terraform Plan (Destroy)"        
           terraform plan -destroy \
-            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \            
+            -var="acm_certificate_arn=${{ env.ACM_CERTIFICATE_ARN }}" \
             -out=tfdestroyplan \
             -detailed-exitcode || exit_code=$?
 
