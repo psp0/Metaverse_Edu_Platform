@@ -108,7 +108,7 @@ jobs:
           assume_role = {
             role_arn = "${BACKEND_ROLE_ARN}"
           }
-          EOF       
+          EOF
           cleanup() {
             rm -f backend-ci.hcl
             echo "Backend configuration file cleaned up"
