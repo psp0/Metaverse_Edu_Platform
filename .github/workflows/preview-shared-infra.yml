@@ -27,6 +27,8 @@ on:
         required: true
       AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN:
         required: true
+      AWS_DEV_EXECUTION_ROLE_ARN:
+        required: true
 
 jobs:
   deploy-preview-shared-infra:
@@ -70,9 +72,17 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-          role-session-name: github-actions-preview-infra-backend
+          role-session-name: github-actions-preview-shared-infra
+
+      - name: Assume second role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_EXECUTION_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+          role-session-name: github-actions-preview-shared-infra-second-role
+          role-chaining: true
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -85,14 +95,26 @@ jobs:
         working-directory: ${{ env.TF_WORKING_DIR }}
         env:
           TF_LOG: ERROR
+          TF_IN_AUTOMATION: true
+          BACKEND_ROLE_ARN: ${{ secrets.AWS_INFRA_CROSS_ACCOUNT_BACKEND_ROLE_ARN }}
         run: |
           set -e
           echo "::group::Terraform Init"
-          terraform init \
-            -backend-config="bucket=${{ env.TF_STATE_BUCKET }}" \
-            -backend-config="key=${{ env.TF_STATE_KEY }}" \
-            -backend-config="region=${{ env.AWS_REGION }}" \
-            -backend-config="encrypt=true"
+          cat > backend-ci.hcl << EOF
+          bucket = "${{ env.TF_STATE_BUCKET }}"
+          key = "${{ env.TF_STATE_KEY }}"  
+          region = "${{ env.AWS_REGION }}"
+          encrypt = true
+          assume_role = {
+            role_arn = "${BACKEND_ROLE_ARN}"
+          }
+          EOF       
+          cleanup() {
+            rm -f backend-ci.hcl
+            echo "Backend configuration file cleaned up"
+          }
+          trap cleanup EXIT
+          terraform init -backend-config=backend-ci.hcl -input=false
           echo "Terraform initialization completed successfully"
           echo "::endgroup::"
 
@@ -103,13 +125,6 @@ jobs:
           terraform validate
           echo "Terraform configuration is valid"
           echo "::endgroup::"
-
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v4
-        with:
-          role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
-          aws-region: ${{ env.AWS_REGION }}
-          role-session-name: github-actions-preview-deployment
 
       # Apply workflow
       - name: Terraform Plan
