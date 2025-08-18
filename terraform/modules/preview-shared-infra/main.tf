@@ -164,7 +164,7 @@ resource "aws_instance" "nat" {
   associate_public_ip_address = true
 
   root_block_device {
-    volume_size           = 5
+    volume_size           = 8
     volume_type           = "gp3"
     encrypted             = true
     delete_on_termination = true
@@ -439,7 +439,7 @@ resource "aws_launch_template" "ecs" {
   block_device_mappings {
     device_name = "/dev/xvda"
     ebs {
-      volume_size           = 10
+      volume_size           = 30
       volume_type           = "gp3"
       encrypted             = true
       delete_on_termination = true
