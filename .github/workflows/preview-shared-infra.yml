@@ -102,7 +102,7 @@ jobs:
           echo "::group::Terraform Init"
           cat > backend-ci.hcl << EOF
           bucket = "${{ env.TF_STATE_BUCKET }}"
-          key = "${{ env.TF_STATE_KEY }}"  
+          key = "${{ env.TF_STATE_KEY }}"
           region = "${{ env.AWS_REGION }}"
           encrypt = true
           assume_role = {
