@@ -33,7 +33,14 @@ public static class BackendConfig
             {
                 var json = File.ReadAllText(configPath);
                 var config = JsonUtility.FromJson<BackendConfigData>(json);
-                
+
+        bool configExists = File.Exists(configPath);
+        if (configExists)
+        {
+            try
+            {
+                var json = File.ReadAllText(configPath);
+                var config = JsonUtility.FromJson<BackendConfigData>(json);
                 if (!string.IsNullOrEmpty(config.BaseUrl))
                 {
                     // 포트가 443이고 HTTPS면 포트 생략, 그 외에는 포트 포함
