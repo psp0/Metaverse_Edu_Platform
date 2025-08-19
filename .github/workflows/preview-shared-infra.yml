@@ -248,7 +248,7 @@ jobs:
             "db_subnet_group_name"
           )
 
-          for output in "${outputs_to_set[@]}"; do            
+          for output in "${outputs_to_set[@]}"; do
             if echo "$outputs_json" | jq -e --arg key "$output" 'has($key)' > /dev/null; then
               if [[ "$output" == *"subnet_ids" ]]; then
                 # Handle array outputs
