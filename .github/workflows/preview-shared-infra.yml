@@ -234,10 +234,10 @@ jobs:
         working-directory: ${{ env.TF_WORKING_DIR }}
         run: |
           set -e
-          echo "Setting Terraform outputs..."
+          echo "Setting Terraform outputs..."        
+          outputs_json=$(terraform output -json)
 
-          # Define output variables
-          outputs=(
+          outputs_to_set=(
             "vpc_id"
             "public_subnet_ids"
             "private_subnet_ids"
@@ -248,16 +248,15 @@ jobs:
             "db_subnet_group_name"
           )
 
-          # Set outputs with error handling
-          for output in "${outputs[@]}"; do
-            if terraform output "$output" >/dev/null 2>&1; then
+          for output in "${outputs_to_set[@]}"; do
+            if echo "$outputs_json" | jq -e --arg key "$output" 'has($key)' > /dev/null; then
               if [[ "$output" == *"subnet_ids" ]]; then
                 # Handle array outputs
-                value=$(terraform output -json "$output" | jq -r 'join(",")')
+                value=$(echo "$outputs_json" | jq -r --arg key "$output" '.[$key].value | join(",")')
                 echo "${output}=${value}" >> $GITHUB_OUTPUT
               else
                 # Handle string outputs
-                value=$(terraform output -raw "$output")
+                value=$(echo "$outputs_json" | jq -r --arg key "$output" '.[$key].value')
                 echo "${output}=${value}" >> $GITHUB_OUTPUT
               fi
             else
