@@ -7,14 +7,14 @@ using System;
 
 
 public class LogoutHandler : MonoBehaviour
-{
-    private string baseUrl = $"{Environment.GetEnvironmentVariable("BACK_SERVER_URL")}:{Environment.GetEnvironmentVariable("BACK_SERVER_PORT")}";
+{   
 
     public Button logoutButton;
 
     void Start()
     {
         logoutButton.onClick.AddListener(Logout);
+        Debug.Log($"[LogoutHandler] Backend URL: {BackendConfig.GetApiUrl()}");
     }
 
     public void Logout()
@@ -24,7 +24,7 @@ public class LogoutHandler : MonoBehaviour
 
     IEnumerator LogoutCoroutine()
     {
-        string url = baseUrl + "/api/users/logout";
+        string url = BackendConfig.GetApiUrl() + "/api/users/logout";
         UnityWebRequest request = new UnityWebRequest(url, "POST");
         request.downloadHandler = new DownloadHandlerBuffer();
         Debug.Log("AccessToken = " + AuthManager.Instance.AccessToken);

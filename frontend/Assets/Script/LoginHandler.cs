@@ -18,11 +18,11 @@ public class LoginHandler : MonoBehaviourPunCallbacks
     public Button loginButton;
     public TextMeshProUGUI messageText;
 
-    private string baseUrl = $"{Environment.GetEnvironmentVariable("BACK_SERVER_URL")}:{Environment.GetEnvironmentVariable("BACK_SERVER_PORT")}";
 
     void Start()
-    {
+    {   
         loginButton.onClick.AddListener(OnLoginClicked);
+        Debug.Log($"[LoginHandler] Backend URL: {BackendConfig.GetApiUrl()}");
     }
 
     void OnLoginClicked()
@@ -41,7 +41,7 @@ public class LoginHandler : MonoBehaviourPunCallbacks
 
     public IEnumerator LoginCoroutine(string userId, string password)
     {
-        string url = baseUrl + "/api/users/login";
+        string url = BackendConfig.GetApiUrl() + "/api/users/login";
 
         var loginData = new LoginRequest { userId = userId, password = password };
         string jsonData = JsonUtility.ToJson(loginData);

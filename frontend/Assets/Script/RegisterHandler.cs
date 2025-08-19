@@ -35,12 +35,12 @@ public class RegisterHandler : MonoBehaviour
     public GameObject warningPanel;
     public TextMeshProUGUI warningMessageText;
 
-    private string baseUrl = $"{Environment.GetEnvironmentVariable("BACK_SERVER_URL")}:{Environment.GetEnvironmentVariable("BACK_SERVER_PORT")}";
-
     void Start()
     {
         registerButton.onClick.AddListener(OnRegisterClicked);
+        Debug.Log($"[RegisterHandler] Backend URL: {BackendConfig.GetApiUrl()}");
     }
+
     void ShowWarning(string message)
     {
         warningMessageText.text = message;
@@ -81,7 +81,7 @@ public class RegisterHandler : MonoBehaviour
                                    string email, string phone, string name, string nickname,
                                    string birthDate, string gender)
     {
-        string url = baseUrl + "/api/users/register";
+        string url = BackendConfig.GetApiUrl() + "/api/users/register";
 
         var data = new RegisterRequest
         {
