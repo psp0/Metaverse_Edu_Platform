@@ -67,7 +67,8 @@ public static class BackendConfig
         #if UNITY_EDITOR
         return "http://localhost:8080";
         #else
-        return "https://api.example.com";
+        Debug.LogError("[BackendConfig] Production API URL is not configured! Please provide backend-config.json with the correct BaseUrl and Port.");
+        return null;
         #endif
     }
     
