@@ -50,7 +50,22 @@ public static class BackendConfig
                     }
                     else
                     {
-                        _cachedUrl = $"{config.BaseUrl}:{config.Port}";
+                    // Validate that BaseUrl is a well-formed absolute URI
+                    if (Uri.TryCreate(config.BaseUrl, UriKind.Absolute, out var uriResult))
+                    {
+                        // 포트가 443이고 HTTPS면 포트 생략, 그 외에는 포트 포함
+                        if (config.BaseUrl.StartsWith("https://") && config.Port == "443")
+                        {
+                            _cachedUrl = config.BaseUrl;
+                        }
+                        else
+                        {
+                            _cachedUrl = $"{config.BaseUrl}:{config.Port}";
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"[BackendConfig] 잘못된 BaseUrl 형식: {config.BaseUrl}");
                     }
                 }
                 
