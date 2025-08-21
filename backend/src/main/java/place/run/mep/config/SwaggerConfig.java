@@ -42,6 +42,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes("bearerAuth", securityScheme))
                 .addSecurityItem(securityRequirement)
+                .addServersItem(server)
                 .info(info);
     }
 }
