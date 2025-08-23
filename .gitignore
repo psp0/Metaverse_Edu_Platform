@@ -49,6 +49,30 @@ frontend/*.app
 ehthumbs.db
 Thumbs.db
 
+### Terraform ###
+# Terraform state files
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+*.tfstate
+*.tfstate.*
+
+# Terraform cache
+.terraform.cache/
+
+# Terraform logs
+*.log
+
+# Terraform plan files
+*.tfplan
+*.tfplan.*
+
+# Terraform backend configuration
+terraform.tfvars
+*.auto.tfvars
+
+# Terraform provider cache
+~/.terraform.d/plugins/
 
 ### Java ###
 # Compiled class file
