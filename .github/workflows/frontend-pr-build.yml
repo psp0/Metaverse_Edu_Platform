@@ -25,6 +25,13 @@ jobs:
           restore-keys: |
             Library-frontend-${{ runner.os }}-
 
+      - name: Setup Photon Settings
+        run: |
+          cp frontend/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset.template \
+             frontend/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
+          sed -i 's/YOUR_PHOTON_APP_ID_HERE/${{ secrets.PHOTON_APP_ID }}/g' \
+             frontend/Assets/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset
+
       - name: Build Unity project
         uses: game-ci/unity-builder@v4
         id: unity-build
