@@ -8,7 +8,7 @@ variable "aws_region" {
 variable "aws_profile" {
   description = "The AWS CLI profile to use for authentication."
   type        = string
-  default = ""
+  default     = ""
 }
 
 # IAM Configuration
@@ -26,6 +26,12 @@ variable "iam_role_project_prefix" {
 
 # Project and Environment Variables
 variable "project_name" {
+  description = "A prefix for resource names."
+  type        = string
+  default     = "mep"
+}
+
+variable "shared_project_name" {
   description = "A prefix for all resource names to ensure uniqueness."
   type        = string
   default     = "mep-shared"

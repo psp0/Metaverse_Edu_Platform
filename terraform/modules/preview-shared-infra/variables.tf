@@ -1,5 +1,5 @@
 # Project and Environment Variables
-variable "project_name" {
+variable "shared_project_name" {
   description = "A prefix for all resource names to ensure uniqueness."
   type        = string
 }
