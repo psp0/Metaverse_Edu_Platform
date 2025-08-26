@@ -501,3 +501,113 @@ resource "aws_db_subnet_group" "main" {
     }
   )
 }
+# Security Group for all PR ECS Services (shared among all PRs)
+resource "aws_security_group" "pr_ecs_services" {
+  name        = "${var.shared_project_name}-pr-ecs-services-sg"
+  description = "Shared security group for all PR ECS services to access RDS"
+  vpc_id      = aws_vpc.main.id
+
+  # No inbound rules needed - this is for outbound DB access only
+  egress {
+    from_port   = 3306
+    to_port     = 3306
+    protocol    = "tcp"
+    cidr_blocks = [var.vpc_cidr_block]
+    description = "Allow MySQL traffic to shared RDS within VPC"
+  }
+
+  tags = merge(local.common_tags, { Name = "${var.shared_project_name}-pr-ecs-services-sg" })
+}
+
+# RDS Security Group with static ingress rule for PR ECS services
+resource "aws_security_group" "shared_rds" {
+  name        = "${var.shared_project_name}-rds-sg"
+  description = "Security group for shared RDS instance"
+  vpc_id      = aws_vpc.main.id
+
+  # Allow MySQL access from PR ECS services security group
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.pr_ecs_services.id]
+    description     = "Allow MySQL access from PR ECS services"
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = merge(local.common_tags, { Name = "${var.shared_project_name}-shared-rds-sg" })
+}
+
+# Generate shared RDS admin password
+resource "random_password" "shared_rds_admin_password" {
+  length  = 32
+  special = true
+  keepers = {
+    project     = var.shared_project_name
+    environment = var.environment
+  }
+}
+
+# Store shared RDS admin username in Parameter Store
+resource "aws_ssm_parameter" "shared_rds_admin_username" {
+  name        = "/${var.shared_project_name}/database/admin/username"
+  type        = "String"
+  value       = var.shared_rds_admin_username
+  description = "Admin username for shared RDS instance"
+
+  tags = merge(local.common_tags, {
+    Name       = "${var.shared_project_name}-rds-admin-username"
+    SecretType = "database-admin-username"
+  })
+}
+
+# Store shared RDS admin password in Parameter Store
+resource "aws_ssm_parameter" "shared_rds_admin_password" {
+  name        = "/${var.shared_project_name}/database/admin/password"
+  type        = "SecureString"
+  value       = random_password.shared_rds_admin_password.result
+  description = "Admin password for shared RDS instance"
+
+  tags = merge(local.common_tags, {
+    Name       = "${var.shared_project_name}-rds-admin-password"
+    SecretType = "database-admin-password"
+  })
+}
+
+# Shared RDS MySQL instance
+resource "aws_db_instance" "shared" {
+  identifier     = "${var.shared_project_name}-rds"
+  engine         = "mysql"
+  engine_version = "8.4.5"
+  instance_class = var.shared_rds_instance_class
+
+  allocated_storage = var.shared_rds_allocated_storage
+  storage_type      = "gp3"
+  storage_encrypted = true
+
+  username = var.shared_rds_admin_username
+  password = random_password.shared_rds_admin_password.result
+
+  db_subnet_group_name   = aws_db_subnet_group.main.name
+  vpc_security_group_ids = [aws_security_group.shared_rds.id]
+
+  multi_az            = var.shared_rds_multi_az
+  publicly_accessible = false
+
+  backup_retention_period = var.shared_rds_backup_retention_period
+  backup_window           = var.shared_rds_backup_window
+  maintenance_window      = var.shared_rds_maintenance_window
+
+  skip_final_snapshot = var.shared_rds_skip_final_snapshot
+
+  tags = merge(local.common_tags, {
+    Name    = "${var.shared_project_name}-rds"
+    Purpose = "shared-database-for-pr-environments"
+  })
+}
