@@ -112,8 +112,8 @@ variable "ecs_max_size_total" {
 }
 
 # Security and Certificate Variables
-variable "acm_certificate_arn" {
-  description = "The ARN of the ACM certificate for the shared ALB."
+variable "acm_certificate_domain" {
+  description = "The domain name for which to find the ACM certificate (e.g., example.com or *.example.com)"
   type        = string
 }
 

@@ -151,6 +151,13 @@ data "aws_ssm_parameter" "latest_amazon_linux_2" {
   name = "/aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2"
 }
 
+# Find ACM certificate by domain name
+data "aws_acm_certificate" "main" {
+  domain   = var.acm_certificate_domain
+  statuses = ["ISSUED"]
+  most_recent = true
+}
+
 # NAT Instance in each public subnet
 resource "aws_instance" "nat" {
   count = length(aws_subnet.public)
@@ -323,7 +330,7 @@ resource "aws_lb_listener" "https" {
   port              = 443
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = var.acm_certificate_arn
+  certificate_arn   = data.aws_acm_certificate.main.arn
 
   default_action {
     type = "fixed-response"

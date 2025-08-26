@@ -20,7 +20,7 @@ module "preview_shared_infra" {
   ecs_max_size_total          = var.ecs_max_size_total
 
   # Security and Certificate Variables
-  acm_certificate_arn = var.acm_certificate_arn
+  acm_certificate_domain = var.acm_certificate_domain
 
   # RDS Configuration Variables
   shared_rds_instance_class         = var.shared_rds_instance_class
