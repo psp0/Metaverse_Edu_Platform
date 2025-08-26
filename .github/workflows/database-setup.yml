@@ -60,8 +60,7 @@ permissions:
 jobs:
   database-setup:
     name: Database Setup - ${{ inputs.environment }}
-    runs-on: ubuntu-latest
-    environment: ${{ inputs.environment }}
+    runs-on: ubuntu-latest  
     outputs:
       db-name: ${{ steps.pr_vars.outputs.db_name }}
       db-user: ${{ steps.pr_vars.outputs.db_user }}
@@ -233,8 +232,7 @@ jobs:
           echo "Database information stored in Parameter Store successfully"
         env:
           PROJECT_NAME: ${{ env.PROJECT_NAME }}
-          PR_NUMBER: ${{ inputs.pr-number }}
-          ENVIRONMENT: development
+          PR_NUMBER: ${{ inputs.pr-number }}          
 
       - name: "Cleanup Database and Parameters"
         if: ${{ inputs.action == 'cleanup' }}
