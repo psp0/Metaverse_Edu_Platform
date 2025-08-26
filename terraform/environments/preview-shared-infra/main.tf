@@ -2,8 +2,8 @@ module "preview_shared_infra" {
   source = "../../modules/preview-shared-infra"
 
   # Project and Environment Variables
-  project_name = var.project_name
-  environment  = var.environment
+  shared_project_name = var.shared_project_name
+  environment         = var.environment
 
   # Network Configuration Variables
   vpc_cidr_block              = var.vpc_cidr_block
@@ -21,4 +21,14 @@ module "preview_shared_infra" {
 
   # Security and Certificate Variables
   acm_certificate_arn = var.acm_certificate_arn
+
+  # RDS Configuration Variables
+  shared_rds_instance_class         = var.shared_rds_instance_class
+  shared_rds_allocated_storage      = var.shared_rds_allocated_storage
+  shared_rds_admin_username         = var.shared_rds_admin_username
+  shared_rds_multi_az              = var.shared_rds_multi_az
+  shared_rds_backup_retention_period = var.shared_rds_backup_retention_period
+  shared_rds_backup_window         = var.shared_rds_backup_window
+  shared_rds_maintenance_window    = var.shared_rds_maintenance_window
+  shared_rds_skip_final_snapshot   = var.shared_rds_skip_final_snapshot
 }
