@@ -1,0 +1,295 @@
+name: Database Setup
+
+on:
+  workflow_call:
+    inputs:
+      pr-number:
+        required: true
+        type: string
+        description: "Pull request number"
+      environment:
+        required: false
+        type: string
+        default: "preview-dev"
+        description: "Environment name (preview-dev or preview-prod)"
+    outputs:
+      db-name:
+        description: "Generated database name"
+        value: ${{ jobs.database-setup.outputs.db-name }}
+      db-user:
+        description: "Generated database user"
+        value: ${{ jobs.database-setup.outputs.db-user }}
+      rds-endpoint:
+        description: "RDS endpoint"
+        value: ${{ jobs.database-setup.outputs.rds-endpoint }}
+    secrets:
+      AWS_DEV_GHA_DEPLOY_ROLE_ARN:
+        required: true
+      AWS_DEV_EXECUTION_ROLE_ARN:
+        required: true
+      AWS_REGION:
+        required: true
+
+  workflow_dispatch:
+    inputs:
+      pr-number:
+        required: true
+        type: string
+        description: "Pull request number"
+      environment:
+        required: false
+        type: choice
+        default: "preview-dev"
+        description: "Environment name"
+        options:
+          - preview-dev
+          - preview-prod
+      action:
+        required: false
+        type: choice
+        default: "setup"
+        description: "Action to perform"
+        options:
+          - setup
+          - cleanup
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  database-setup:
+    name: Database Setup - ${{ inputs.environment }}
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    outputs:
+      db-name: ${{ steps.pr_vars.outputs.db_name }}
+      db-user: ${{ steps.pr_vars.outputs.db_user }}
+      rds-endpoint: ${{ steps.get_shared_rds_info.outputs.rds_endpoint }}
+
+    env:
+      AWS_REGION: ${{ vars.AWS_REGION }}
+      PROJECT_NAME: ${{ vars.PROJECT_NAME || 'mep' }}
+      SHARED_PROJECT_NAME: ${{ vars.SHARED_PROJECT_NAME || 'mep-shared' }}
+      FLYWAY_VERSION: ${{ vars.FLYWAY_VERSION || '9.22.3' }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Configure AWS Credentials for Database Setup
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_GHA_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: github-actions-${{ github.run_id }}-db-setup
+          role-skip-session-tagging: true
+
+      - name: Assume second role for Execution
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_DEV_EXECUTION_ROLE_ARN }}
+          aws-region: ${{ vars.AWS_REGION }}
+          role-session-name: github-actions-${{ github.run_id }}-db-setup-exec
+          role-chaining: true
+          role-skip-session-tagging: true
+
+      - name: "Fetch Shared RDS Information from AWS"
+        id: get_shared_rds_info
+        run: |
+          RDS_IDENTIFIER="${SHARED_PROJECT_NAME}-rds"
+          echo "Fetching RDS endpoint for identifier: $RDS_IDENTIFIER"
+
+          RDS_ENDPOINT=$(aws rds describe-db-instances \
+            --db-instance-identifier "$RDS_IDENTIFIER" \
+            --query "DBInstances[0].Endpoint.Address" \
+            --output text)
+
+          echo "::add-mask::$RDS_ENDPOINT"
+          echo "rds_endpoint=$RDS_ENDPOINT" >> $GITHUB_OUTPUT
+
+          RDS_USERNAME_PARAM="/$PROJECT_NAME/database/admin/username"
+          RDS_PASSWORD_PARAM="/$PROJECT_NAME/database/admin/password"
+
+          if aws ssm get-parameter --name "$RDS_USERNAME_PARAM" > /dev/null 2>&1; then
+            RDS_USERNAME=$(aws ssm get-parameter \
+              --name "$RDS_USERNAME_PARAM" \
+              --query "Parameter.Value" \
+              --output text)
+            echo "::add-mask::$RDS_USERNAME"
+            echo "rds_username=$RDS_USERNAME" >> $GITHUB_OUTPUT
+          else
+            echo "rds_username=admin" >> $GITHUB_OUTPUT
+          fi
+
+          RDS_PASSWORD=$(aws ssm get-parameter \
+            --name "$RDS_PASSWORD_PARAM" \
+            --with-decryption \
+            --query "Parameter.Value" \
+            --output text)
+          echo "::add-mask::$RDS_PASSWORD"
+          echo "rds_password=$RDS_PASSWORD" >> $GITHUB_OUTPUT
+
+      - name: "Generate or Fetch DB Password from Parameter Store"
+        id: get_db_password
+        run: |
+          PARAMETER_NAME="/${{ env.PROJECT_NAME }}/development/pr-${{ inputs.pr-number }}/database/password"
+          echo "Checking for existing password at parameter: $PARAMETER_NAME"
+
+          if aws ssm get-parameter --name "$PARAMETER_NAME" > /dev/null 2>&1; then
+            echo "Password already exists, fetching from Parameter Store..."
+            DB_PASSWORD=$(aws ssm get-parameter \
+              --name "$PARAMETER_NAME" \
+              --with-decryption \
+              --query "Parameter.Value" \
+              --output text)
+          else
+            echo "Password does not exist, generating new password..."
+            DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+            
+            aws ssm put-parameter \
+              --name "$PARAMETER_NAME" \
+              --value "$DB_PASSWORD" \
+              --type "SecureString" \
+              --description "Database password for PR ${{ inputs.pr-number }}" \
+              --overwrite
+            
+            echo "New password generated and stored in Parameter Store"
+          fi
+            
+          echo "::add-mask::$DB_PASSWORD"
+          echo "db_password=$DB_PASSWORD" >> $GITHUB_OUTPUT
+
+      - name: "Setup Flyway CLI"
+        run: |
+          wget -qO- "https://download.red-gate.com/maven/release/org/flywaydb/flyway-commandline/${{ env.FLYWAY_VERSION }}/flyway-commandline-${{ env.FLYWAY_VERSION }}-linux-x64.tar.gz" | tar -xvz
+          echo "$PWD/flyway-${{ env.FLYWAY_VERSION }}" >> $GITHUB_PATH
+
+      - name: "Define PR Variables"
+        id: pr_vars
+        run: |
+          echo "db_name=${{ env.PROJECT_NAME }}_pr_${{ inputs.pr-number }}" >> $GITHUB_OUTPUT
+          echo "db_user=${{ env.PROJECT_NAME }}_pr_${{ inputs.pr-number }}_user" >> $GITHUB_OUTPUT
+
+      - name: "Run Flyway Provisioning (Create DB & User)"
+        id: flyway_provisioning
+        if: ${{ inputs.action != 'cleanup' }}
+        env:
+          FLYWAY_URL: jdbc:mysql://${{ steps.get_shared_rds_info.outputs.rds_endpoint }}:3306/?useSSL=false
+          FLYWAY_USER: ${{ steps.get_shared_rds_info.outputs.rds_username }}
+          FLYWAY_PASSWORD: ${{ steps.get_shared_rds_info.outputs.rds_password }}
+
+          DB_NAME: ${{ steps.pr_vars.outputs.db_name }}
+          DB_USER: ${{ steps.pr_vars.outputs.db_user }}
+          DB_PASSWORD: ${{ steps.get_db_password.outputs.db_password }}
+        run: |
+          echo "Running provisioning for database '$DB_NAME'..."
+          set -e
+
+          flyway \
+            -locations="filesystem:db/provision" \
+            -placeholders.dbName=$DB_NAME \
+            -placeholders.dbUser=$DB_USER \
+            -placeholders.dbPassword=$DB_PASSWORD \
+            migrate
+
+          echo "Database provisioning completed successfully"
+
+      - name: "Run Flyway Migrations"
+        id: flyway_migrations
+        if: ${{ inputs.action != 'cleanup' }}
+        env:
+          FLYWAY_URL: jdbc:mysql://${{ steps.get_shared_rds_info.outputs.rds_endpoint }}:3306/${{ steps.pr_vars.outputs.db_name }}?useSSL=false
+          FLYWAY_USER: ${{ steps.pr_vars.outputs.db_user }}
+          FLYWAY_PASSWORD: ${{ steps.get_db_password.outputs.db_password }}
+        run: |
+          echo "Running schema migrations on database '${{ steps.pr_vars.outputs.db_name }}'..."
+          set -e
+
+          flyway \
+            -locations="filesystem:db/init,filesystem:db/migration" \
+            migrate
+
+          echo "Database schema migrations completed successfully"
+
+      - name: "Store DB Info in Parameter Store"
+        id: store_db_info
+        if: ${{ inputs.action != 'cleanup' }}
+        run: |
+          set -e
+
+          aws ssm put-parameter \
+            --name "/${PROJECT_NAME}/development/pr-${PR_NUMBER}/database/name" \
+            --value "${{ steps.pr_vars.outputs.db_name }}" \
+            --type "String" \
+            --overwrite
+
+          aws ssm put-parameter \
+            --name "/${PROJECT_NAME}/development/pr-${PR_NUMBER}/database/username" \
+            --value "${{ steps.pr_vars.outputs.db_user }}" \
+            --type "String" \
+            --overwrite
+
+          echo "Database information stored in Parameter Store successfully"
+        env:
+          PROJECT_NAME: ${{ env.PROJECT_NAME }}
+          PR_NUMBER: ${{ inputs.pr-number }}
+          ENVIRONMENT: development
+
+      - name: "Cleanup Database and Parameters"
+        if: ${{ inputs.action == 'cleanup' }}
+        env:
+          FLYWAY_URL: jdbc:mysql://${{ steps.get_shared_rds_info.outputs.rds_endpoint }}:3306/?useSSL=false
+          FLYWAY_USER: ${{ steps.get_shared_rds_info.outputs.rds_username }}
+          FLYWAY_PASSWORD: ${{ steps.get_shared_rds_info.outputs.rds_password }}
+          DB_NAME: ${{ steps.pr_vars.outputs.db_name }}
+          DB_USER: ${{ steps.pr_vars.outputs.db_user }}
+          MYSQL_PWD: ${{ steps.get_shared_rds_info.outputs.rds_password }}
+        run: |
+          if ! command -v mysql &> /dev/null
+          then
+              echo "mysql-client not found, installing..."
+              sudo apt-get update
+              sudo apt-get install -y mysql-client
+          else
+              echo "mysql-client is already available"
+          fi
+          
+          echo "Starting cleanup for PR #${{ inputs.pr-number }}..."
+
+          mysql -h ${{ steps.get_shared_rds_info.outputs.rds_endpoint }} \
+                -u ${{ steps.get_shared_rds_info.outputs.rds_username }} \
+                -e "DROP DATABASE IF EXISTS \`${DB_NAME}\`; DROP USER IF EXISTS '${DB_USER}'@'%';"
+
+          echo "Database and user dropped successfully"
+
+          PARAMS=(
+            "/${PROJECT_NAME}/development/pr-${{ inputs.pr-number }}/database/name"
+            "/${PROJECT_NAME}/development/pr-${{ inputs.pr-number }}/database/username" 
+            "/${PROJECT_NAME}/development/pr-${{ inputs.pr-number }}/database/password"
+          )
+
+          for PARAM in "${PARAMS[@]}"; do
+            if aws ssm get-parameter --name "$PARAM" > /dev/null 2>&1; then
+              aws ssm delete-parameter --name "$PARAM" && echo "Deleted: $PARAM"
+            else
+              echo "Parameter not found (already clean): $PARAM"
+            fi
+          done
+
+          echo "Cleanup completed successfully"
+
+      - name: "Verify Database Setup"
+        if: ${{ inputs.action != 'cleanup' }}
+        run: |
+          echo "Database setup completed successfully!"
+          echo "Database name: ${{ steps.pr_vars.outputs.db_name }}"
+          echo "Database user: ${{ steps.pr_vars.outputs.db_user }}"
+          echo "RDS endpoint: ${{ steps.get_shared_rds_info.outputs.rds_endpoint }}"
+
+      - name: "Verify Cleanup Completed"
+        if: ${{ inputs.action == 'cleanup' }}
+        run: |
+          echo "Database cleanup completed successfully!"
+          echo "Cleaned up database: ${{ steps.pr_vars.outputs.db_name }}"
+          echo "Cleaned up user: ${{ steps.pr_vars.outputs.db_user }}"

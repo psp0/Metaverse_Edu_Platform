@@ -17,7 +17,7 @@ provider "aws" {
 
   default_tags {
     tags = {
-      Project   = var.project_name
+      Project   = var.shared_project_name
       ManagedBy = "terraform"
     }
   }

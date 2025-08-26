@@ -8,7 +8,7 @@ variable "aws_region" {
 variable "aws_profile" {
   description = "The AWS CLI profile to use for authentication."
   type        = string
-  default = ""
+  default     = ""
 }
 
 # IAM Configuration
@@ -25,7 +25,7 @@ variable "iam_role_project_prefix" {
 }
 
 # Project and Environment Variables
-variable "project_name" {
+variable "shared_project_name" {
   description = "A prefix for all resource names to ensure uniqueness."
   type        = string
   default     = "mep-shared"
@@ -82,7 +82,7 @@ variable "az_instance_type_map" {
 variable "ecs_instance_type" {
   description = "Instance type for the ECS EC2 instances."
   type        = string
-  default     = "t3.medium"
+  default     = "t3.small"
 }
 
 variable "ecs_desired_capacity_total" {
@@ -104,7 +104,56 @@ variable "ecs_max_size_total" {
 }
 
 # Security and Certificate Variables
-variable "acm_certificate_arn" {
-  description = "The ARN of the ACM certificate for the shared ALB."
+variable "acm_certificate_domain" {
+  description = "The domain name for which to find the ACM certificate (e.g., example.com or *.example.com)"
   type        = string
+}
+
+variable "shared_rds_instance_class" {
+  description = "The instance class for the shared RDS instance"
+  type        = string
+  default     = "db.t3.micro"
+}
+
+variable "shared_rds_allocated_storage" {
+  description = "The allocated storage for the shared RDS instance (GB)"
+  type        = number
+  default     = 20
+}
+
+variable "shared_rds_admin_username" {
+  description = "The admin username for the shared RDS instance"
+  type        = string
+  default     = "admin"
+  sensitive   = true
+}
+
+variable "shared_rds_multi_az" {
+  description = "Whether to enable Multi-AZ deployment for high availability"
+  type        = bool
+  default     = false
+}
+
+variable "shared_rds_backup_retention_period" {
+  description = "The backup retention period (days)"
+  type        = number
+  default     = 0
+}
+
+variable "shared_rds_backup_window" {
+  description = "The preferred backup window (UTC)"
+  type        = string
+  default     = "03:00-04:00"
+}
+
+variable "shared_rds_maintenance_window" {
+  description = "The preferred maintenance window (UTC)"
+  type        = string
+  default     = "sun:04:00-sun:05:00"
+}
+
+variable "shared_rds_skip_final_snapshot" {
+  description = "Whether to skip final snapshot when deleting"
+  type        = bool
+  default     = true
 }

@@ -13,12 +13,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SwaggerConfig {
 
-    @Value("${swagger.server.url:https://localhost}")
-    private String serverUrl;
-
-    @Value("${swagger.server.port:8080}")
-    private String serverPort;
-
     @Bean
     public OpenAPI openAPI() {
         Info info = new Info()
@@ -34,10 +28,6 @@ public class SwaggerConfig {
                 .name("Authorization");
 
         SecurityRequirement securityRequirement = new SecurityRequirement().addList("bearerAuth");
-
-        Server server = new Server()
-                .url(serverUrl + ":" + serverPort)
-                .description("MEP Server");
 
         return new OpenAPI()
                 .components(new Components().addSecuritySchemes("bearerAuth", securityScheme))

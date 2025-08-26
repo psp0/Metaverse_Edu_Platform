@@ -33,8 +33,8 @@ on:
         default: "ap-northeast-2"
 
     secrets:
-      AWS_INFRA_ROLE_ARN:
-        description: "AWS Management account role ARN"
+      AWS_ARTIFACT_MANAGER_ROLE_ARN:
+        description: "AWS Artifact Manager role ARN"
         required: true
       UNITY_LICENSE:
         description: "Unity license file content"
@@ -116,7 +116,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ inputs.aws_region }}
-          role-to-assume: ${{ secrets.AWS_INFRA_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_ARTIFACT_MANAGER_ROLE_ARN }}
           role-session-name: github-actions-${{ github.run_id }}-infra-frontend
 
       - name: Clean up previous build artifacts for this PR
@@ -226,21 +226,19 @@ jobs:
       - name: Create build summary
         if: always()
         run: |
-          echo "## Frontend (Unity WebGL) 빌드 결과" >> $GITHUB_STEP_SUMMARY
-          echo "### 빌드 상태: ${{ job.status == 'success' && '성공' || '실패' }}" >> $GITHUB_STEP_SUMMARY
+          echo "Frontend (Unity WebGL) 빌드 결과" >> $GITHUB_STEP_SUMMARY
+          echo "빌드 상태: ${{ job.status == 'success' && '성공' || '실패' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-
-          echo "### 빌드 결과물 정보" >> $GITHUB_STEP_SUMMARY
+          echo "빌드 결과물 정보" >> $GITHUB_STEP_SUMMARY
           if [[ "${{ job.status }}" == "success" ]]; then
             echo "- 빌드가 성공적으로 완료되었습니다." >> $GITHUB_STEP_SUMMARY
             echo "- 빌드 아티팩트가 생성되었습니다." >> $GITHUB_STEP_SUMMARY
           else
             echo "- 빌드가 실패했습니다. 자세한 내용은 로그를 확인해주세요." >> $GITHUB_STEP_SUMMARY
           fi
-
-          echo "### 빌드 컨텍스트" >> $GITHUB_STEP_SUMMARY
+          echo "빌드 컨텍스트" >> $GITHUB_STEP_SUMMARY
           if [[ -n "${{ inputs.pr_number }}" ]]; then
-            echo "- **PR 번호**: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+            echo "- PR 번호: #${{ inputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
           fi
-          echo "- **커밋 SHA**: \`${{ env.FINAL_HEAD_SHA }}\`" >> $GITHUB_STEP_SUMMARY
-          echo "- **환경**: \`${{ inputs.environment }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- 커밋 SHA: ${{ env.FINAL_HEAD_SHA }}" >> $GITHUB_STEP_SUMMARY
+          echo "- 환경: ${{ inputs.environment }}" >> $GITHUB_STEP_SUMMARY

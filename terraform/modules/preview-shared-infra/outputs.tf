@@ -144,3 +144,39 @@ output "common_tags" {
   description = "Common tags applied to all resources"
   value       = local.common_tags
 }
+
+output "shared_rds_endpoint" {
+  description = "The RDS instance endpoint for connecting to the shared database"
+  value       = aws_db_instance.shared.endpoint
+}
+
+output "shared_rds_address" {
+  description = "The RDS instance hostname"
+  value       = aws_db_instance.shared.address
+}
+
+output "shared_rds_port" {
+  description = "The RDS instance port"
+  value       = aws_db_instance.shared.port
+}
+
+output "shared_rds_security_group_id" {
+  description = "The security group ID for the shared RDS instance"
+  value       = aws_security_group.shared_rds.id
+}
+
+output "pr_ecs_services_security_group_id" {
+  description = "The shared security group ID for all PR ECS services to access RDS"
+  value       = aws_security_group.pr_ecs_services.id
+}
+
+output "shared_rds_admin_username" {
+  description = "The admin username for the shared RDS instance"
+  value       = aws_db_instance.shared.username
+  sensitive   = true
+}
+
+output "shared_rds_parameter_store_password_name" {
+  description = "The Parameter Store parameter name containing the RDS admin password"
+  value       = aws_ssm_parameter.shared_rds_admin_password.name
+}
