@@ -555,6 +555,8 @@ resource "aws_security_group" "shared_rds" {
 resource "random_password" "shared_rds_admin_password" {
   length  = 32
   special = true
+  # Exclude characters that are not allowed in RDS passwords: /, @, ", space
+  override_special = "!#$%&*()-_=+[]{}<>:?"
   keepers = {
     project     = var.shared_project_name
     environment = var.environment
