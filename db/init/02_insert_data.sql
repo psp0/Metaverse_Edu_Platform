@@ -1,4 +1,4 @@
-USE mep_db;
+-- 초기 데이터 삽입 스크립트 (GitHub Actions Flyway용)
 
 -- Insert into chapter table
 INSERT INTO `unit` (`unit_id`, `chapter_no`, `title`, `description`) VALUES
