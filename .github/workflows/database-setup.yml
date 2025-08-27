@@ -107,8 +107,8 @@ jobs:
           echo "::add-mask::$RDS_ENDPOINT"
           echo "rds_endpoint=$RDS_ENDPOINT" >> $GITHUB_OUTPUT
 
-          RDS_USERNAME_PARAM="/$PROJECT_NAME/database/admin/username"
-          RDS_PASSWORD_PARAM="/$PROJECT_NAME/database/admin/password"
+          RDS_USERNAME_PARAM="/$SHARED_PROJECT_NAME/database/admin/username"
+          RDS_PASSWORD_PARAM="/$SHARED_PROJECT_NAME/database/admin/password"
 
           if aws ssm get-parameter --name "$RDS_USERNAME_PARAM" > /dev/null 2>&1; then
             RDS_USERNAME=$(aws ssm get-parameter \
