@@ -70,7 +70,7 @@ jobs:
       AWS_REGION: ${{ vars.AWS_REGION }}
       PROJECT_NAME: ${{ vars.PROJECT_NAME || 'mep' }}
       SHARED_PROJECT_NAME: ${{ vars.SHARED_PROJECT_NAME || 'mep-shared' }}
-      FLYWAY_VERSION: ${{ vars.FLYWAY_VERSION || '9.22.3' }}
+      FLYWAY_VERSION: ${{ vars.FLYWAY_VERSION || '11.11.2' }}
 
     steps:
       - name: Checkout code
@@ -161,7 +161,7 @@ jobs:
 
       - name: "Setup Flyway CLI"
         run: |
-          wget -qO- "https://download.red-gate.com/maven/release/org/flywaydb/flyway-commandline/${{ env.FLYWAY_VERSION }}/flyway-commandline-${{ env.FLYWAY_VERSION }}-linux-x64.tar.gz" | tar -xvz
+          wget -qO- "https://github.com/flyway/flyway/releases/download/flyway-${{ env.FLYWAY_VERSION }}/flyway-commandline-${{ env.FLYWAY_VERSION }}-linux-x64.tar.gz" | tar -xvz
           echo "$PWD/flyway-${{ env.FLYWAY_VERSION }}" >> $GITHUB_PATH
 
       - name: "Define PR Variables"
