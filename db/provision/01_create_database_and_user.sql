@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS `${dbName}`;
+
+CREATE USER IF NOT EXISTS '${dbUser}'@'%' IDENTIFIED BY '${dbPassword}';
+
+GRANT ALL PRIVILEGES ON `${dbName}`.* TO '${dbUser}'@'%';
+
+FLUSH PRIVILEGES;
