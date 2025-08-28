@@ -41,7 +41,7 @@ public class LoginHandler : MonoBehaviourPunCallbacks
 
     public IEnumerator LoginCoroutine(string userId, string password)
     {
-        string url = baseUrl + "/api/users/login";
+        string url = baseUrl + "/users/login";
 
         var loginData = new LoginRequest { userId = userId, password = password };
         string jsonData = JsonUtility.ToJson(loginData);

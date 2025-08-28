@@ -24,7 +24,7 @@ public class LogoutHandler : MonoBehaviour
 
     IEnumerator LogoutCoroutine()
     {
-        string url = baseUrl + "/api/users/logout";
+        string url = baseUrl + "/users/logout";
         UnityWebRequest request = new UnityWebRequest(url, "POST");
         request.downloadHandler = new DownloadHandlerBuffer();
         Debug.Log("AccessToken = " + AuthManager.Instance.AccessToken);
