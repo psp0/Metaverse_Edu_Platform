@@ -37,23 +37,27 @@ services:
       - --skip-character-set-client-handshake
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./db/init:/docker-entrypoint-initdb.d
+      - ./flyway/sql:/docker-entrypoint-initdb.d
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - "80:80"
       - "443:443"
     volumes:
       - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
+      - ./nginx/https-server.conf.template:/etc/nginx/https-server.conf.template
       - ./nginx/ssl:/etc/nginx/ssl
-      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - /etc/letsencrypt:/etc/letsencrypt
     environment:
-      - DOMAIN_NAME=${DOMAIN_NAME}
-    command: /bin/bash -c "envsubst '\$$DOMAIN_NAME' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+      - ENVIRONMENT=${ENVIRONMENT:-local}
+      - DOMAIN_NAME=${DOMAIN_NAME:-localhost}
     depends_on:
       - backend
-    restart: always
+    restart: unless-stopped
+    stop_grace_period: 10s
 
 volumes:
   mysql_data:
