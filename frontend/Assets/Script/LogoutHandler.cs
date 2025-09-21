@@ -3,6 +3,8 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
+
 
 public class LogoutHandler : MonoBehaviour
 {

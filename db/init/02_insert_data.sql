@@ -1,4 +1,4 @@
--- USE mep_db;
+-- 초기 데이터 삽입 스크립트 (GitHub Actions Flyway용)
 
 INSERT INTO `subject` (`subject_id`, `name`) VALUES (1, '수학');
 INSERT INTO `subject` (`subject_id`, `name`) VALUES (2, '영어');

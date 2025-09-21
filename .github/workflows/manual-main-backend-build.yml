@@ -1,0 +1,63 @@
+name: Manual Main Branch Backend Build
+
+permissions:
+  id-token: write # OIDC 토큰 생성을 위해 필요
+  contents: read # 리포지토리 읽기 권한
+  packages: write # 패키지 업로드 권한
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tags:
+        description: "게시할 Docker 이미지 태그를 입력하세요"
+        required: true
+        default: "main-latest"
+        type: string
+      java_version:
+        description: "Java 버전"
+        required: false
+        default: "17"
+        type: choice
+        options:
+          - "17"
+          - "21"
+      run_tests:
+        description: "단위 테스트 실행"
+        required: false
+        default: true
+        type: boolean
+      run_security_scan:
+        description: "보안 취약점 스캔 실행"
+        required: false
+        default: true
+        type: boolean
+      upload_artifacts:
+        description: "빌드 아티팩트 업로드"
+        required: false
+        default: false
+        type: boolean
+      artifact_retention_days:
+        description: "아티팩트 보관 기간 (일)"
+        required: false
+        default: "7"
+        type: string
+
+jobs:
+  call-reusable-backend-build:
+    name: Build Backend Application
+    permissions:
+      id-token: write
+      contents: read
+      packages: write
+    uses: ./.github/workflows/backend-build.yml
+    with:
+      image_tags: ${{ github.event.inputs.image_tags }}
+      java_version: ${{ github.event.inputs.java_version }}
+      run_tests: ${{ fromJSON(github.event.inputs.run_tests) }}
+      run_security_scan: ${{ fromJSON(github.event.inputs.run_security_scan) }}
+      upload_artifacts: ${{ fromJSON(github.event.inputs.upload_artifacts) }}
+      artifact_retention_days: ${{ fromJSON(github.event.inputs.artifact_retention_days) }}
+      build_context: "manual-main"
+      commit_sha: ${{ github.sha }}
+      ref_name: "main"
+    secrets: inherit

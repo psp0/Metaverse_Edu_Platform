@@ -6,10 +6,10 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/LoginPage.unity
+    path: Assets/Scenes/LoginPage.unity
     guid: def8cd78f9303a74e8b06bab229c6c93
   - enabled: 1
-    path: Assets/PersonalRoom.unity
+    path: Assets/Scenes/PersonalRoom.unity
     guid: 38478f63331b3984881c16ac71a49430
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity

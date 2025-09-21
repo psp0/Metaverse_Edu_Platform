@@ -1,5 +1,4 @@
--- CREATE DATABASE IF NOT EXISTS mep_db;
--- USE mep_db;
+-- MySQL 테이블 생성 스크립트 (GitHub Actions Flyway용)
 
 -- 사용자 테이블
 CREATE TABLE `user` (

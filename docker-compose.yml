@@ -1,22 +1,10 @@
 version: "3.8"
 
 services:
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
-    environment:
-      - BACK_SERVER_URL=${SERVER_URL}
-      - BACK_SERVER_PORT=${SERVER_PORT}
-
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile  
+      dockerfile: Dockerfile
     depends_on:
       db:
         condition: service_healthy
@@ -25,14 +13,13 @@ services:
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
       - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
       - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - DOMAIN_NAME=${DOMAIN_NAME}
-      - SWAGGER_SERVER_URL=${SWAGGER_SERVER_URL}
-      - SWAGGER_SERVER_PORT=${SWAGGER_SERVER_PORT}
-
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_ACCESS_TOKEN_VALIDITY_SECONDS=${JWT_ACCESS_TOKEN_VALIDITY_SECONDS}
+      - JWT_REFRESH_TOKEN_VALIDITY_SECONDS=${JWT_REFRESH_TOKEN_VALIDITY_SECONDS}
   db:
     image: mysql:8.0.42
-    ports:
-      - "3306:3306"
+    expose:
+      - "3306"
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u${MYSQL_USER}", "-p${MYSQL_PASSWORD}"]
       interval: 10s
@@ -50,21 +37,27 @@ services:
       - --skip-character-set-client-handshake
     volumes:
       - mysql_data:/var/lib/mysql
-      - ./db/init:/docker-entrypoint-initdb.d
+      - ./flyway/sql:/docker-entrypoint-initdb.d
 
   nginx:
-    image: nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
-      - "8443:8443"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
+      - ./nginx/https-server.conf.template:/etc/nginx/https-server.conf.template
       - ./nginx/ssl:/etc/nginx/ssl
+      - /etc/letsencrypt:/etc/letsencrypt
     environment:
-      - DOMAIN_NAME=${DOMAIN_NAME}
-    command: /bin/bash -c "envsubst '\$$DOMAIN_NAME' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+      - ENVIRONMENT=${ENVIRONMENT:-local}
+      - DOMAIN_NAME=${DOMAIN_NAME:-localhost}
     depends_on:
       - backend
-    restart: always
+    restart: unless-stopped
+    stop_grace_period: 10s
 
 volumes:
   mysql_data:
