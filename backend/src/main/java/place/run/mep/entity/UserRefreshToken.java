@@ -10,13 +10,12 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor // Added
-@AllArgsConstructor // Added
+@NoArgsConstructor
 @Table(name = "user_refresh_token")
 public class UserRefreshToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "token_id") // Corrected from toekn_id to token_id
+    @Column(name = "token_id")
     private Long tokenId;
 
     @ManyToOne(fetch = FetchType.LAZY)

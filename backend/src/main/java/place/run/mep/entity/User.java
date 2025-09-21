@@ -18,7 +18,7 @@ public class User {
     @Column(name = "user_id", nullable = false, unique = true, length = 50)
     private String userId;
 
-    @Column(name = "created_at", nullable = false)
+    @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
