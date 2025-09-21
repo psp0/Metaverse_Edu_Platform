@@ -68,4 +68,16 @@ cat /etc/nginx/nginx.conf
 echo "===================="
 
 # nginx 시작
-nginx -g 'daemon off;'
+echo "Starting nginx..."
+
+# SIGTERM 신호 핸들러 추가
+trap 'echo "Received SIGTERM, stopping nginx..."; nginx -s quit; exit 0' TERM
+
+# nginx를 백그라운드에서 실행
+nginx -g 'daemon off;' &
+
+# nginx 프로세스 ID 저장
+NGINX_PID=$!
+
+# 신호를 기다림
+wait $NGINX_PID
