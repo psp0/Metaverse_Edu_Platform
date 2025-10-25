@@ -50,8 +50,7 @@ CREATE TABLE `user_refresh_token` (
 CREATE TABLE `subject` (
     `subject_id` INT NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
-    PRIMARY KEY (`subject_id`),
-    UNIQUE KEY `idx_subject_name` (`name`)
+    PRIMARY KEY (`subject_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- 학습 단원 테이블
@@ -60,24 +59,30 @@ CREATE TABLE `unit` (
     `subject_id` INT NOT NULL,
     `chapter_no` INT NULL,
     `title` VARCHAR(255) NOT NULL,
-    `description` TEXT NULL,
     PRIMARY KEY (`unit_id`),
-    INDEX `idx_unit_subject_id` (`subject_id`),
-    INDEX `idx_unit_chapter_no` (`chapter_no`),
     CONSTRAINT `fk_unit_subject` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 소단원 그룹 테이블
+CREATE TABLE `sub_unit_group` (
+    `sub_unit_group_id` INT NOT NULL AUTO_INCREMENT,
+    `unit_id` INT NOT NULL,
+    `subunit_title` VARCHAR(255) NOT NULL,
+    PRIMARY KEY (`sub_unit_group_id`),
+    CONSTRAINT `fk_sub_unit_group_to_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 소단원 테이블
 CREATE TABLE `sub_unit` (
     `sub_unit_id` INT NOT NULL AUTO_INCREMENT,
-    `unit_id` INT NOT NULL,
-    `sub_chapter_no` INT NULL,
-    `sub_title` VARCHAR(255) NOT NULL,
-    `description` TEXT NULL,
+    `sub_unit_group_id` INT NOT NULL,
+    `detail` VARCHAR(255) NULL,
     PRIMARY KEY (`sub_unit_id`),
-    INDEX `idx_sub_unit_unit_id` (`unit_id`),
-    CONSTRAINT `fk_sub_unit_unit` FOREIGN KEY (`unit_id`) REFERENCES `unit` (`unit_id`) ON DELETE CASCADE
+    CONSTRAINT `fk_sub_unit_to_group` FOREIGN KEY (`sub_unit_group_id`) REFERENCES `sub_unit_group` (`sub_unit_group_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 강의 테이블
 CREATE TABLE `lecture` (
@@ -87,9 +92,9 @@ CREATE TABLE `lecture` (
     `content_url` TEXT NULL,
     `duration_sec` INT NOT NULL,
     PRIMARY KEY (`lecture_id`),
-    INDEX `idx_lecture_sub_unit_id` (`sub_unit_id`),
     CONSTRAINT `fk_lecture_sub_unit` FOREIGN KEY (`sub_unit_id`) REFERENCES `sub_unit` (`sub_unit_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 퀴즈 테이블
 CREATE TABLE `quiz` (
@@ -97,9 +102,9 @@ CREATE TABLE `quiz` (
     `sub_unit_id` INT NOT NULL,
     `content` TEXT NOT NULL,
     PRIMARY KEY (`quiz_id`),
-    INDEX `idx_quiz_sub_unit_id` (`sub_unit_id`),
     CONSTRAINT `fk_quiz_sub_unit` FOREIGN KEY (`sub_unit_id`) REFERENCES `sub_unit` (`sub_unit_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 퀴즈 선택지 테이블
 CREATE TABLE `quiz_option` (
@@ -109,9 +114,9 @@ CREATE TABLE `quiz_option` (
     `option_text` TEXT NOT NULL,
     `is_answer` BOOLEAN NOT NULL,
     PRIMARY KEY (`option_id`),
-    INDEX `idx_quiz_option_quiz_id` (`quiz_id`),
     CONSTRAINT `fk_quiz_option_quiz` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 퀴즈 해설 테이블
 CREATE TABLE `explanation` (
@@ -123,6 +128,7 @@ CREATE TABLE `explanation` (
     CONSTRAINT `fk_explanation_quiz` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 -- 퀴즈 응답 테이블
 CREATE TABLE `quiz_response` (
     `response_id` INT NOT NULL AUTO_INCREMENT,
@@ -132,26 +138,23 @@ CREATE TABLE `quiz_response` (
     `is_correct` BOOLEAN NOT NULL,
     `answered_at` DATETIME NOT NULL,
     PRIMARY KEY (`response_id`),
-    INDEX `idx_quiz_response_quiz_id` (`quiz_id`),
-    INDEX `idx_quiz_response_option_id` (`option_id`),
-    INDEX `idx_quiz_response_user_no` (`user_no`),
     CONSTRAINT `fk_quiz_response_quiz` FOREIGN KEY (`quiz_id`) REFERENCES `quiz` (`quiz_id`) ON DELETE CASCADE,
     CONSTRAINT `fk_quiz_response_option` FOREIGN KEY (`option_id`) REFERENCES `quiz_option` (`option_id`),
     CONSTRAINT `fk_quiz_response_user` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
 -- 문제 응답 테이블
 CREATE TABLE `problem_response` (
     `response_id` BIGINT NOT NULL AUTO_INCREMENT,
-    `user_no` BIGINT(20) NOT NULL,
+    `user_no` BIGINT NOT NULL,
     `problem_id` VARCHAR(50) NULL,
     `answer` TEXT NULL,
     `is_correct` BOOLEAN NULL,
     PRIMARY KEY (`response_id`),
-    INDEX `idx_problem_response_user_no` (`user_no`),
-    INDEX `idx_problem_response_problem_id` (`problem_id`),
     CONSTRAINT `fk_problem_response_user` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- 사용자 단원 진행상황 테이블
 CREATE TABLE `user_unit_progress` (
@@ -167,4 +170,17 @@ CREATE TABLE `user_unit_progress` (
     UNIQUE KEY `idx_uup_user_subunit` (`user_no`, `sub_unit_id`),
     CONSTRAINT `fk_uup_user` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE,
     CONSTRAINT `fk_uup_sub_unit` FOREIGN KEY (`sub_unit_id`) REFERENCES `sub_unit` (`sub_unit_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- 사용자 스킬 숙달도 테이블
+CREATE TABLE `user_skill_proficiency` (
+    `proficiency_id` BIGINT NOT NULL AUTO_INCREMENT,
+    `user_no` BIGINT NOT NULL,
+    `sub_unit_group_id` INT NOT NULL,
+    `proficiency_percentage` DECIMAL(5,2) NOT NULL,
+    `updated_at` DATETIME NOT NULL,
+    PRIMARY KEY (`proficiency_id`),
+    UNIQUE KEY `idx_usp_user_subunit_group` (`user_no`, `sub_unit_group_id`),
+    CONSTRAINT `fk_usp_user` FOREIGN KEY (`user_no`) REFERENCES `user` (`user_no`) ON DELETE CASCADE,
+    CONSTRAINT `fk_usp_sub_unit_group` FOREIGN KEY (`sub_unit_group_id`) REFERENCES `sub_unit_group` (`sub_unit_group_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

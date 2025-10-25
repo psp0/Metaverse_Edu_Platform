@@ -16,17 +16,11 @@ public class SubUnit {
     private Integer subUnitId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_id")
-    private Unit unit;
+    @JoinColumn(name = "sub_unit_group_id", nullable = false)
+    private SubUnitGroup subUnitGroup;
 
-    @Column(name = "sub_chapter_no")
-    private Integer subChapterNo;
-
-    @Column(name = "sub_title", nullable = false)
-    private String subTitle;
-
-    @Column(columnDefinition = "TEXT")
-    private String description;
+    @Column(name = "detail")
+    private String detail;
 
     @OneToOne(mappedBy = "subUnit", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Lecture lecture;

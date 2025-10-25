@@ -1,6 +1,5 @@
 package place.run.mep.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 import place.run.mep.entity.SubUnit;
@@ -9,13 +8,10 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "subUnitId", "subChapterNo", "subTitle", "description", "completed", "progressPercentage", "lectureProgress", "quizProgress", "lastStudiedAt", "lectureLastTimestampSec" })
+@JsonPropertyOrder({ "subUnitId", "detail", "completed", "progressPercentage", "lectureProgress", "quizProgress", "lastStudiedAt", "lectureLastTimestampSec", "contentUrl" })
 public class SubUnitDetailDto {
     private final int subUnitId;
-    private final int subChapterNo;
-    private final String subTitle;
-    private final String description;
+    private final String detail;
     private final boolean completed;
     private final BigDecimal progressPercentage;
     private final BigDecimal lectureProgress;
@@ -24,33 +20,27 @@ public class SubUnitDetailDto {
     private final Integer lectureLastTimestampSec;
     private final String contentUrl;
 
-    // 학습 기록이 있는 경우
     public SubUnitDetailDto(SubUnit subUnit, UserUnitProgress progress) {
         this.subUnitId = subUnit.getSubUnitId();
-        this.subChapterNo = subUnit.getSubChapterNo();
-        this.subTitle = subUnit.getSubTitle();
-        this.description = subUnit.getDescription();
-        this.completed = progress.getProgressPercentage() != null && progress.getProgressPercentage().compareTo(new BigDecimal("100.00")) >= 0;
-        this.progressPercentage = progress.getProgressPercentage();
-        this.lectureProgress = progress.getLectureProgress();
-        this.quizProgress = progress.getQuizProgress();
-        this.lastStudiedAt = progress.getUpdatedAt();
-        this.lectureLastTimestampSec = progress.getLectureLastTimestampSec();
-        this.contentUrl = (subUnit.getLecture() != null) ? subUnit.getLecture().getContentUrl() : null;
-    }
+        this.detail = subUnit.getDetail();
 
-    // 학습 기록이 없는 경우
-    public SubUnitDetailDto(SubUnit subUnit) {
-        this.subUnitId = subUnit.getSubUnitId();
-        this.subChapterNo = subUnit.getSubChapterNo();
-        this.subTitle = subUnit.getSubTitle();
-        this.description = subUnit.getDescription();
-        this.completed = false;
-        this.progressPercentage = BigDecimal.ZERO;
-        this.lectureProgress = BigDecimal.ZERO;
-        this.quizProgress = BigDecimal.ZERO;
-        this.lastStudiedAt = null;
-        this.lectureLastTimestampSec = 0;
+        // 진행도 정보가 있는경우
+        if (progress != null) {
+            this.progressPercentage = progress.getProgressPercentage();
+            this.lectureProgress = progress.getLectureProgress();
+            this.quizProgress = progress.getQuizProgress();
+            this.lastStudiedAt = progress.getUpdatedAt();
+            this.lectureLastTimestampSec = progress.getLectureLastTimestampSec();
+            this.completed = progress.getProgressPercentage() != null && progress.getProgressPercentage().compareTo(new BigDecimal("100.00")) >= 0;
+        } else {
+            this.progressPercentage = BigDecimal.ZERO;
+            this.lectureProgress = BigDecimal.ZERO;
+            this.quizProgress = BigDecimal.ZERO;
+            this.lastStudiedAt = null;
+            this.lectureLastTimestampSec = 0;
+            this.completed = false;
+        }
+
         this.contentUrl = (subUnit.getLecture() != null) ? subUnit.getLecture().getContentUrl() : null;
     }
 }

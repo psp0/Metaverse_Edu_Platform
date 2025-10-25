@@ -12,9 +12,10 @@ public interface UnitRepository extends JpaRepository<Unit, Integer> {
      * chapterNo 순서로 정렬합니다.
      */
     @Query("SELECT DISTINCT u FROM Unit u " +
-            "LEFT JOIN FETCH u.subUnits su " +
+            "LEFT JOIN FETCH u.subUnitGroups sg " +
+            "LEFT JOIN FETCH sg.subUnits su " +
             "LEFT JOIN FETCH su.lecture " +
             "WHERE u.subject.subjectId = :subjectId " +
-            "ORDER BY u.chapterNo ASC, su.subChapterNo ASC")
+            "ORDER BY u.chapterNo ASC, sg.subUnitGroupId ASC, su.subUnitId ASC") // 정렬 기준 필드 수정
     List<Unit> findAllBySubjectIdWithSubUnitsAndLectures(@Param("subjectId") Integer subjectId);
 }

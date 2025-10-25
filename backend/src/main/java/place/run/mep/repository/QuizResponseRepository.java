@@ -10,6 +10,10 @@ import java.util.Optional;
 
 public interface QuizResponseRepository extends JpaRepository<QuizResponse, Integer> {
     List<QuizResponse> findByUserAndQuiz_SubUnit(User user, SubUnit subUnit);
+
     long countByUserAndQuiz_SubUnit(User user, SubUnit subUnit);
+
     Optional<QuizResponse> findByUserAndQuiz(User user, Quiz quiz);
+
+    long countByUserAndQuiz_QuizIdInAndIsCorrect(User user, List<Integer> quizIds, boolean isCorrect);
 }

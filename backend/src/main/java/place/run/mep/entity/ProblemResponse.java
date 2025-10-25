@@ -1,6 +1,7 @@
 package place.run.mep.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,4 +29,12 @@ public class ProblemResponse {
 
     @Column(name = "is_correct")
     private Boolean isCorrect;
+
+    public ProblemResponse(User user, String problemId, String answer, Boolean isCorrect) {
+        this.user = user;
+        this.problemId = problemId;
+        this.answer = answer;
+        this.isCorrect = isCorrect;
+    }
+
 }

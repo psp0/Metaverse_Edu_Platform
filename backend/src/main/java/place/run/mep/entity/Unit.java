@@ -26,10 +26,7 @@ public class Unit {
     @Column(nullable = false)
     private String title;
 
-    @Column(columnDefinition = "TEXT")
-    private String description;
-
     @OneToMany(mappedBy = "unit", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @OrderBy("subChapterNo ASC")
-    private List<SubUnit> subUnits = new ArrayList<>();
+    @OrderBy("subUnitGroupId ASC")
+    private List<SubUnitGroup> subUnitGroups = new ArrayList<>();
 }
