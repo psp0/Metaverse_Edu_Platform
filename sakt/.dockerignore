@@ -1,0 +1,24 @@
+# Git 관련 폴더 및 파일
+.git/
+.gitignore
+
+# Docker 관련 파일 (이미지 안에 포함될 필요 없음)
+Dockerfile
+.dockerignore
+
+# IDE 및 에디터 설정 폴더
+.idea/
+.vscode/
+
+# Python 생성 파일 (캐시 등)
+__pycache__/
+*.pyc
+
+# 훈련된 모델 결과물 (컨테이너 실행 후 생성되므로 포함시키지 않음)
+models/
+
+# 프로젝트 설명 파일 (서버 실행과 무관)
+README.md
+
+# 데이터 생성 스크립트 (서버 실행과 무관)
+generate_data.py
