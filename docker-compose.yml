@@ -18,6 +18,22 @@ services:
       - JWT_REFRESH_TOKEN_VALIDITY_SECONDS=${JWT_REFRESH_TOKEN_VALIDITY_SECONDS}
       - SAKT_SERVER_URL=${SAKT_SERVER_URL}
       - AI_PROBLEM_SERVER_URL=${AI_PROBLEM_SERVER_URL}
+  
+  sakt:
+    build:
+      context: ./sakt
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "5001:5001"
+    environment:
+      - FLASK_ENV=${FLASK_ENV:-production}
+    restart: unless-stopped
+    volumes:
+      - ./sakt/data:/app/data
+      - ./sakt/models:/app/models
+
   db:
     image: mysql:8.0.42
     expose:
