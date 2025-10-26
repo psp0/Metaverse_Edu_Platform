@@ -78,7 +78,7 @@ public class ProgressService {
     }
 
     /**
-     * 퀴즈 완료율을 기반으로 퀴즈 진행도를 업데이트합니다. (QuizService에서 호출)
+     * 퀴즈 완료율을 기반으로 퀴즈 진행도를 업데이트합니다. (중간 저장용)
      */
     @Transactional
     public void updateQuizProgressByCompletion(User user, SubUnit subUnit, BigDecimal completionRatio) {
@@ -86,6 +86,18 @@ public class ProgressService {
         
         BigDecimal quizProgress = completionRatio.multiply(new BigDecimal("100.0"));
         progress.setQuizProgress(quizProgress);
+
+        updateTotalProgress(progress);
+    }
+
+    /**
+     * 퀴즈를 최종 완료 처리합니다. (숙달도 판정 후 호출)
+     */
+    @Transactional
+    public void updateQuizAsCompleted(User user, SubUnit subUnit) {
+        UserUnitProgress progress = getOrCreateProgress(user, subUnit);
+
+        progress.setQuizProgress(new BigDecimal("100.00"));
 
         updateTotalProgress(progress);
     }

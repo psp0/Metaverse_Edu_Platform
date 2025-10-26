@@ -11,10 +11,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import place.run.mep.dto.QuizAnswerRequestDto;
 import place.run.mep.dto.QuizAnswerResponseDto;
-import place.run.mep.dto.QuizStateDto;
+import place.run.mep.dto.SubUnitQuizStateDto; // [수정] DTO import 변경
 import place.run.mep.service.QuizService;
-
-import java.util.List;
 
 @Tag(name = "학습 (퀴즈)", description = "개념 퀴즈 문제 조회 및 풀이 관련 API")
 @RestController
@@ -24,25 +22,30 @@ public class QuizController {
 
     private final QuizService quizService;
 
-    @Operation(summary = "소단원별 퀴즈 상태 조회 (이어풀기용)",
-               description = "특정 소단원의 모든 문제와 함께, 사용자가 이전에 푼 기록(선택 답안, 정답 여부)을 반환합니다.")
+    @Operation(summary = "소단원별 퀴즈 상태 및 전체 목록 조회",
+            description = "특정 소단원의 전체 문제 수, 푼 문제 수 등 현황과 함께, 풀이 여부가 포함된 전체 문제 목록을 반환합니다.")
+    @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/sub-unit/{subUnitId}/state")
-    public ResponseEntity<List<QuizStateDto>> getQuizState(
+    public ResponseEntity<SubUnitQuizStateDto> getQuizState(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Integer subUnitId) {
-        
-        List<QuizStateDto> quizStates = quizService.getQuizStateForUser(userDetails.getUsername(), subUnitId);
-        return ResponseEntity.ok(quizStates);
+        SubUnitQuizStateDto subUnitQuizState = quizService.getQuizState(userDetails.getUsername(), subUnitId);
+        return ResponseEntity.ok(subUnitQuizState);
     }
 
     @Operation(summary = "퀴즈 단일 문항 제출 및 채점",
-               description = "사용자가 푼 한 문제의 답안을 받아 즉시 채점하고, 정답 여부 및 해설을 반환하며, 진행도를 업데이트합니다.")
+            description = "한 문제의 답안을 제출하면 즉시 채점/해설을 반환하고 진행도를 업데이트합니다. 마지막 문제일 경우, 자동으로 숙달도 판정까지 수행됩니다.")
+    @SecurityRequirement(name = "bearerAuth")
     @PostMapping("/answer")
-    public ResponseEntity<QuizAnswerResponseDto> submitSingleAnswer(
+    public ResponseEntity<QuizAnswerResponseDto> submitAnswer(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody QuizAnswerRequestDto requestDto) {
-
-        QuizAnswerResponseDto response = quizService.submitAndGradeSingleAnswer(userDetails.getUsername(), requestDto);
+        QuizAnswerResponseDto response = quizService.submitAnswer(
+                userDetails.getUsername(),
+                requestDto.getQuizId(),
+                requestDto.getSelectedOptionId()
+        );
         return ResponseEntity.ok(response);
     }
+
 }

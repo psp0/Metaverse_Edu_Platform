@@ -2,7 +2,6 @@ package place.run.mep.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,10 +25,10 @@ public class ClassroomController {
             description = "사용자의 모든 학습 진행 상황을 포함한 단원 목록을 반환합니다.")
 
     @GetMapping("/subjects/{subjectId}/units")
-    public ResponseEntity<List<UnitDetailDto>> getUnitsWithProgress(
+    public ResponseEntity<List<UnitDetailDto>> getSubjectDetails(
             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
             @PathVariable Integer subjectId) {
-        List<UnitDetailDto> units = classroomService.getUnitsWithProgress(userDetails.getUsername(), subjectId);
+        List<UnitDetailDto> units = classroomService.getSubjectDetails(userDetails.getUsername(), subjectId);
         return ResponseEntity.ok(units);
     }
 }
