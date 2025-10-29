@@ -27,8 +27,8 @@ public class QuizController {
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping("/sub-unit/{subUnitId}/state")
     public ResponseEntity<SubUnitQuizStateDto> getQuizState(
-            @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
-            @PathVariable Integer subUnitId) {
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal UserDetails userDetails,
+                                                             @PathVariable Integer subUnitId) {
         SubUnitQuizStateDto subUnitQuizState = quizService.getQuizState(userDetails.getUsername(), subUnitId);
         return ResponseEntity.ok(subUnitQuizState);
     }
