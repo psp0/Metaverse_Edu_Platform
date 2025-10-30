@@ -8,6 +8,10 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      server:
+        condition: service_started
+      sakt:
+        condition: service_started
     environment:
       - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
       - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
@@ -76,6 +80,47 @@ services:
       - backend
     restart: unless-stopped
     stop_grace_period: 10s
+  ai_db:
+    image: mysql:8.0.42
+    container_name: problem_db
+    platform: linux/amd64
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: problem_bank_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/mysql
+    ports:
+      - "3307:3306" 
+    restart: always
+
+  server: 
+    container_name: problem_server
+    build:
+      context: ./ai_problem_server 
+    ports:
+      - "8000:8000" 
+    volumes:
+      - ./ai_problem_server/app:/app
+      - ./ai_problem_server/your_problems.jsonl:/app/your_problems.jsonl
+    environment:
+      MYSQL_HOST: ai_db 
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      MYSQL_DATABASE: problem_bank_db
+    depends_on:
+      - ai_db
+    command: >
+      sh -c "python wait_for_db.py && 
+             if [ ! -f /app/.db_initialized ]; then 
+               python load_db.py && 
+               touch /app/.db_initialized; 
+             fi && 
+             uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+    restart: always
+
 
 volumes:
-  mysql_data:
+  mysql_data: 
+  db_data:    

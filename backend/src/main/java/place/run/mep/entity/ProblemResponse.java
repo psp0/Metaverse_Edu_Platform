@@ -1,7 +1,6 @@
 package place.run.mep.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,5 +35,4 @@ public class ProblemResponse {
         this.answer = answer;
         this.isCorrect = isCorrect;
     }
-
 }
