@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ef86b9877057d414e93ff856dc0740a3
+timeCreated: 1489431221
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/phone.mat
+  uploadId: 615421

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1d52039733628481a84bda830b73c744
+timeCreated: 1459196999
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Plugins/m64/libZFProxyWeb.dylib
+  uploadId: 371853

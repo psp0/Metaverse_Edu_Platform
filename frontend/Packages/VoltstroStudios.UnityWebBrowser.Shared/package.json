@@ -1,0 +1,7 @@
+{
+  "name": "com.voltstro.unitywebbrowser.shared",
+  "displayName": "UnityWebBrowser Shared",
+  "version": "2.2.7",
+  "unity": "2021.3",
+  "description": "Shared library for UnityWebBrowser"
+}

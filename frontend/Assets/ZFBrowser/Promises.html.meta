@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 34e8fe82c44f4154ca3476e6433f6302
+timeCreated: 1483829108
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Promises.html
+  uploadId: 371853

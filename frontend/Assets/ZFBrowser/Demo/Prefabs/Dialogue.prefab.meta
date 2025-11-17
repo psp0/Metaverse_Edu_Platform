@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7f9bda6aad5017a41b5b8538bf43c56e
+timeCreated: 1453852312
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Prefabs/Dialogue.prefab
+  uploadId: 371853

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 42605feeb2ca7d2408b1051233e3ee9f
+timeCreated: 1483827340
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/SimpleScripting.unity
+  uploadId: 371853

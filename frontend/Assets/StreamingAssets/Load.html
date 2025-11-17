@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>External Site – Full Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    html, body { height: 100%; margin: 0; background: #0f1115; color: #e6e6e6; font-family: Arial, sans-serif; }
+    .bar { position: fixed; top: 0; left: 0; right: 0; height: 48px; background: #171a21; border-bottom: 1px solid #2a2f3a; display: flex; align-items: center; gap: 8px; padding: 0 12px; z-index: 2; }
+    .title { font-weight: bold; }
+    .btn { padding: 8px 12px; border: 0; background: #2e7d32; color: #fff; cursor: pointer; }
+    .btn:active { transform: translateY(1px); }
+    .wrap { position: absolute; top: 48px; left: 0; right: 0; bottom: 0; }
+    iframe { width: 100%; height: 100%; border: 0; background: #000; }
+    .fallback { position: absolute; inset: 48px 0 0 0; display: none; align-items: center; justify-content: center; }
+    .hint { background:#141820; border:1px solid #2a2f3a; padding:16px; border-radius:8px; text-align:center; }
+    .small { font-size:12px; color:#9aa0a6; margin-top:6px; }
+  </style>
+</head>
+<body>
+  <div class="bar">
+    <div class="title">Full-Page Embed</div>
+    <button class="btn" onclick="openDirect()">이 페이지로 바로 열기</button>
+    <button class="btn" onclick="reloadFrame()">임베드 재시도</button>
+  </div>
+
+  <div class="wrap">
+    <!-- 임베드: 사이트가 iframe 허용하면 여기서 보임 -->
+    <iframe id="ext" src="https://shanghai-labs-posters-balanced.trycloudflare.com" allowfullscreen></iframe>
+
+    <!-- 임베드가 차단될 때를 대비한 안내 (수동으로 보여줄 수 있음) -->
+    <div id="fallback" class="fallback">
+      <div class="hint">
+        <div>이 사이트는 iframe 임베드를 차단했을 수 있습니다.</div>
+        <div class="small">아래 버튼으로 페이지 자체를 해당 주소로 이동하세요.</div>
+        <div style="margin-top:10px;">
+          <button class="btn" onclick="openDirect()">바로 열기</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      // ES5만 사용
+      var URL = "https://shanghai-labs-posters-balanced.trycloudflare.com";
+      var frame = document.getElementById('ext');
+      var fb = document.getElementById('fallback');
+
+      // 일부 브라우저/보안정책에서는 iframe이 완전히 막혀 비어 있을 수 있음.
+      // 자동 감지는 어려우니, 1초 뒤 프레임이 비어 있으면 안내를 띄우는 '소프트' 체크.
+      setTimeout(function(){
+        // 접근은 교차출처로 불가하므로 단순히 화면이 비어있을 때 대비한 안내 표시만.
+        // 필요시 수동으로 버튼 눌러 전환.
+        // 여기서는 항상 표시하지 않고, 사용자가 안 보인다고 할 때 버튼으로 열도록 유지.
+        // fb.style.display = 'flex';  // 필요시 강제 표시
+      }, 1000);
+
+      window.openDirect = function () {
+        // 최상위로 직접 이동 (임베드 차단을 우회)
+        window.location.href = URL;
+      };
+
+      window.reloadFrame = function () {
+        frame.src = URL;
+      };
+    })();
+  </script>
+</body>
+</html>

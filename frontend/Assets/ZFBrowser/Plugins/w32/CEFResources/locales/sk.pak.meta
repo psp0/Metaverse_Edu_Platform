@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0889838b18b01f04ea7975cb3506d27c
+timeCreated: 1533838208
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Plugins/w32/CEFResources/locales/sk.pak
+  uploadId: 371853

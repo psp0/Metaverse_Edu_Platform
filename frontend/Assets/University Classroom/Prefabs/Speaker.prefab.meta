@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 3497dc3e8104dae41bbef742d91d104b
+timeCreated: 1490187927
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Speaker.prefab
+  uploadId: 615421

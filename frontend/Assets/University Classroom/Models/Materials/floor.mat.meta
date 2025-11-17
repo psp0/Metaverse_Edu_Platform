@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b9f6a44424ed63d4faaea8de18150233
+timeCreated: 1488616087
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/floor.mat
+  uploadId: 615421

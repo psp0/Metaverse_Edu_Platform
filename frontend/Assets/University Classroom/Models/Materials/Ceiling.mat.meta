@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 310183c0fea9e7c49bc0aecb644ff508
+timeCreated: 1490030322
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/Ceiling.mat
+  uploadId: 615421

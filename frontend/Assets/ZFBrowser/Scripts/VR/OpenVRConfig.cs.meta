@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 9a37968ab41d263409e78ac49712dfe8
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/VR/OpenVRConfig.cs
+  uploadId: 371853

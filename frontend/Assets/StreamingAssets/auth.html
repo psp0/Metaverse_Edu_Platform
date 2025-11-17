@@ -1,0 +1,458 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>METAEDU 로그인 / 회원가입</title>
+  <style>
+/* ===== METAEDU Light & Clean Theme ===== */
+:root{
+  --bg:#f5f7fb;        /* 밝은 배경 */
+  --panel:#ffffff;     /* 화이트 패널 */
+  --ink:#0f172a;       /* 본문 글자(진한 남청) */
+  --ink-dim:#475569;   /* 서브 글자 */
+  --primary:#16a34a;   /* 포인트 그린 */
+  --primary-2:#22c55e; /* 보조 그린 */
+  --accent:#3b82f6;    /* 블루 악센트 */
+  --error:#dc2626;
+  --ok:#16a34a;
+  --stroke:#e2e8f0;    /* 옅은 테두리 */
+}
+
+*{box-sizing:border-box}
+/* ===== Scroll Fix: page scroll ===== */
+html, body{
+  height: auto !important;       /* 고정 높이 해제 */
+  min-height: 100dvh !important; /* 모바일 브라우저 안전 */
+}
+
+body{
+  overflow-y: auto !important;   /* 세로 스크롤 허용 */
+  overflow-x: hidden !important; /* 가로는 숨김 */
+  align-items: flex-start !important; /* 가운데 고정 해제 */
+  padding: 24px 12px !important;      /* 위쪽 여백 */
+}
+
+.card{
+  margin: 24px auto !important;  /* 위아래 여백으로 자연스럽게 */
+  max-width: 88vw;
+}
+
+
+/* 은은한 하이라이트(라이트용 아주 옅게) */
+body::before{
+  content:"";
+  position:fixed; inset:-30%;
+  background: conic-gradient(from 0deg,
+    #22c55e0e, #06b6d40e, #3b82f60e, #8b5cf60e, #22c55e0e);
+  filter: blur(70px);
+  animation: aurora 28s linear infinite;
+  z-index:-1;
+}
+@keyframes aurora{to{transform:rotate(360deg)}}
+
+/* 카드 */
+.card{
+  width: 620px; max-width: 88vw;
+  background: var(--panel);
+  padding: 40px;
+  border-radius: 18px;
+  border: 1px solid var(--stroke);
+  box-shadow:
+    0 10px 30px rgba(2,6,23,.06),
+    0 2px 8px rgba(2,6,23,.05);
+  backdrop-filter: saturate(1.1);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.card:hover{
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 40px rgba(2,6,23,.08),
+    0 3px 10px rgba(2,6,23,.06);
+}
+
+/* 로고 */
+.brand{
+  position: relative;
+  font-family:"Orbitron",sans-serif;
+  text-align:center;
+  font-size:40px; font-weight:800; letter-spacing:1.5px;
+  margin-bottom:18px;
+
+  /* 색상 스펙트럼: 시작/끝 동일 컬러로 연속성 확보 */
+  --c1:#16a34a;  /* green-600 */
+  --c2:#22c55e;  /* green-500 */
+  --c3:#10b981;  /* emerald-500 */
+  --c4:#3b82f6;  /* blue-500  */
+  --c5:#60a5fa;  /* blue-400  */
+  --c6:#a855f7;  /* violet-500*/
+
+  background: linear-gradient(90deg,
+    var(--c1) 0%,
+    var(--c2) 16.6%,
+    var(--c3) 33.3%,
+    var(--c4) 50%,
+    var(--c5) 66.6%,
+    var(--c6) 83.3%,
+    var(--c1) 100%   /* 시작/끝 동일 */
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  /* 점프 없이 왕복으로 움직이게 */
+  animation: brandGradient 8s ease-in-out infinite alternate;
+  will-change: background-position;
+}
+
+/* 하이라이트 샤인이 너무 튀지 않도록 부드럽게 */
+.brand::after{
+  content:"";
+  position:absolute; inset:0;
+  background: linear-gradient(115deg,
+    transparent 0%,
+    rgba(255,255,255,.35) 10%,
+    rgba(255,255,255,.75) 13%,
+    rgba(255,255,255,.35) 16%,
+    transparent 26%
+  );
+  transform: translateX(-130%) skewX(-8deg);
+  filter: blur(0.3px);
+  animation: brandShine 3.2s ease-in-out infinite;
+  mix-blend-mode: screen;
+  pointer-events:none;
+  /* 라이트 테마에서 과한 샤인 방지용 */
+  opacity: .9;
+}
+
+/* 배경 그라데이션이 좌↔우로 왕복 */
+@keyframes brandGradient{
+  0%   { background-position:   0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* 샤인도 왕복 이동 + 살짝 쉬는 구간 */
+@keyframes brandShine{
+  0%   { transform: translateX(-130%) skewX(-8deg); opacity:.0; }
+  10%  { opacity:.9; }
+  50%  { transform: translateX(130%) skewX(-8deg); opacity:.9; }
+  60%  { opacity:.0; }
+  100% { transform: translateX(130%) skewX(-8deg); opacity:.0; }
+}
+
+/* 모션 최소화 선호 시 정지 */
+@media (prefers-reduced-motion: reduce){
+  .brand, .brand::after { animation: none; }
+}
+
+/* 섹션 타이틀 */
+h2{
+  margin: 0 0 14px;
+  text-align: center;
+  font-weight: 800;
+  letter-spacing: .5px;
+  color:#0b1220;
+  font-family:"Orbitron",sans-serif;
+}
+
+/* 라벨/인풋 */
+.input{ margin-bottom: 16px; display:flex; flex-direction:column; }
+label{ font-size:13px; margin-bottom:8px; color:var(--ink-dim); }
+
+input, select{
+  padding: 12px 14px;
+  border: 1px solid var(--stroke);
+  border-radius: 12px;
+  background: #ffffff;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s ease, box-shadow .15s ease, transform .08s ease;
+}
+input::placeholder{ color:#94a3b8; }
+input:focus, select:focus{
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px #22c55e2a;
+}
+
+/* 이메일 행 */
+.row{ display:flex; gap:8px; }
+
+/* 버튼 */
+button.btn{
+  width:100%; padding: 14px 16px;
+  border-radius: 12px; border: 0;
+  font-weight: 800; letter-spacing:.2px;
+  cursor:pointer; margin-top: 12px;
+  color:#ffffff;
+  background: linear-gradient(90deg, var(--primary), var(--primary-2) 70%);
+  transition: transform .12s ease, box-shadow .2s ease, filter .15s ease;
+}
+button.btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(34,197,94,.28);
+}
+button.btn:active{ transform: translateY(0); filter:brightness(.98); }
+
+/* 보조 버튼(회원가입/뒤로가기 등) – 밝은 회색 톤 */
+#gotoSignup.btn, #gotoLogin.btn{
+  background: linear-gradient(90deg, #e2e8f0, #cbd5e1);
+  color:#0f172a;
+}
+#gotoSignup.btn:hover, #gotoLogin.btn:hover{
+  box-shadow: 0 6px 18px rgba(15,23,42,.12);
+}
+
+/* 메시지 */
+.msg{ font-size:14px; margin-top: 8px; text-align:center; min-height: 22px; }
+.msg.err{ color: var(--error); font-weight: 700; }
+.msg.ok{ color: var(--ok); font-weight: 700; }
+
+/* 비번 일치 문구 */
+.inline-msg{ font-size:12px; color: var(--error); margin-left: 6px; }
+.hidden{ display:none; }
+
+/* 패널 전환 */
+#panel-login, #panel-signup{ animation: fade .18s ease; }
+@keyframes fade{ from{opacity:.6; transform:translateY(3px)} to{opacity:1; transform:none} }
+
+/* 반응형 */
+@media (max-width: 420px){
+  .card{ padding: 28px; border-radius: 16px; }
+  .brand{ font-size: 32px; }
+  h2{ font-size: 18px; }
+  input, select{ padding: 12px; font-size: 14px; }
+  button.btn{ padding: 12px; font-size: 14px; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="brand">METAEDU</div>
+
+    <!-- 로그인 -->
+    <div id="panel-login">
+      <h2>로그인</h2>
+      <div id="loginMsg" class="msg"></div>
+      <form id="loginForm">
+        <div class="input">
+          <label for="loginId">아이디</label>
+          <input id="loginId" required>
+        </div>
+        <div class="input">
+          <label for="loginPw">비밀번호</label>
+          <input id="loginPw" type="password" required>
+        </div>
+        <button type="submit" class="btn">로그인</button>
+        <button type="button" class="btn" id="gotoSignup">회원가입으로</button>
+      </form>
+    </div>
+
+    <!-- 회원가입 -->
+    <div id="panel-signup" class="hidden">
+      <h2>회원가입</h2>
+      <div id="signupMsg" class="msg"></div>
+      <form id="signupForm">
+        <div class="input">
+          <label for="suId">아이디</label>
+          <input id="suId" required>
+        </div>
+        <div class="input">
+          <label for="suPw">비밀번호</label>
+          <input id="suPw" type="password" minlength="6" required>
+        </div>
+        <div class="input">
+          <label for="suPw2">비밀번호 확인 
+            <span id="pwCheckMsg" class="inline-msg hidden">비밀번호가 일치하지 않습니다</span>
+          </label>
+          <input id="suPw2" type="password" minlength="6" required>
+        </div>
+        <div class="input">
+          <label for="suNickname">닉네임</label>
+          <input id="suNickname" required>
+        </div>
+        <div class="input">
+          <label for="suName">이름</label>
+          <input id="suName" required>
+        </div>
+        <div class="input">
+          <label for="suBirth">생년월일</label>
+          <input id="suBirth" type="date" required>
+        </div>
+        <div class="input">
+          <label for="suPhone">전화번호</label>
+          <input id="suPhone" placeholder="010-1234-5678" required>
+        </div>
+        <div class="input">
+          <label for="suEmail">이메일</label>
+          <div class="row">
+            <input id="suEmailFront" placeholder="example" required style="flex:2">
+            <select id="suEmailBack" style="flex:1">
+              <option value="@naver.com">@naver.com</option>
+              <option value="@gmail.com">@gmail.com</option>
+              <option value="@daum.net">@daum.net</option>
+              <option value="@kakao.com">@kakao.com</option>
+            </select>
+          </div>
+        </div>
+        <div class="input">
+          <label for="suGender">성별</label>
+          <select id="suGender" required>
+            <option value="M">남성</option>
+            <option value="F">여성</option>
+          </select>
+        </div>
+        <button type="submit" class="btn">회원가입</button>
+	<button type="button" class="btn" id="gotoLogin">뒤로가기</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const BASE_URL = "https://api.dev.mep.psp0.tech";
+
+    function notifyUnity(eventName, payloadObj) {
+      const payload = JSON.stringify({ eventName: eventName, data: payloadObj });
+      if (window.cefQuery) {
+        window.cefQuery({ request: payload });
+      } else {
+        console.log("[DEBUG] Unity bridge not available:", payload);
+      }
+    }
+
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const loginMsg = document.getElementById("loginMsg");
+    const signupMsg = document.getElementById("signupMsg");
+    const panelLogin = document.getElementById("panel-login");
+    const panelSignup = document.getElementById("panel-signup");
+    document.getElementById("gotoSignup").addEventListener("click", showSignup);
+
+    function showLogin() {
+      panelLogin.classList.remove("hidden");
+      panelSignup.classList.add("hidden");
+    }
+    function showSignup() {
+	signupForm.reset();
+      panelSignup.classList.remove("hidden");
+      panelLogin.classList.add("hidden");
+    }
+	document.getElementById("gotoLogin").addEventListener("click", showLogin);
+
+
+    // 비밀번호 확인 검사
+    const pw = document.getElementById("suPw");
+    const pw2 = document.getElementById("suPw2");
+    const pwMsg = document.getElementById("pwCheckMsg");
+    function checkPwMatch() {
+      if (pw2.value && pw.value !== pw2.value) {
+        pwMsg.classList.remove("hidden");
+      } else {
+        pwMsg.classList.add("hidden");
+      }
+    }
+    pw.addEventListener("input", checkPwMatch);
+    pw2.addEventListener("input", checkPwMatch);
+
+    // 로그인 처리
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      loginMsg.textContent = "";
+      try {
+        const res = await fetch(BASE_URL + "/api/users/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: document.getElementById("loginId").value,   // 백엔드 요구 키 확인
+            password: document.getElementById("loginPw").value
+          })
+        });
+
+        console.log("[DEBUG][LOGIN] status:", res.status);
+        const data = await res.json().catch(() => ({}));
+        console.log("[DEBUG][LOGIN] response:", data);
+
+        if (!res.ok) {
+          loginMsg.textContent = data.message || "로그인 실패 (" + res.status + ")";
+          loginMsg.className = "msg err";
+          return;
+        }
+
+        notifyUnity("loginSuccess", {
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token,
+          expiresAt: data.expires_at
+        });
+
+        loginMsg.textContent = "로그인 성공!";
+        loginMsg.className = "msg ok";
+      } catch (err) {
+        console.error("[DEBUG][LOGIN] fetch error:", err);
+        loginMsg.textContent = "네트워크 오류: " + err.message;
+        loginMsg.className = "msg err";
+      }
+    });
+
+    // 회원가입 처리
+    signupForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      signupMsg.textContent = "";
+
+      if (pw.value !== pw2.value) {
+        signupMsg.textContent = "비밀번호가 일치하지 않습니다.";
+        signupMsg.className = "msg err";
+        return;
+      }
+
+      const email = document.getElementById("suEmailFront").value + document.getElementById("suEmailBack").value;
+
+      try {
+        const res = await fetch(BASE_URL + "/api/users/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: document.getElementById("suId").value,
+            password: pw.value,
+            nickname: document.getElementById("suNickname").value,
+            name: document.getElementById("suName").value,
+            birth_date: document.getElementById("suBirth").value,
+            phone: document.getElementById("suPhone").value,
+            email: email,
+            gender: document.getElementById("suGender").value
+          })
+        });
+
+        console.log("[DEBUG][SIGNUP] status:", res.status);
+        const data = await res.json().catch(() => ({}));
+        console.log("[DEBUG][SIGNUP] response:", data);
+
+
+
+if (!res.ok) {
+  signupMsg.textContent = data.message || "회원가입 실패 (" + res.status + ")";
+  signupMsg.className = "msg err";
+  return;
+}
+
+// ✅ Unity에 토큰 전달
+const payload = {
+  accessToken: data.access_token,
+  refreshToken: data.refresh_token,
+  expiresAt: data.expires_at
+};
+unityLoginSuccess(JSON.stringify(payload));
+
+// 메시지 출력 + 로그인 화면 이동
+signupMsg.textContent = "회원가입 성공! 로그인하세요.";
+signupMsg.className = "msg ok";
+showLogin();
+
+      } catch (err) {
+        console.error("[DEBUG][SIGNUP] fetch error:", err);
+        signupMsg.textContent = "네트워크 오류: " + err.message;
+        signupMsg.className = "msg err";
+      }
+    });
+  </script>
+</body>
+</html>

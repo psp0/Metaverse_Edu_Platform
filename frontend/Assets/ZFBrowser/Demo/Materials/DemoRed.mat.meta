@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 428602467b7a09447b30d644d385dc41
+timeCreated: 1449710645
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Materials/DemoRed.mat
+  uploadId: 371853

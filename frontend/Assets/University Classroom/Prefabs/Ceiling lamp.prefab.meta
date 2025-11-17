@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f202421c0aca9234c8a9d3fe76a54fe3
+timeCreated: 1490173447
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Ceiling lamp.prefab
+  uploadId: 615421

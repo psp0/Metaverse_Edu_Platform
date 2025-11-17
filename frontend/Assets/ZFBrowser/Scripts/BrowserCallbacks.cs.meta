@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a30036008e7d3434291fcfba205bf239
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/BrowserCallbacks.cs
+  uploadId: 371853

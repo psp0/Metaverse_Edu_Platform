@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 948c27e78bb70dc4c8938884beff76fd
+timeCreated: 1452980098
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Prefabs/ControlledDoor.prefab
+  uploadId: 371853

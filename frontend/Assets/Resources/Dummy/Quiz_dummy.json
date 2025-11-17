@@ -1,0 +1,34 @@
+{
+  "questions": [
+    {
+      "quizId": 1,
+      "content": "2 + 2 = ?",
+      "options": [
+        { "optionId": 1, "label": "A", "optionText": "3", "isAnswer": false },
+        { "optionId": 2, "label": "B", "optionText": "4", "isAnswer": true },
+        { "optionId": 3, "label": "C", "optionText": "5" , "isAnswer": false},
+        { "optionId": 4, "label": "D", "optionText": "22", "isAnswer": false }
+      ]
+    },
+    {
+      "quizId": 2,
+      "content": "다음 중 소수(Prime Number)는?",
+      "options": [
+        { "optionId": 5, "label": "A", "optionText": "9", "isAnswer": false },
+        { "optionId": 6, "label": "B", "optionText": "11", "isAnswer": true },
+        { "optionId": 7, "label": "C", "optionText": "15", "isAnswer": false },
+        { "optionId": 8, "label": "D", "optionText": "21", "isAnswer": false }
+      ]
+    },
+    {
+      "quizId": 3,
+      "content": "영어 단어 'apple'의 뜻은?",
+      "options": [
+        { "optionId": 9, "label": "A", "optionText": "사과","isAnswer": true  },
+        { "optionId": 10, "label": "B", "optionText": "바나나", "isAnswer": false },
+        { "optionId": 11, "label": "C", "optionText": "포도", "isAnswer": false },
+        { "optionId": 12, "label": "D", "optionText": "복숭아", "isAnswer": false }
+      ]
+    }
+  ]
+}

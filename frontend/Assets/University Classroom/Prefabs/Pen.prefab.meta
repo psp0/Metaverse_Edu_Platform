@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: af025fb8fd2b8a94d9fb2ee7fd3ef74b
+timeCreated: 1490187882
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Pen.prefab
+  uploadId: 615421

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 42ad52ad407fdd04392bdcaa737b39cb
+timeCreated: 1518219584
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/ExternalKeyboard.unity
+  uploadId: 371853

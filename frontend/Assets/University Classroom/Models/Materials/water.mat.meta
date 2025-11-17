@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 44481f2d77f6e624d854f74ba148e976
+timeCreated: 1489343824
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/water.mat
+  uploadId: 615421

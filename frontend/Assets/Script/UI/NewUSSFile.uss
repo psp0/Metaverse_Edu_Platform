@@ -1,0 +1,9 @@
+#ChatBtn {
+<button 
+  class="btn_tab" 
+  data-ga-label="H_주요메뉴_전체강좌" 
+  data-target="gnb_lecture"
+  onclick="window.location.href='https://www.etoos.com/lecture/default.asp'">
+  전체강좌
+</button>
+}

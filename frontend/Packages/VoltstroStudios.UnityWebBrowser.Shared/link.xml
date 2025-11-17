@@ -1,0 +1,9 @@
+<linker>
+    <assembly fullname="VoltstroStudios.UnityWebBrowser.Shared">
+        <type fullname="VoltstroStudios.UnityWebBrowser.Shared.Core.IClientControls" preserve="all"/>
+        <type fullname="VoltstroStudios.UnityWebBrowser.Shared.Core.IEngineControls" preserve="all"/>
+        <type fullname="VoltstroStudios.UnityWebBrowser.Shared.Core.ClientControls" preserve="all"/>
+        <type fullname="VoltstroStudios.UnityWebBrowser.Shared.Core.EngineControls" preserve="all"/>
+        <type fullname="VoltstroStudios.UnityWebBrowser.Shared.Popups.*" preserve="all"/>
+    </assembly>
+</linker>

@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: f7a2a645481f96e4682c86cc9b22dff9
+timeCreated: 1478892646
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/Cookie.cs
+  uploadId: 371853

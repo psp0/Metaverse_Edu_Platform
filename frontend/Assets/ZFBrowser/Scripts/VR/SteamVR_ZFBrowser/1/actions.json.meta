@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 333b76369a91bc643815a65306e29a9a
+timeCreated: 1550017345
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/VR/SteamVR_ZFBrowser/1/actions.json
+  uploadId: 371853

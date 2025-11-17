@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 6338060fd8bc2e6499d0fdafd054bbfb
+timeCreated: 1489485340
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/newspaper.mat
+  uploadId: 615421

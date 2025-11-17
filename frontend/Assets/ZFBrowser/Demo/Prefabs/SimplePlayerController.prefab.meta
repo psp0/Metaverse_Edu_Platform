@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: a021ec9c8bd1b3d48aea8e6c29653f2f
+timeCreated: 1513618117
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Prefabs/SimplePlayerController.prefab
+  uploadId: 371853

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d4c6772b5f2c6b24fbe986c42e886cec
+timeCreated: 1453859516
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Prefabs/Legacy/BrowserQuad (FPS UI).prefab
+  uploadId: 371853

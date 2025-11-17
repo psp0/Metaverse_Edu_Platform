@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d1f3633971a208d4098caf4518d5c8e3
+timeCreated: 1490187796
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Notice board.prefab
+  uploadId: 615421

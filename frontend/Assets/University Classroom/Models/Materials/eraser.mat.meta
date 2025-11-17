@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 292a50b40b585a54b8fabfd900e65401
+timeCreated: 1489742368
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/eraser.mat
+  uploadId: 615421

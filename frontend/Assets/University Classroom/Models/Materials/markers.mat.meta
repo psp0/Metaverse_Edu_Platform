@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 541d2c6665cb24742b2a638f2097d280
+timeCreated: 1489431576
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/markers.mat
+  uploadId: 615421

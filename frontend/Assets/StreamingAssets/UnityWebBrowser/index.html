@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>METAEDU</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="nav">
+    <div class="logo" onclick="goHome()">METAEDU</div>
+    <nav class="menu">
+      <button>전체강좌 ▾</button>
+      <div class="dropdown">
+        <button onclick="loadSubject('ALL')">전체강좌</button>
+        <button onclick="loadSubject('KOR')">국어</button>
+        <button onclick="loadSubject('ENG')">영어</button>
+        <button onclick="loadSubject('MATH')">수학</button>
+        <button onclick="loadSubject('RECENT')">최근학습</button>
+      </div>
+    </nav>
+	<button class="exitBtn" onclick="exitLecture()">나가기 </button>
+  </div>
+</header>
+
+<main id="panel-index">
+  <h2 id="subjectTitle">전체강좌</h2>
+  <div id="list"></div>
+</main>
+
+<div id="panel-video" class="hidden">
+  <div class="player">
+    <h2 id="videoTitle"></h2>
+
+    <div id="ytplayer"></div>
+
+    <div class="controls">
+      <button class="btn" onclick="goHome()">← 목록으로</button>
+      <button class="btn" onclick="playVideo()">▶ 재생</button>
+      <button class="btn" onclick="pauseVideo()">⏸ 정지</button>
+      <button class="btn primary" onclick="openQuiz(selectedLecture.id)">개념퀴즈 시작</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<div id="panel-quiz" class="hidden">
+  <div class="quiz-card">
+    <div class="q" id="qtext">문제가 여기에 표시됩니다.</div>
+    <div id="choices"></div>
+    <div class="result" id="quizResult"></div>
+    <div class="btnRow">
+      <div class="nav-btns">
+        <button class="btn" id="prevBtn">이전</button>
+        <button class="btn primary" id="submitBtn">제출</button>
+      </div>
+      <button class="btn" onclick="goHome()">← 메인으로</button>
+    </div>
+  </div>
+</div>
+
+<div id="panel-customquiz" class="hidden">
+  <div class="quiz-card">
+    <div class="quiz-info">
+      <span class="quiz-level" id="cqlevel">Level 표시 예정</span>
+      <span class="header" id="counter"></span>
+    </div>
+    <div class="q" id="cqtext">문제가 여기에 표시됩니다.</div>
+    <div id="cchoices"></div>
+    <div id="omrButtons" class="omr-card"></div> <div class="result" id="cresult"></div>
+    <div class="btnRow">
+      <div class="nav-btns">
+        <button class="btn" id="cPrevBtn">이전</button>
+        <button class="btn primary" id="nextBtn">다음</button>
+      </div>
+      <button class="btn" onclick="goHome()">← 메인으로</button>
+    </div>
+  </div>
+</div>
+
+<div id="panel-results-modal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <h2>채점 완료!</h2>
+    <div class="results-summary">
+      <div class="stat-box">
+        <div class="label">정답률</div>
+        <div class="value" id="res-stats-score">20 / 30</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">숙달도 변화</div>
+        <div class="value" id="res-stats-prof">35% → 40% (▲5%)</div>
+      </div>
+    </div>
+    <div class="btnRow">
+      <button class="btn" id="btn-back-to-list">목록으로</button>
+      <button class="btn primary" id="btn-review-results">결과 검토하기</button>
+    </div>
+  </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

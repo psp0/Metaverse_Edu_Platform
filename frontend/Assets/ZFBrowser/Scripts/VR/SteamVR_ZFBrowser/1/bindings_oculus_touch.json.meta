@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4333b94e56871b0478484af9f8c9ab77
+timeCreated: 1550017345
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/VR/SteamVR_ZFBrowser/1/bindings_oculus_touch.json
+  uploadId: 371853

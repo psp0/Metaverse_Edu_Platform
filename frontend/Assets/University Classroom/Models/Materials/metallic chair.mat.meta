@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b72f184dd4f50eb4cab98e44fc47bcbf
+timeCreated: 1488704218
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/metallic chair.mat
+  uploadId: 615421

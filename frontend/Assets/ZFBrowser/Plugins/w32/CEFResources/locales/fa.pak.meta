@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: b429d2f073361c548b647e1f589b147d
+timeCreated: 1533838212
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Plugins/w32/CEFResources/locales/fa.pak
+  uploadId: 371853
