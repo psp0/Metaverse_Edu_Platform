@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 38732aaddc6fb7e49a24317750716a75
+timeCreated: 1490187559
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Chalks.prefab
+  uploadId: 615421

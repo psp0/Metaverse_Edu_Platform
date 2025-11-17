@@ -1,0 +1,64 @@
+{
+  "subjects": [
+    {
+      "name": "국어",
+      "units": [
+        {
+          "title": "문학의 이해",
+          "subUnits": [
+            {
+              "subUnitId": 10101,
+              "subTitle": "고전 시가",
+              "lectureProgress": 100
+            },
+            {
+              "subUnitId": 10102,
+              "subTitle": "현대 소설",
+              "lectureProgress": 50
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "영어",
+      "units": [
+        {
+          "title": "Grammar",
+          "subUnits": [
+            {
+              "subUnitId": 20101,
+              "subTitle": "시제",
+              "lectureProgress": 100
+            },
+            {
+              "subUnitId": 20102,
+              "subTitle": "관계대명사",
+              "lectureProgress": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "수학",
+      "units": [
+        {
+          "title": "이차방정식",
+          "subUnits": [
+            {
+              "subUnitId": 30101,
+              "subTitle": "이차방정식의 정의",
+              "lectureProgress": 100
+            },
+            {
+              "subUnitId": 30102,
+              "subTitle": "근의 공식",
+              "lectureProgress": 20
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

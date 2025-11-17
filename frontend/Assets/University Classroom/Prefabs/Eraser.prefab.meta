@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: b79b634f248cd6b42bdf0e2ef9345ad7
+timeCreated: 1490187631
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Eraser.prefab
+  uploadId: 615421

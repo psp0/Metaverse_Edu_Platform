@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 9d4177d5d30b644bd87802a347eaccbe
+timeCreated: 1513619243
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Prefabs/DemoCharacter.prefab
+  uploadId: 371853

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: adfa2b62110074248969aa32f47b9a91
+timeCreated: 1458686032
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Changelog.txt
+  uploadId: 371853

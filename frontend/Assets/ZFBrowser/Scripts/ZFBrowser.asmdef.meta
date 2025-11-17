@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 8b34362e30924cc4c898574d4e3cbff3
+timeCreated: 1518478829
+licenseType: Store
+AssemblyDefinitionImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/ZFBrowser.asmdef
+  uploadId: 371853

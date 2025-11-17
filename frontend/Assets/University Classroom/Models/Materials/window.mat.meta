@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c03138b7b2e70b64ab9dd6f1274163ff
+timeCreated: 1490011469
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/window.mat
+  uploadId: 615421

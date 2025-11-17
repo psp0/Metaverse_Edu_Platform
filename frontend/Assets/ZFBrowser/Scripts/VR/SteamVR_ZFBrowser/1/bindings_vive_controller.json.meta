@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 49929d55b853ac441b756ecd2dc51f04
+timeCreated: 1550017345
+licenseType: Store
+TextScriptImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/VR/SteamVR_ZFBrowser/1/bindings_vive_controller.json
+  uploadId: 371853

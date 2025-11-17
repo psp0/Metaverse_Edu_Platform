@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 3c13ecf0fde4d4343b89190978bd45b6
+timeCreated: 1533838210
+licenseType: Store
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Plugins/w64/CEFResources/locales/ko.pak
+  uploadId: 371853

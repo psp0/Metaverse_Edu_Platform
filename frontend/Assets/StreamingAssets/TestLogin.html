@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>Unity Login Test</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    button {
+      padding: 16px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #22c55e;
+      color: #06230f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Unity에서 JS로 주입하는 sendLoginSuccess 함수를 버튼에서 호출 -->
+  <button onclick="sendLoginSuccess()">로그인 성공 보내기</button>
+</body>
+</html>

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 5f9a6876c1ffcfa44ba96ec70e855529
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 289935
+  packageName: Hospital Hallway Interior
+  packageVersion: 1.0
+  assetPath: Assets/Hospital Hallway/FBX/Materials/Waiting_chair_BaseMap.mat
+  uploadId: 685593

@@ -1,0 +1,20 @@
+fileFormatVersion: 2
+guid: a2938eedd03d07e4e811bfc31d5a1ed0
+timeCreated: 1512171514
+licenseType: Store
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Scripts/VRMainControlPanel.cs
+  uploadId: 371853

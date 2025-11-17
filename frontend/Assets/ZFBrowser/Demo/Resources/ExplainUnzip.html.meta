@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2eb159ef656bc68439e8008698eda885
+timeCreated: 1454451206
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Resources/ExplainUnzip.html
+  uploadId: 371853

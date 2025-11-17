@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: cf8accf34f877b2459e755f5a947bac1
+timeCreated: 1490187751
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Prefabs/Information.prefab
+  uploadId: 615421

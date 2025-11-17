@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 22dc3f593b2209c499c1e21b435c4ba5
+timeCreated: 1449711058
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Scripts/BallBrowserSpawner.cs
+  uploadId: 371853

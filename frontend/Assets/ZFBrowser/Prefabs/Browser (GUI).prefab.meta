@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d2b6f4719f2a1e34f9bdeb0cae87bddd
+timeCreated: 1511294785
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Prefabs/Browser (GUI).prefab
+  uploadId: 371853

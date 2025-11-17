@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: b444127e6cd251d4f99cd0315125d33a
+timeCreated: 1447457584
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Scripts/WebResources.cs
+  uploadId: 371853

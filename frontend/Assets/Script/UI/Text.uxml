@@ -1,0 +1,8 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Script/UI/ChatBotPanel.uss?fileID=7433441132597879392&amp;guid=48d6559c4c5ac924abe8d736a37eeb1a&amp;type=3#ChatBotPanel" />
+    <ui:ScrollView name="ChatScroll" style="height: 941px; background-color: rgba(245, 245, 245, 0.89);" />
+    <ui:TextField label="Text Field" placeholder-text="filler text" name="ChatInput" style="height: 59px;">
+        <ui:Button text="+" name="ImageButton" style="text-overflow: ellipsis;" />
+        <ui:Button text="▶" name="SendButton" />
+    </ui:TextField>
+</ui:UXML>

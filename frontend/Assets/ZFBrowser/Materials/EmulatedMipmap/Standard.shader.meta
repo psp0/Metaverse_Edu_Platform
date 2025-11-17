@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 18746865b29ae794a8ad1a7581c41ce4
+timeCreated: 1452631810
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Materials/EmulatedMipmap/Standard.shader
+  uploadId: 371853

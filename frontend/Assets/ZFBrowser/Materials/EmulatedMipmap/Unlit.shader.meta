@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 6723ad6224ea78f4892e7de7f6e425de
+timeCreated: 1452706256
+licenseType: Store
+ShaderImporter:
+  defaultTextures: []
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Materials/EmulatedMipmap/Unlit.shader
+  uploadId: 371853

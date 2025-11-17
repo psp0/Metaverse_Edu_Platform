@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e46fd56a894e1394fad105314a376f7a
+timeCreated: 1452980233
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Demo/Standard Assets/Prototyping/Materials/TealGrid.mat
+  uploadId: 371853

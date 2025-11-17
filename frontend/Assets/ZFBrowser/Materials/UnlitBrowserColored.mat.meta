@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 2f25fad43dc5dff4b86f7633f1d13fd0
+timeCreated: 1447370688
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Materials/UnlitBrowserColored.mat
+  uploadId: 371853

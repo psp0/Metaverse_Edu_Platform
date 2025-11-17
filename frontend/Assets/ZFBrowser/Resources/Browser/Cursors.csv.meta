@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: c2d9c7581d8e2a941a46e7e28e0e9063
+timeCreated: 1448048307
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Resources/Browser/Cursors.csv
+  uploadId: 371853

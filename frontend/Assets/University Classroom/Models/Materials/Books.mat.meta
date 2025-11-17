@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 8391251e27d159448881c40445d457b0
+timeCreated: 1489436591
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 86107
+  packageName: University Classroom
+  packageVersion: 1.1
+  assetPath: Assets/University Classroom/Models/Materials/Books.mat
+  uploadId: 615421

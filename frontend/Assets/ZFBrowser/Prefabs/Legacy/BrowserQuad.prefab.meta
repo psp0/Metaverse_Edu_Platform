@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f2e09d52524cce94e8594b983b316198
+timeCreated: 1447385333
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 55459
+  packageName: Embedded Browser
+  packageVersion: 3.1.0
+  assetPath: Assets/ZFBrowser/Prefabs/Legacy/BrowserQuad.prefab
+  uploadId: 371853

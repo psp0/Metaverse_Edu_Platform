@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <title>ZFBrowser Ping Test</title>
+  <style>
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    button {
+      padding: 16px 24px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      background: #22c55e;
+      color: #06230f;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <button onclick="sendPing()">Ping 보내기</button>
+
+  <script>
+    function sendPing() {
+      if (window.callUnity) {
+        window.callUnity("ping", "helloUnity");
+      } else {
+        console.log("[DEBUG] Unity bridge 없음");
+      }
+    }
+  </script>
+</body>
+</html>
